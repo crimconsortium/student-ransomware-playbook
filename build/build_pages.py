@@ -1112,22 +1112,7 @@ def _dorm_svg() -> str:
   <!-- charging cable hint -->
   <path d="M 582,407 q 30,0 30,15 q 0,15 -10,15" stroke="#444" stroke-width="2" fill="none"/>
 
-  <!-- 5. BED along the right wall -->
-  <!-- frame -->
-  <rect x="610" y="285" width="380" height="160" fill="#5a4f3e"/>
-  <!-- mattress -->
-  <rect x="618" y="275" width="364" height="40" rx="6" fill="#f3ede2"/>
-  <!-- blanket -->
-  <rect x="630" y="300" width="352" height="130" fill="url(#lab-blanket-grad)"/>
-  <!-- blanket fold -->
-  <rect x="630" y="310" width="352" height="6" fill="#a04500" opacity="0.6"/>
-  <rect x="630" y="380" width="352" height="6" fill="#a04500" opacity="0.6"/>
-  <!-- pillows -->
-  <rect x="640" y="260" width="110" height="45" rx="8" fill="#fff" stroke="#cfc4b3" stroke-width="1.5"/>
-  <rect x="760" y="265" width="100" height="40" rx="8" fill="#f3ede2" stroke="#cfc4b3" stroke-width="1.5"/>
-  <!-- bed legs -->
-  <rect x="610" y="445" width="14" height="22" fill="#3a3a3a"/>
-  <rect x="976" y="445" width="14" height="22" fill="#3a3a3a"/>
+  <!-- 5. (Bed removed; right wall is open) -->
 
   <!-- 6. DRESSER / PRINTER (bottom right) and TV STAND / CONSOLE -->
   <!-- Dresser/printer combo, far right -->
@@ -1146,13 +1131,7 @@ def _dorm_svg() -> str:
   <rect x="825" y="510" width="30" height="3" fill="#3a3a3a"/>
   <circle cx="890" cy="511" r="2.5" fill="#f68212"/>
 
-  <!-- 7. RUG on the floor (center) -->
-  <rect x="230" y="485" width="500" height="95" rx="6" fill="url(#lab-rug-grad)"/>
-  <rect x="240" y="495" width="480" height="75" rx="4" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
-  <g opacity="0.4" stroke="#fff" stroke-width="1">
-    <line x1="260" y1="485" x2="260" y2="580"/>
-    <line x1="700" y1="485" x2="700" y2="580"/>
-  </g>
+  <!-- 7. (Rug removed) -->
 
   <!-- 8. HOTSPOTS on top -->
   {hotspots}
