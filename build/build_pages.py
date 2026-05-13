@@ -878,91 +878,283 @@ def render_scenarios() -> str:
 # palette only.
 HOTSPOT_GEOMETRY = {
     # key:        (cx, cy, label)
-    "laptop":     (470, 360, "Laptop"),
-    "phone":      (650, 420, "Phone"),
-    "console":    (810, 470, "Console"),
-    "router":     (110, 110, "Wi-Fi router"),
-    "printer":    (250, 480, "Printer"),
-    "roommate":   (180, 290, "Roommate's PC"),
-    "clouddrive": (560, 130, "Cloud drive"),
-    "campusemail":(370, 130, "Campus email"),
-    "clubaccount":(770, 200, "Club account"),
-    "usbstick":   (350, 410, "USB stick"),
+    # Coordinates are tuned to the 1000x600 viewBox of _dorm_svg().
+    # New positions match the richer scene: laptop on the center desk,
+    # phone next to it, console near the TV stand bottom-right, router
+    # on the high shelf top-left, printer on the dresser bottom-right,
+    # roommate's PC at the left wall desk, cloud drive poster above the
+    # bed (right), campus email poster above the main desk (center),
+    # club account whiteboard top-right, USB stick on the center desk.
+    "router":     (118, 100, "Wi-Fi router"),
+    "campusemail":(565, 120, "Campus email"),
+    "clubaccount":(860, 130, "Club account"),
+    "clouddrive": (707, 120, "Cloud drive"),
+    "roommate":   (165, 320, "Roommate's PC"),
+    "laptop":     (460, 360, "Laptop"),
+    "usbstick":   (385, 405, "USB stick"),
+    "phone":      (560, 405, "Phone"),
+    "printer":    (820, 425, "Printer"),
+    "console":    (855, 510, "Console"),
 }
 
 
 def _dorm_svg() -> str:
-    """Return inline SVG of a flat dorm-room scene with clickable hotspots.
+    """Return inline SVG of a richer dorm-room scene with clickable hotspots.
 
-    The scene is intentionally diagrammatic, not photoreal: it uses only the
-    strict palette (orange #f68212, black, white, and grays from --c-line /
-    --c-bg-2) so it works in light and dark mode and prints cleanly.
-    Each hotspot is an <a> with data-hotspot="<key>" so the JS engine can
-    treat clicks the same as taps on the tile grid below.
+    Uses the strict palette (orange #f68212, black, white, grays) plus
+    light-mode shading via explicit grays. Dark-mode treatment is handled
+    in CSS via the .lab-svg.dark filter scope. Each hotspot is an <a> with
+    data-hotspot="<key>" so the JS engine treats clicks the same as the
+    tile grid below.
     """
-    # Build hotspot <a> dots. We draw an orange ring around each so it reads
-    # as interactive without color-coding meaning (still mono-orange).
+    # Hotspots are drawn last, on top of everything.
     dots = []
     for key, (cx, cy, label) in HOTSPOT_GEOMETRY.items():
         dots.append(
             f'<a class="lab-hotspot" href="#lab" data-hotspot="{key}" role="button" '
             f'aria-label="Open module: {html.escape(label)}" tabindex="0">'
-            f'<circle cx="{cx}" cy="{cy}" r="22" class="lab-hotspot-ring"/>'
-            f'<circle cx="{cx}" cy="{cy}" r="9" class="lab-hotspot-dot"/>'
-            f'<text x="{cx}" y="{cy + 44}" text-anchor="middle" class="lab-hotspot-label">{html.escape(label)}</text>'
+            f'<circle cx="{cx}" cy="{cy}" r="24" class="lab-hotspot-ring"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="10" class="lab-hotspot-dot"/>'
+            f'<text x="{cx}" y="{cy + 46}" text-anchor="middle" class="lab-hotspot-label">{html.escape(label)}</text>'
             f'</a>'
         )
     hotspots = "".join(dots)
-    # Flat room: floor strip + back wall + furniture rectangles. Keep simple.
-    return f'''<svg class="lab-svg" viewBox="0 0 1000 600" role="img" aria-label="Diagrammatic dorm room with clickable items" xmlns="http://www.w3.org/2000/svg">
-  <!-- Walls + floor -->
-  <rect x="0" y="0" width="1000" height="430" class="lab-wall"/>
-  <rect x="0" y="430" width="1000" height="170" class="lab-floor"/>
-  <line x1="0" y1="430" x2="1000" y2="430" class="lab-edge"/>
-  <!-- Window -->
-  <rect x="380" y="60" width="240" height="140" class="lab-window"/>
-  <line x1="500" y1="60" x2="500" y2="200" class="lab-edge"/>
-  <line x1="380" y1="130" x2="620" y2="130" class="lab-edge"/>
-  <!-- Wi-Fi router on a small shelf, top-left -->
-  <rect x="60" y="140" width="110" height="10" class="lab-furn"/>
-  <rect x="80" y="105" width="70" height="30" rx="4" class="lab-furn"/>
-  <line x1="95" y1="95" x2="105" y2="75" class="lab-edge"/>
-  <line x1="130" y1="95" x2="140" y2="75" class="lab-edge"/>
-  <!-- Roommate's PC tower + monitor, mid-left -->
-  <rect x="120" y="260" width="130" height="80" rx="4" class="lab-furn"/>
-  <rect x="170" y="340" width="30" height="60" class="lab-furn"/>
-  <rect x="140" y="400" width="90" height="10" class="lab-furn"/>
-  <!-- Printer, bottom-left -->
-  <rect x="200" y="455" width="110" height="55" rx="4" class="lab-furn"/>
-  <rect x="215" y="445" width="80" height="10" class="lab-furn"/>
-  <!-- Desk surface, center -->
-  <rect x="330" y="395" width="380" height="15" class="lab-furn"/>
-  <rect x="340" y="410" width="15" height="90" class="lab-furn"/>
-  <rect x="685" y="410" width="15" height="90" class="lab-furn"/>
-  <!-- Laptop on the desk -->
-  <rect x="425" y="330" width="100" height="65" rx="3" class="lab-furn"/>
-  <rect x="415" y="395" width="120" height="6" class="lab-furn"/>
-  <!-- USB stick to the left of the laptop -->
-  <rect x="335" y="400" width="30" height="10" class="lab-furn"/>
-  <rect x="325" y="402" width="10" height="6" class="lab-furn"/>
-  <!-- Phone on the desk, right of laptop -->
-  <rect x="625" y="395" width="50" height="30" rx="4" class="lab-furn"/>
-  <!-- Console + TV stand, bottom-right -->
-  <rect x="760" y="455" width="100" height="40" rx="4" class="lab-furn"/>
-  <rect x="790" y="495" width="40" height="6" class="lab-furn"/>
-  <rect x="740" y="335" width="140" height="95" rx="3" class="lab-furn"/>
-  <!-- Cloud drive (poster) on back wall, center-right -->
-  <rect x="500" y="80" width="120" height="100" class="lab-poster"/>
-  <text x="560" y="135" text-anchor="middle" class="lab-poster-text">CLOUD</text>
-  <!-- Campus email (poster) on back wall, center-left -->
-  <rect x="310" y="80" width="120" height="100" class="lab-poster"/>
-  <text x="370" y="135" text-anchor="middle" class="lab-poster-text">EMAIL</text>
-  <!-- Club account (whiteboard) on back wall, right -->
-  <rect x="700" y="150" width="160" height="110" class="lab-poster"/>
-  <text x="780" y="205" text-anchor="middle" class="lab-poster-text">CLUB</text>
-  <!-- Roommate marker (a chair near the PC) -->
-  <rect x="130" y="345" width="40" height="40" rx="3" class="lab-furn"/>
-  <!-- Hotspots (always drawn last so they sit on top) -->
+    # The scene is drawn in layers:
+    #   1. back wall + floor (with perspective-y baseboard)
+    #   2. wall fixtures (window with daylight, posters, whiteboard, shelf w/ router)
+    #   3. left wall furniture (roommate's desk + PC + monitor + chair)
+    #   4. center desk (with laptop, USB stick, phone, mug, books, lamp w/ glow)
+    #   5. bed along the right wall with pillows + blanket
+    #   6. right-side TV stand with console + screen + dresser w/ printer
+    #   7. rug on the floor
+    #   8. hotspots (on top of everything)
+    return f'''<svg class="lab-svg" viewBox="0 0 1000 600" role="img" aria-label="Illustrated dorm room with clickable items" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lab-wall-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7f4ef"/>
+      <stop offset="100%" stop-color="#ece6dc"/>
+    </linearGradient>
+    <linearGradient id="lab-floor-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfc4b3"/>
+      <stop offset="100%" stop-color="#b8ac98"/>
+    </linearGradient>
+    <linearGradient id="lab-window-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe5b8"/>
+      <stop offset="100%" stop-color="#ffd08a"/>
+    </linearGradient>
+    <radialGradient id="lab-sunbeam" cx="0.5" cy="0" r="0.9">
+      <stop offset="0%" stop-color="#ffe5b8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffe5b8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lab-lamp-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ffd99a" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#ffd99a" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffd99a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lab-rug-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f68212" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#d96c08" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="lab-blanket-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f68212"/>
+      <stop offset="100%" stop-color="#c45a00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. WALL + FLOOR -->
+  <rect x="0" y="0" width="1000" height="440" fill="url(#lab-wall-grad)"/>
+  <rect x="0" y="440" width="1000" height="160" fill="url(#lab-floor-grad)"/>
+  <!-- baseboard -->
+  <rect x="0" y="430" width="1000" height="12" fill="#9b8f7c"/>
+  <line x1="0" y1="442" x2="1000" y2="442" stroke="#7a6d59" stroke-width="1.2"/>
+  <!-- floor planks (subtle) -->
+  <g stroke="#a3957f" stroke-width="0.8" opacity="0.55">
+    <line x1="0" y1="475" x2="1000" y2="475"/>
+    <line x1="0" y1="510" x2="1000" y2="510"/>
+    <line x1="0" y1="545" x2="1000" y2="545"/>
+    <line x1="0" y1="580" x2="1000" y2="580"/>
+  </g>
+
+  <!-- 2. WINDOW with daylight + sunbeam on floor -->
+  <rect x="260" y="40" width="220" height="160" fill="#3a3a3a"/>
+  <rect x="268" y="48" width="204" height="144" fill="url(#lab-window-grad)"/>
+  <line x1="370" y1="48" x2="370" y2="192" stroke="#3a3a3a" stroke-width="4"/>
+  <line x1="268" y1="120" x2="472" y2="120" stroke="#3a3a3a" stroke-width="4"/>
+  <!-- sill -->
+  <rect x="252" y="196" width="236" height="12" fill="#7a6d59"/>
+  <line x1="252" y1="208" x2="488" y2="208" stroke="#5a4f3e" stroke-width="1"/>
+  <!-- sunbeam falling across the room -->
+  <polygon points="285,200 455,200 600,470 220,470" fill="url(#lab-sunbeam)"/>
+
+  <!-- Wi-Fi router on a shelf, top-left -->
+  <!-- shelf -->
+  <rect x="40" y="140" width="170" height="8" fill="#5a4f3e"/>
+  <rect x="42" y="148" width="6" height="14" fill="#5a4f3e"/>
+  <rect x="202" y="148" width="6" height="14" fill="#5a4f3e"/>
+  <!-- router body -->
+  <rect x="85" y="95" width="80" height="38" rx="5" fill="#222"/>
+  <rect x="90" y="100" width="70" height="3" fill="#f68212"/>
+  <circle cx="100" cy="122" r="3" fill="#f68212"/>
+  <circle cx="112" cy="122" r="3" fill="#f68212" opacity="0.7"/>
+  <circle cx="124" cy="122" r="3" fill="#f68212" opacity="0.4"/>
+  <!-- antennas -->
+  <line x1="95" y1="95" x2="75" y2="60" stroke="#222" stroke-width="3"/>
+  <line x1="155" y1="95" x2="175" y2="60" stroke="#222" stroke-width="3"/>
+  <circle cx="75" cy="60" r="4" fill="#222"/>
+  <circle cx="175" cy="60" r="4" fill="#222"/>
+  <!-- a couple of small books on the shelf -->
+  <rect x="170" y="118" width="10" height="22" fill="#3a3a3a"/>
+  <rect x="180" y="114" width="10" height="26" fill="#7a6d59"/>
+  <rect x="190" y="120" width="10" height="20" fill="#f68212"/>
+
+  <!-- Posters on back wall -->
+  <!-- EMAIL poster (right of window, above main desk) -->
+  <g>
+    <rect x="490" y="60" width="150" height="115" fill="#fff" stroke="#3a3a3a" stroke-width="2"/>
+    <rect x="490" y="60" width="150" height="22" fill="#f68212"/>
+    <text x="565" y="77" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" letter-spacing="0.1em">CAMPUS EMAIL</text>
+    <!-- envelope motif -->
+    <rect x="515" y="100" width="100" height="55" fill="#f3ede2" stroke="#3a3a3a" stroke-width="1.5"/>
+    <polyline points="515,100 565,138 615,100" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+  </g>
+  <!-- Cloud drive poster (between email poster and whiteboard) -->
+  <g>
+    <rect x="655" y="65" width="105" height="110" fill="#fff" stroke="#3a3a3a" stroke-width="2" transform="rotate(-3 707 120)"/>
+    <g transform="rotate(-3 707 120)">
+      <text x="707" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#3a3a3a" letter-spacing="0.08em">CLOUD DRIVE</text>
+      <!-- cloud shape -->
+      <path d="M 668,140 q 0,-22 22,-22 q 4,-13 18,-13 q 14,0 18,13 q 22,0 22,22 q 0,13 -22,13 l -40,0 q -18,0 -18,-13 z" fill="#f3ede2" stroke="#3a3a3a" stroke-width="1.5"/>
+    </g>
+  </g>
+  <!-- Club account whiteboard (top right) -->
+  <g>
+    <rect x="770" y="60" width="180" height="140" fill="#fff" stroke="#3a3a3a" stroke-width="3"/>
+    <rect x="770" y="60" width="180" height="6" fill="#7a6d59"/>
+    <rect x="770" y="194" width="180" height="6" fill="#7a6d59"/>
+    <text x="860" y="95" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f68212" letter-spacing="0.08em">CLUB ACCOUNT</text>
+    <line x1="790" y1="115" x2="930" y2="115" stroke="#3a3a3a" stroke-width="1.2"/>
+    <text x="800" y="135" font-family="sans-serif" font-size="11" fill="#3a3a3a">Treasurer: Sam</text>
+    <text x="800" y="152" font-family="sans-serif" font-size="11" fill="#3a3a3a">Pres: Alex</text>
+    <text x="800" y="169" font-family="sans-serif" font-size="11" fill="#3a3a3a">Drive: shared</text>
+    <text x="800" y="186" font-family="sans-serif" font-size="11" fill="#3a3a3a">Meet: Thu 7pm</text>
+  </g>
+
+  <!-- 3. LEFT-WALL: Roommate's desk + monitor + tower + chair -->
+  <!-- desk -->
+  <rect x="30" y="340" width="230" height="14" fill="#7a6d59"/>
+  <rect x="40" y="354" width="10" height="110" fill="#5a4f3e"/>
+  <rect x="240" y="354" width="10" height="110" fill="#5a4f3e"/>
+  <!-- monitor (off, shows a small label) -->
+  <rect x="105" y="245" width="130" height="90" rx="4" fill="#1a1a1a"/>
+  <rect x="112" y="252" width="116" height="76" fill="#222"/>
+  <text x="170" y="295" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#f68212" font-weight="700">ROOMMATE</text>
+  <!-- monitor stand -->
+  <rect x="160" y="335" width="20" height="8" fill="#222"/>
+  <!-- tower beside the desk -->
+  <rect x="40" y="360" width="40" height="95" rx="3" fill="#2b2b2b"/>
+  <circle cx="60" cy="375" r="4" fill="#f68212"/>
+  <rect x="50" y="385" width="20" height="3" fill="#444"/>
+  <rect x="50" y="392" width="20" height="3" fill="#444"/>
+  <!-- chair -->
+  <rect x="125" y="395" width="70" height="60" rx="6" fill="#3a3a3a"/>
+  <rect x="130" y="455" width="60" height="10" fill="#222"/>
+  <rect x="155" y="465" width="10" height="30" fill="#222"/>
+  <!-- keyboard on the desk -->
+  <rect x="108" y="344" width="120" height="10" rx="2" fill="#444"/>
+
+  <!-- 4. MAIN DESK (center) -->
+  <rect x="310" y="395" width="410" height="18" fill="#7a6d59"/>
+  <rect x="315" y="413" width="12" height="95" fill="#5a4f3e"/>
+  <rect x="703" y="413" width="12" height="95" fill="#5a4f3e"/>
+  <!-- desk drawer hint -->
+  <rect x="335" y="413" width="360" height="22" fill="#6a5e4a"/>
+  <circle cx="515" cy="424" r="3" fill="#3a3a3a"/>
+  <!-- lamp on left side of desk -->
+  <rect x="335" y="380" width="6" height="-50" fill="#3a3a3a"/>
+  <line x1="338" y1="395" x2="338" y2="330" stroke="#3a3a3a" stroke-width="4"/>
+  <line x1="338" y1="330" x2="370" y2="310" stroke="#3a3a3a" stroke-width="4"/>
+  <polygon points="360,305 392,305 396,330 356,330" fill="#3a3a3a"/>
+  <!-- lamp glow -->
+  <ellipse cx="378" cy="345" rx="75" ry="55" fill="url(#lab-lamp-glow)"/>
+  <!-- mug -->
+  <rect x="345" y="370" width="22" height="26" rx="3" fill="#f68212"/>
+  <path d="M 367,375 q 8,0 8,8 q 0,8 -8,8" fill="none" stroke="#f68212" stroke-width="3"/>
+  <!-- stack of books -->
+  <rect x="665" y="378" width="50" height="7" fill="#3a3a3a"/>
+  <rect x="662" y="385" width="55" height="6" fill="#7a6d59"/>
+  <rect x="668" y="391" width="48" height="4" fill="#f68212"/>
+  <!-- LAPTOP (open, glowing screen) -->
+  <!-- screen -->
+  <polygon points="420,322 510,322 520,388 410,388" fill="#1a1a1a"/>
+  <polygon points="428,328 502,328 510,382 420,382" fill="#2a2a2a"/>
+  <!-- screen content: a fake browser bar in orange -->
+  <rect x="425" y="332" width="82" height="9" fill="#0d0d0d"/>
+  <rect x="428" y="335" width="3" height="3" fill="#f68212"/>
+  <rect x="434" y="335" width="3" height="3" fill="#f68212" opacity="0.6"/>
+  <rect x="440" y="335" width="3" height="3" fill="#f68212" opacity="0.3"/>
+  <rect x="450" y="335" width="55" height="3" fill="#444"/>
+  <!-- screen text lines -->
+  <rect x="428" y="346" width="68" height="3" fill="#f68212"/>
+  <rect x="428" y="353" width="55" height="3" fill="#888"/>
+  <rect x="428" y="360" width="60" height="3" fill="#888"/>
+  <rect x="428" y="367" width="45" height="3" fill="#888"/>
+  <rect x="428" y="374" width="40" height="3" fill="#f68212"/>
+  <!-- base (keyboard) -->
+  <polygon points="395,388 525,388 540,400 380,400" fill="#2b2b2b"/>
+  <polygon points="395,388 525,388 522,391 398,391" fill="#444"/>
+  <!-- USB stick on the desk to the left of laptop -->
+  <rect x="370" y="398" width="30" height="10" rx="1" fill="#f68212"/>
+  <rect x="398" y="399" width="8" height="8" fill="#cfc4b3"/>
+  <!-- PHONE on the desk, right of laptop, charging -->
+  <rect x="540" y="395" width="42" height="24" rx="4" fill="#1a1a1a"/>
+  <rect x="544" y="399" width="34" height="16" rx="1" fill="#2a2a2a"/>
+  <circle cx="561" cy="407" r="4" fill="#f68212"/>
+  <!-- charging cable hint -->
+  <path d="M 582,407 q 30,0 30,15 q 0,15 -10,15" stroke="#444" stroke-width="2" fill="none"/>
+
+  <!-- 5. BED along the right wall -->
+  <!-- frame -->
+  <rect x="610" y="285" width="380" height="160" fill="#5a4f3e"/>
+  <!-- mattress -->
+  <rect x="618" y="275" width="364" height="40" rx="6" fill="#f3ede2"/>
+  <!-- blanket -->
+  <rect x="630" y="300" width="352" height="130" fill="url(#lab-blanket-grad)"/>
+  <!-- blanket fold -->
+  <rect x="630" y="310" width="352" height="6" fill="#a04500" opacity="0.6"/>
+  <rect x="630" y="380" width="352" height="6" fill="#a04500" opacity="0.6"/>
+  <!-- pillows -->
+  <rect x="640" y="260" width="110" height="45" rx="8" fill="#fff" stroke="#cfc4b3" stroke-width="1.5"/>
+  <rect x="760" y="265" width="100" height="40" rx="8" fill="#f3ede2" stroke="#cfc4b3" stroke-width="1.5"/>
+  <!-- bed legs -->
+  <rect x="610" y="445" width="14" height="22" fill="#3a3a3a"/>
+  <rect x="976" y="445" width="14" height="22" fill="#3a3a3a"/>
+
+  <!-- 6. DRESSER / PRINTER (bottom right) and TV STAND / CONSOLE -->
+  <!-- Dresser/printer combo, far right -->
+  <rect x="760" y="440" width="165" height="55" fill="#7a6d59"/>
+  <rect x="760" y="440" width="165" height="4" fill="#5a4f3e"/>
+  <!-- printer body -->
+  <rect x="785" y="402" width="80" height="38" rx="4" fill="#cfc4b3" stroke="#3a3a3a" stroke-width="1.5"/>
+  <rect x="790" y="414" width="70" height="6" fill="#fff" stroke="#3a3a3a" stroke-width="1"/>
+  <rect x="790" y="406" width="24" height="3" fill="#222"/>
+  <circle cx="855" cy="408" r="2.5" fill="#f68212"/>
+  <!-- TV stand under the dresser line, left of dresser -->
+  <rect x="775" y="495" width="180" height="40" fill="#5a4f3e"/>
+  <rect x="775" y="495" width="180" height="4" fill="#3a3a3a"/>
+  <!-- console (slim, slotted) -->
+  <rect x="815" y="500" width="90" height="22" rx="3" fill="#1a1a1a"/>
+  <rect x="825" y="510" width="30" height="3" fill="#3a3a3a"/>
+  <circle cx="890" cy="511" r="2.5" fill="#f68212"/>
+
+  <!-- 7. RUG on the floor (center) -->
+  <rect x="230" y="485" width="500" height="95" rx="6" fill="url(#lab-rug-grad)"/>
+  <rect x="240" y="495" width="480" height="75" rx="4" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <g opacity="0.4" stroke="#fff" stroke-width="1">
+    <line x1="260" y1="485" x2="260" y2="580"/>
+    <line x1="700" y1="485" x2="700" y2="580"/>
+  </g>
+
+  <!-- 8. HOTSPOTS on top -->
   {hotspots}
 </svg>'''
 
