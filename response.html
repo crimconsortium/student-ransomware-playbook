@@ -24,6 +24,7 @@
         <li><a href="response.html">If something goes wrong</a></li>
         <li><a href="readiness.html">Checklist</a></li>
         <li><a href="scenarios.html">Scenarios</a></li>
+        <li><a href="dorm-lab.html">Dorm lab</a></li>
         <li><a href="glossary.html">Glossary</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
@@ -37,37 +38,37 @@
   <section class="hero">
     <div class="container">
       <h1>If something goes wrong</h1>
-      <p class="lead">A short, plain-language guide to what to do if you suspect a ransomware attack, phishing hit, or account compromise. Read it before you need it.</p>
+      <p class="lead">What to do if you think you've been hit with ransomware, phishing, or an account takeover. Read it before you need it.</p>
     </div>
   </section>
 
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Read this in advance — not during a live incident</h4>
-      <p>If you believe something is happening right now, <strong>call your campus IT help desk</strong> using a phone or another known-good device, and follow their instructions. In the U.S., you can also report incidents to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
+      <h4>Read this in advance, not during a live incident</h4>
+      <p>If something's happening right now, <strong>call your campus IT help desk</strong> from a phone or another device you trust, and do what they say. In the U.S. you can also report to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
     </div>
   </section>
 
   <section class="container read">
     <h2>In the moment</h2>
-    <ul><li>If a message, login page, or pop-up looks suspicious, stop. Do not click, do not enter credentials.</li><li>If you already clicked or entered a password, change that password from a different device and report it now.</li><li>If your device is acting strange (files renamed, ransom note, unexpected encryption), disconnect it from Wi-Fi and any cables, leave it powered on, and contact IT.</li><li>Forward suspicious emails using the campus ‘Report Phishing’ button or as an attachment to the security team.</li><li>Don’t try to ‘fix’ a suspected infection yourself. Don’t pay a ransom on a personal device — call IT.</li><li>Follow official guidance from the campus emergency channel. Ignore unverified rumors on social media.</li></ul>
+    <ul><li>If a message, login page, or pop-up looks suspicious, stop. Don&#x27;t click, don&#x27;t enter credentials.</li><li>If you already clicked or entered a password, change that password from a different device and report it now.</li><li>If your device is acting strange (files renamed, ransom note, unexpected encryption), disconnect it from Wi-Fi and any cables, leave it powered on, and contact IT.</li><li>Forward suspicious emails using the campus &#x27;Report Phishing&#x27; button or as an attachment to the security team.</li><li>Don&#x27;t try to &#x27;fix&#x27; a suspected infection yourself. Don&#x27;t pay a ransom on a personal device. Call IT.</li><li>Follow official guidance from the campus emergency channel. Ignore unverified rumors on social media.</li></ul>
   </section>
 
   <section class="container">
     <h2>What should I do right now?</h2>
-    <p>A short decision tree for the most common situations students run into.</p>
+    <p>A short decision tree for the situations students actually run into.</p>
     <div class="decision" data-decision-id="student-decision">
       <p class="breadcrumbs"></p>
       <p class="question"></p>
       <div class="choices"></div>
       <div class="result" hidden></div>
-      <script type="application/json">{"start": "n0", "nodes": {"n0": {"type": "q", "q": "What just happened?", "choices": [{"label": "I got a suspicious email or text.", "next": "n_phish_1"}, {"label": "My device is acting strange or shows a ransom note.", "next": "n_device_1"}, {"label": "I think I already entered my password into a fake site.", "next": "n_creds_1"}]}, "n_phish_1": {"type": "q", "q": "Did you click a link or open an attachment?", "choices": [{"label": "No.", "next": "n_phish_no"}, {"label": "Yes.", "next": "n_creds_1"}]}, "n_phish_no": {"type": "result", "title": "Report it and move on.", "body": "Use the campus \u2018Report Phishing\u2019 button or forward as an attachment to your security team. Do not reply to the sender. Delete after reporting."}, "n_creds_1": {"type": "q", "q": "Are you on the same device that may have been compromised right now?", "choices": [{"label": "Yes.", "next": "n_creds_same"}, {"label": "No.", "next": "n_creds_other"}]}, "n_creds_same": {"type": "result", "title": "Switch devices, then act.", "body": "Move to a different device (your phone is fine) and: (1) change the affected password, (2) review your account recovery info, (3) report to IT immediately. Don\u2019t use the suspect device until IT has reviewed it."}, "n_creds_other": {"type": "result", "title": "Change the password and report.", "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened \u2014 keep the original phishing message as evidence."}, "n_device_1": {"type": "q", "q": "Can you safely disconnect from Wi-Fi and unplug any cables?", "choices": [{"label": "Yes, doing it now.", "next": "n_device_disc"}, {"label": "No.", "next": "n_device_call"}]}, "n_device_disc": {"type": "result", "title": "Stay disconnected, leave it on, call IT.", "body": "Don\u2019t power off the device \u2014 IT may need volatile memory. Don\u2019t try to recover files yourself. Call the help desk and describe exactly what you saw."}, "n_device_call": {"type": "result", "title": "Call IT now.", "body": "Call the help desk immediately and describe what you\u2019re seeing. They\u2019ll guide containment from there."}}}</script>
+      <script type="application/json">{"start": "n0", "nodes": {"n0": {"type": "q", "q": "What just happened?", "choices": [{"label": "I got a suspicious email or text.", "next": "n_phish_1"}, {"label": "My device is acting strange or shows a ransom note.", "next": "n_device_1"}, {"label": "I think I already entered my password into a fake site.", "next": "n_creds_1"}]}, "n_phish_1": {"type": "q", "q": "Did you click a link or open an attachment?", "choices": [{"label": "No.", "next": "n_phish_no"}, {"label": "Yes.", "next": "n_creds_1"}]}, "n_phish_no": {"type": "result", "title": "Report it and move on.", "body": "Use the campus \u2018Report Phishing\u2019 button or forward as an attachment to your security team. Do not reply to the sender. Delete after reporting."}, "n_creds_1": {"type": "q", "q": "Are you on the same device that may have been compromised right now?", "choices": [{"label": "Yes.", "next": "n_creds_same"}, {"label": "No.", "next": "n_creds_other"}]}, "n_creds_same": {"type": "result", "title": "Switch devices, then act.", "body": "Move to a different device (your phone is fine) and: (1) change the affected password, (2) review your account recovery info, (3) report to IT immediately. Don\u2019t use the suspect device until IT has reviewed it."}, "n_creds_other": {"type": "result", "title": "Change the password and report.", "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened. Keep the original phishing message as evidence."}, "n_device_1": {"type": "q", "q": "Can you safely disconnect from Wi-Fi and unplug any cables?", "choices": [{"label": "Yes, doing it now.", "next": "n_device_disc"}, {"label": "No.", "next": "n_device_call"}]}, "n_device_disc": {"type": "result", "title": "Stay disconnected, leave it on, call IT.", "body": "Don't power off the device. IT may need volatile memory. Don't try to recover files yourself. Call the help desk and describe exactly what you saw."}, "n_device_call": {"type": "result", "title": "Call IT now.", "body": "Call the help desk immediately and describe what you\u2019re seeing. They\u2019ll guide containment from there."}}}</script>
     </div>
   </section>
 
   <section class="container read">
     <h2>After the dust settles</h2>
-    <ul><li>Change passwords for any account that may have been exposed and review login history.</li><li>Re-enable backups and confirm your important files are still recoverable.</li><li>Tell classmates and roommates what you saw — phishing campaigns usually target many students at once.</li><li>Attend any post-incident briefings; they teach you the exact lure that worked so you can avoid the next one.</li></ul>
+    <ul><li>Change passwords for any account that may have been exposed and review login history.</li><li>Re-enable backups and confirm your important files are still recoverable.</li><li>Tell classmates and roommates what you saw. Phishing campaigns usually target many students at once.</li><li>Attend any post-incident briefings. They teach you the exact lure that worked so you can spot the next one.</li></ul>
   </section>
 
 </main>
@@ -86,6 +87,7 @@
         <li><a href="response.html">If something goes wrong</a></li>
         <li><a href="readiness.html">Checklist</a></li>
         <li><a href="scenarios.html">Scenarios</a></li>
+        <li><a href="dorm-lab.html">Dorm lab</a></li>
       </ul>
     </div>
     <div>
@@ -109,5 +111,6 @@
 
 <script src="assets/js/app.js"></script>
 <script src="assets/js/scenarios.js" defer></script>
+<script src="assets/js/dorm-lab.js" defer></script>
 </body>
 </html>

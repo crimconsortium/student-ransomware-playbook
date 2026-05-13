@@ -773,3 +773,260 @@ ol.how-to li::marker { color: var(--brand-orange); font-weight: 700; }
   .scn-runner, .scn-progress-bar [data-action] { display: none; }
   .scn-tile { border-color: #888; break-inside: avoid; }
 }
+
+/* =============================================================================
+   Dorm Room Incident Lab
+   Mirrors the scenarios visual language (orange + black/gray/white only).
+   The SVG dorm scene uses currentColor + a few palette tokens so it inverts
+   cleanly in dark mode.
+   ============================================================================= */
+.lab-readiness {
+  background: var(--bg-elev);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  margin: 0.6rem 0 1rem;
+}
+.lab-readiness-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-sans);
+}
+.lab-readiness-head strong { font-size: 1rem; }
+.lab-readiness-head span { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--accent); }
+.lab-readiness-bar {
+  position: relative;
+  height: 14px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.5rem 0 0.5rem;
+}
+.lab-readiness-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.25s ease-out;
+}
+.lab-readiness-meta {
+  margin: 0;
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Dorm scene */
+.lab-scene {
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  padding: 0.5rem;
+  overflow: hidden;
+}
+.lab-svg { display: block; width: 100%; height: auto; }
+.lab-wall   { fill: var(--bg-soft); }
+.lab-floor  { fill: var(--bg-elev); }
+.lab-edge   { stroke: var(--fg-muted); stroke-width: 1.2; fill: none; }
+.lab-furn   { fill: var(--bg-elev); stroke: currentColor; stroke-width: 1.4; }
+.lab-window { fill: transparent; stroke: currentColor; stroke-width: 1.4; }
+.lab-poster { fill: var(--bg-elev); stroke: currentColor; stroke-width: 1.4; }
+.lab-poster-text {
+  fill: var(--fg-muted);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+/* Hotspots — orange ring on a subtle white dot, pulse on hover, focus-visible ring */
+.lab-hotspot { cursor: pointer; outline: none; }
+.lab-hotspot-ring {
+  fill: rgba(246, 130, 18, 0.12);
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  transition: fill 0.15s, r 0.15s;
+}
+.lab-hotspot-dot {
+  fill: var(--accent);
+  stroke: #fff;
+  stroke-width: 2;
+}
+.lab-hotspot:hover .lab-hotspot-ring,
+.lab-hotspot:focus-visible .lab-hotspot-ring {
+  fill: rgba(246, 130, 18, 0.28);
+}
+.lab-hotspot:focus-visible {
+  /* SVG <a> focus ring */
+  filter: drop-shadow(0 0 0 transparent);
+}
+.lab-hotspot:focus-visible .lab-hotspot-ring {
+  stroke-width: 3.5;
+}
+.lab-hotspot-label {
+  fill: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: var(--bg-elev);
+  stroke-width: 4;
+}
+.lab-scene-help { margin: 0.4rem 0 0; font-size: 0.9rem; }
+
+/* Tile grid (small-screen + accessibility fallback) */
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.9rem;
+  margin: 0.8rem 0 1rem;
+}
+.lab-tile {
+  position: relative;
+  display: block;
+  background: var(--bg-elev);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  padding: 1rem 1rem 2.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.lab-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.lab-tile h3 { margin: 0.4rem 0 0.3rem; font-size: 1.05rem; }
+.lab-tile p  { margin: 0; color: var(--fg-muted); font-size: 0.93rem; }
+.lab-num {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.lab-status {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+.lab-status.is-done {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Runner */
+.lab-runner {
+  background: var(--bg-elev);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin: 1rem 0;
+}
+.lab-runner-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.lab-runner-title { font-weight: 700; font-size: 1.1rem; }
+.lab-setup {
+  background: var(--bg-soft);
+  border-left: 4px solid var(--accent);
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+.lab-question { margin-bottom: 0.6rem; font-size: 1.05rem; }
+.lab-choices { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.8rem; }
+.lab-choice {
+  text-align: left;
+  background: var(--bg-elev);
+  color: inherit;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+.lab-choice:hover { border-color: var(--accent); background: var(--bg-soft); }
+.lab-choice:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Outcome card — same visual language as scenarios */
+.lab-outcome-card {
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 6px solid var(--accent);
+  background: var(--bg-soft);
+}
+.lab-outcome-card h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+.lab-tag-pill {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  margin-right: 0.4rem;
+  vertical-align: 0.05em;
+  background: var(--accent);
+  color: #fff;
+}
+.lab-tag-ok .lab-tag-pill    { background: var(--fg-muted); }
+.lab-tag-risky .lab-tag-pill { background: #0d0d0d; color: #fff; }
+.lab-tag-bad .lab-tag-pill   { background: #0d0d0d; color: #fff; }
+.lab-tag-good   { border-left-color: var(--accent); }
+.lab-tag-ok     { border-left-color: var(--fg-muted); }
+.lab-tag-risky  { border-left-color: #0d0d0d; }
+.lab-tag-bad    { border-left-color: #0d0d0d; border-left-width: 10px; }
+.lab-outcome-links {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0.6rem;
+  color: var(--fg-muted);
+}
+.lab-outcome-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+
+/* AAR checklist */
+.lab-aar {
+  margin-top: 1rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+}
+.lab-aar h3 { margin: 0 0 0.2rem; font-size: 1.05rem; }
+.lab-aar-list { list-style: none; padding: 0; margin: 0.4rem 0 0; }
+.lab-aar-list li {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  padding: 0.35rem 0;
+}
+.lab-aar-list input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 1.05rem; height: 1.05rem;
+  accent-color: var(--accent);
+}
+.lab-aar-list label { line-height: 1.45; }
+
+/* Print: hide the interactive scene + runner, leave the tile list as a readable summary */
+@media print {
+  .lab-scene, .lab-runner, .lab-readiness-meta [data-action] { display: none; }
+  .lab-tile { border-color: #888; break-inside: avoid; }
+  .lab-readiness-fill { background: #888 !important; }
+}
+
+/* Small screens: scene is still useful but tiles get larger touch targets */
+@media (max-width: 640px) {
+  .lab-hotspot-label { font-size: 18px; }
+  .lab-grid { grid-template-columns: 1fr; }
+}

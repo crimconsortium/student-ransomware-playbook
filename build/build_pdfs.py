@@ -8,7 +8,7 @@ import sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, GLOSSARY, FAQ, REFERENCES, SCENARIOS  # noqa: E402
+from content import ROLES, GLOSSARY, FAQ, REFERENCES, SCENARIOS, LAB  # noqa: E402
 
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -131,6 +131,21 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
     for i, scn in enumerate(SCENARIOS, 1):
         story.append(Paragraph(f"{i:02d}. {_esc(scn['title'])}", s["h3"]))
         story.append(Paragraph(_esc(scn['situation']), s["body"]))
+
+    story.append(PageBreak())
+
+    story.append(Paragraph("Dorm Room Incident Lab", s["h1"]))
+    story.append(Paragraph(
+        "Ten room-anchored incident drills, each ending with a short after-action review. "
+        "Play the interactive version at "
+        "crimconsortium.github.io/student-ransomware-playbook/dorm-lab.html. The drills are "
+        "listed below for quick offline reference.",
+        s["body"]))
+    for i, mod in enumerate(LAB, 1):
+        story.append(Paragraph(f"{i:02d}. {_esc(mod['title'])}", s["h3"]))
+        story.append(Paragraph(_esc(mod['setup']), s["body"]))
+        for habit in mod.get('aar', []):
+            story.append(Paragraph("☐ &nbsp; " + _esc(habit), s["body"]))
 
     story.append(PageBreak())
 

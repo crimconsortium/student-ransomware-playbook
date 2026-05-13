@@ -31,13 +31,13 @@ def lifecycle_figure(emphasize: str, caption: str) -> str:
       <figcaption>{caption}</figcaption>
     </figure>'''
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, SCENARIOS  # noqa: E402
+from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, SCENARIOS, LAB  # noqa: E402
 
 
 def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str:
     """Return a full HTML page. depth = directory depth from repo root."""
     rel = "../" * depth
-    desc = description or "Student Ransomware Playbook — a plain-language educational guide for college and university students."
+    desc = description or "Student Ransomware Playbook. A plain-language educational guide for college and university students."
     desc = html.escape(desc)
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -65,6 +65,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
         <li><a href="{rel}scenarios.html">Scenarios</a></li>
+        <li><a href="{rel}dorm-lab.html">Dorm lab</a></li>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
@@ -91,6 +92,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
         <li><a href="{rel}scenarios.html">Scenarios</a></li>
+        <li><a href="{rel}dorm-lab.html">Dorm lab</a></li>
       </ul>
     </div>
     <div>
@@ -114,6 +116,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
 
 <script src="{rel}assets/js/app.js"></script>
 <script src="{rel}assets/js/scenarios.js" defer></script>
+<script src="{rel}assets/js/dorm-lab.js" defer></script>
 </body>
 </html>
 """
@@ -142,13 +145,13 @@ DECISION_TREES = {
             "n_creds_same": {"type": "result", "title": "Switch devices, then act.",
                 "body": "Move to a different device (your phone is fine) and: (1) change the affected password, (2) review your account recovery info, (3) report to IT immediately. Don’t use the suspect device until IT has reviewed it."},
             "n_creds_other": {"type": "result", "title": "Change the password and report.",
-                "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened — keep the original phishing message as evidence."},
+                "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened. Keep the original phishing message as evidence."},
             "n_device_1": {"type": "q", "q": "Can you safely disconnect from Wi-Fi and unplug any cables?", "choices": [
                 {"label": "Yes, doing it now.", "next": "n_device_disc"},
                 {"label": "No.", "next": "n_device_call"},
             ]},
             "n_device_disc": {"type": "result", "title": "Stay disconnected, leave it on, call IT.",
-                "body": "Don’t power off the device — IT may need volatile memory. Don’t try to recover files yourself. Call the help desk and describe exactly what you saw."},
+                "body": "Don't power off the device. IT may need volatile memory. Don't try to recover files yourself. Call the help desk and describe exactly what you saw."},
             "n_device_call": {"type": "result", "title": "Call IT now.",
                 "body": "Call the help desk immediately and describe what you’re seeing. They’ll guide containment from there."},
         }
@@ -258,7 +261,7 @@ QUIZZES = {
     "student": [
         {"q": "You receive an email from ‘IT Help Desk’ saying your account will be deleted in 24 hours unless you click a link to verify. The link goes to a page that looks like your campus login. What do you do?",
          "options": [
-             "Enter my password — I don’t want my account deleted.",
+             "Enter my password. I don't want my account deleted.",
              "Click the link but only check it; don’t log in.",
              "Don’t click. Report the message via the campus phishing report tool.",
              "Reply asking if it’s real."],
@@ -271,7 +274,7 @@ QUIZZES = {
              "Email IT from the affected device.",
              "Delete the phishing email so no one knows."],
          "correct": 1,
-         "explanation": "Speed beats embarrassment. Change the password from a clean device, then report — keep the email as evidence."},
+         "explanation": "Speed beats embarrassment. Change the password from a clean device, then report. Keep the email as evidence."},
         {"q": "Your laptop suddenly shows files renamed with weird extensions and a ransom note. What’s the first move?",
          "options": [
              "Power it off immediately.",
@@ -279,7 +282,7 @@ QUIZZES = {
              "Run a free decryption tool you find online.",
              "Pay the ransom in crypto."],
          "correct": 1,
-         "explanation": "Power-off can destroy volatile evidence. Disconnect from the network and call IT — never pay or download unknown ‘decryption’ tools."},
+         "explanation": "Power-off can destroy volatile evidence. Disconnect from the network and call IT. Never pay or download unknown 'decryption' tools."},
         {"q": "Which of these is the strongest defense against credential phishing?",
          "options": [
              "A long password.",
@@ -439,8 +442,8 @@ def render_role_page(role: dict) -> str:
 
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Educational summary — not live-incident instructions</h4>
-      <p>The items below paraphrase publicly available guidance from sources such as CISA, NIST, and the FBI for use in advance reading and planning. They are not professional advice and not a substitute for your institution’s policies or trained responders. If an incident is happening right now, contact your campus IT or information-security team and, in the U.S., consider reporting to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>.</p>
+      <h4>Read this in advance, not during a live incident</h4>
+      <p>The items below paraphrase public guidance from sources like CISA, NIST, and the FBI. It's for advance reading, not a substitute for your school's policies or trained responders. If something's happening right now, call campus IT. In the U.S. you can also report to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>.</p>
     </div>
   </section>
 
@@ -547,14 +550,14 @@ def render_prevention() -> str:
   <section class="hero">
     <div class="container">
       <h1>Protect yourself</h1>
-      <p class="lead">Simple, durable habits that make your accounts, devices, and coursework much harder to ransom or steal. None of these require IT expertise.</p>
+      <p class="lead">A handful of habits that make your accounts, devices, and coursework a lot harder to ransom or steal. You don't need to be technical to do any of this.</p>
     </div>
   </section>
 
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Educational summary — not for use during a live incident</h4>
-      <p>This page paraphrases public guidance from sources such as <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>. It is general advice for advance reading. If something is happening right now, contact your campus IT or information-security team using a phone or known-good device.</p>
+      <h4>Read this in advance, not during a live incident</h4>
+      <p>This page paraphrases public guidance from <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>. It's general advice for advance reading. If something's happening right now, call campus IT from a phone or another device you trust.</p>
     </div>
   </section>
 
@@ -565,14 +568,14 @@ def render_prevention() -> str:
 
   <section class="container read">
     <h2>Phishing red flags</h2>
-    <p>Most successful attacks on students start with phishing — an email, text, DM, or fake login page that looks legitimate. Pause if you notice:</p>
+    <p>Most attacks on students start with a phish. An email, text, DM, or fake login page that looks real. Slow down if you see any of this:</p>
     <ul>
       <li><strong>Urgency.</strong> “Your account will be locked in 24 hours.” “Your aid will be canceled.”</li>
-      <li><strong>A login link in the message.</strong> Type your campus URL into the browser yourself.</li>
-      <li><strong>A sender domain that’s close but not exact</strong> (e.g., <code>support@my-college.edu.help</code> instead of <code>support@my-college.edu</code>).</li>
-      <li><strong>Unexpected attachments</strong> — especially zip files, OneNote files, or HTML “invoices.”</li>
-      <li><strong>An offer that’s too good to be true</strong>: high-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund.</li>
-      <li><strong>MFA prompts you didn’t trigger.</strong> Never approve a prompt you didn’t start. Repeated prompts are <a href="glossary.html#mfa-fatigue">MFA fatigue</a> — a known attack.</li>
+      <li><strong>A login link in the message.</strong> Don't click it. Type your campus URL into the browser yourself.</li>
+      <li><strong>A sender domain that's close but not exact</strong> (like <code>support@my-college.edu.help</code> instead of <code>support@my-college.edu</code>).</li>
+      <li><strong>Unexpected attachments.</strong> Especially zip files, OneNote files, or HTML “invoices.”</li>
+      <li><strong>An offer that's too good to be true.</strong> High-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund.</li>
+      <li><strong>MFA prompts you didn't trigger.</strong> Never approve a prompt you didn't start. Repeated prompts are <a href="glossary.html#mfa-fatigue">MFA fatigue</a>. It's a known attack.</li>
     </ul>
   </section>
 """
@@ -588,14 +591,14 @@ def render_response() -> str:
   <section class="hero">
     <div class="container">
       <h1>If something goes wrong</h1>
-      <p class="lead">A short, plain-language guide to what to do if you suspect a ransomware attack, phishing hit, or account compromise. Read it before you need it.</p>
+      <p class="lead">What to do if you think you've been hit with ransomware, phishing, or an account takeover. Read it before you need it.</p>
     </div>
   </section>
 
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Read this in advance — not during a live incident</h4>
-      <p>If you believe something is happening right now, <strong>call your campus IT help desk</strong> using a phone or another known-good device, and follow their instructions. In the U.S., you can also report incidents to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
+      <h4>Read this in advance, not during a live incident</h4>
+      <p>If something's happening right now, <strong>call your campus IT help desk</strong> from a phone or another device you trust, and do what they say. In the U.S. you can also report to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
     </div>
   </section>
 
@@ -606,7 +609,7 @@ def render_response() -> str:
 
   <section class="container">
     <h2>What should I do right now?</h2>
-    <p>A short decision tree for the most common situations students run into.</p>
+    <p>A short decision tree for the situations students actually run into.</p>
     <div class="decision" data-decision-id="student-decision">
       <p class="breadcrumbs"></p>
       <p class="question"></p>
@@ -629,7 +632,7 @@ def render_emergency() -> str:
   <section class="hero">
     <div class="container">
       <h1>If an incident occurs</h1>
-      <p class="lead">An educational summary of what authoritative public guidance says people on a college campus should do if they ever face a ransomware incident. This page is for advance reading and planning — not for use during a live incident.</p>
+      <p class="lead">A summary of what public guidance says people on a college campus should do if they face a ransomware incident. Read it before you need it. It's not for use during a live incident.</p>
     </div>
   </section>
 
@@ -665,7 +668,7 @@ def render_emergency() -> str:
     <div class="alert">
       <h4>If a department leader sees a system become unavailable</h4>
       <ol>
-        <li>Public guidance commonly recommends pausing sensitive workflows — payments, banking changes, and sensitive data exports — until IT/security confirms it is safe to resume.</li>
+        <li>Public guidance commonly recommends pausing sensitive workflows (payments, banking changes, sensitive data exports) until IT/security confirms it is safe to resume.</li>
         <li>Sources recommend using pre-arranged out-of-band contact lists (printed or phone-stored) rather than potentially affected systems.</li>
         <li>They also recommend waiting for official guidance before making public statements and ignoring unverified rumors.</li>
       </ol>
@@ -673,20 +676,20 @@ def render_emergency() -> str:
 
     <div class="alert">
       <h4>What incident-response teams typically do (background reading only)</h4>
-      <p class="muted">For pre-incident familiarity — actual response should be led by trained personnel and qualified counsel, following your institution’s plan.</p>
+      <p class="muted">For pre-incident familiarity. Actual response should be led by trained personnel and qualified counsel, following your institution's plan.</p>
       <ol>
         <li>NIST SP 800-61r3 describes triggering the documented IR plan and coordinating through an out-of-band channel.</li>
         <li>CISA #StopRansomware describes isolating affected network segments, disabling compromised identities, and revoking sessions and tokens.</li>
         <li>Both sources describe preserving evidence (e.g., memory and disk images) before reimaging where feasible.</li>
-        <li>Most guidance describes engaging legal counsel, the cyber-insurance hotline, and law enforcement — in the U.S., <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and <a href="https://www.ic3.gov/">FBI IC3</a>.</li>
+        <li>Most guidance describes engaging legal counsel, the cyber-insurance hotline, and law enforcement. In the U.S., that's <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and <a href="https://www.ic3.gov/">FBI IC3</a>.</li>
         <li>It also describes coordinating with communications on cadence and channels and keeping a written timeline of decisions.</li>
       </ol>
     </div>
 
-    <h2>By role — background reading</h2>
+    <h2>By role: background reading</h2>
     <p>Each role page summarizes what published guidance says that role might do before, during, and after an incident. These are educational summaries for planning, not live-incident instructions.</p>
     <ul>
-""" + "".join(f'      <li><a href="roles/{r["id"]}.html#during"><strong>{html.escape(r["label"])}</strong></a> — during-incident background reading</li>\n' for r in ROLES) + """    </ul>
+""" + "".join(f'      <li><a href="roles/{r["id"]}.html#during"><strong>{html.escape(r["label"])}</strong></a>: during-incident background reading</li>\n' for r in ROLES) + """    </ul>
   </section>
 """
     return page("If an incident occurs", body, depth=0, description="Educational summary of public guidance from CISA, NIST, and the FBI on what to do during a ransomware incident on campus. Not for live-incident use.")
@@ -703,7 +706,7 @@ def render_readiness() -> str:
   <section class="hero">
     <div class="container">
       <h1>Quick checklist</h1>
-      <p class="lead">A short self-audit to gauge your readiness. Check items off as you complete them — progress is saved on this device only, no accounts, no servers.</p>
+      <p class="lead">A short self-audit. Check things off as you go. Progress saves on this device only. No accounts, no servers.</p>
     </div>
   </section>
 
@@ -724,7 +727,7 @@ def render_readiness() -> str:
 
   <section class="container">
     <h2>Practice scenario</h2>
-    <p>A quick scenario to turn this guidance into reflexes.</p>
+    <p>One quick scenario to turn this into a reflex.</p>
     <div class="quiz" data-quiz-id="student-quiz">
       <p class="meta"></p>
       <p class="question"></p>
@@ -745,7 +748,7 @@ def render_glossary() -> str:
     body = f"""
   <section class="container read">
     <h1>Glossary</h1>
-    <p class="lead">Plain-language definitions of key terms used in this playbook.</p>
+    <p class="lead">Plain-language definitions for the terms in this playbook.</p>
     <dl>{items}</dl>
   </section>
 """
@@ -760,7 +763,7 @@ def render_faq() -> str:
     body = f"""
   <section class="container read">
     <h1>Frequently asked questions</h1>
-    <p class="lead">Quick answers to common student questions about ransomware, phishing, and account safety.</p>
+    <p class="lead">Short answers to the questions students actually ask about ransomware, phishing, and account safety.</p>
     {items}
   </section>
 """
@@ -769,15 +772,15 @@ def render_faq() -> str:
 
 def render_references() -> str:
     items = "".join(
-        f'<li><a href="{url}">{html.escape(title)}</a> — {html.escape(blurb)}</li>'
+        f'<li><a href="{url}">{html.escape(title)}</a>. {html.escape(blurb)}</li>'
         for title, url, blurb in REFERENCES
     )
     body = f"""
   <section class="container read">
     <h1>Sources &amp; further reading</h1>
-    <p class="lead">A short list of credible, current resources used to maintain this playbook.</p>
+    <p class="lead">The sources we use to keep this playbook current.</p>
     <ul>{items}</ul>
-    <p class="muted">This list is reviewed quarterly. Suggest additions on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
+    <p class="muted">We review this list every quarter. If something's missing, suggest it on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
   </section>
 """
     return page("References", body, depth=0, description="Curated sources and further reading.")
@@ -787,7 +790,7 @@ def render_404() -> str:
     body = """
   <section class="container read">
     <h1>Page not found</h1>
-    <p>That page isn’t here. Try one of these:</p>
+    <p>That page isn't here. Try one of these:</p>
     <ul>
       <li><a href="/student-ransomware-playbook/">Home</a></li>
       <li><a href="/student-ransomware-playbook/prevention.html">Protect yourself</a></li>
@@ -821,10 +824,10 @@ def render_scenarios() -> str:
     body = f"""
   <section class="container read">
     <h1>Choose-Your-Response</h1>
-    <p class="lead">Ten short, realistic situations students actually run into. Pick what you’d do; see what would happen; learn the reason behind the right answer. Progress saves on this device only — no accounts, no servers.</p>
+    <p class="lead">Ten short, real situations students actually run into. Pick what you'd do, see what would happen, and find out why. Progress saves on this device only. No accounts, no servers.</p>
     <div class="alert">
       <h4>How this works</h4>
-      <p>Each scenario takes 1–2 minutes. Choose an option, read the outcome, and either retry or move on. After you’ve finished all ten, you can download a printable completion certificate.</p>
+      <p>Each scenario takes a minute or two. Pick an option, read the outcome, retry or move on. Finish all ten and you can download a printable completion certificate.</p>
     </div>
   </section>
 
@@ -836,7 +839,7 @@ def render_scenarios() -> str:
     <p class="scn-progress-bar" aria-live="polite">
       <span data-role="scn-counter">0 of {len(SCENARIOS)} complete</span>
       &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="scn-reset">↺ Reset progress</button>
-      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" data-role="scn-cert-btn" aria-disabled="true" disabled>🔒 Certificate locked — finish all {len(SCENARIOS)}</button>
+      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" data-role="scn-cert-btn" aria-disabled="true" disabled>🔒 Certificate locked. Finish all {len(SCENARIOS)}</button>
     </p>
   </section>
 
@@ -856,15 +859,205 @@ def render_scenarios() -> str:
 
   <section class="container read">
     <h2>Why these ten?</h2>
-    <p>Each scenario is built around a pattern that has actually hit college and university students recently — phishing, MFA fatigue, fake job offers, financial-aid scams, ransomware on a personal laptop, account-takeover of a club’s cloud storage, lost or stolen devices, social pressure to share credentials, and physical-media tricks. The decisions and explanations are based on public guidance from <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. None of the scenarios describe how to attack anything — they describe how a student can recognize and respond.</p>
-    <p>This is an educational simulation. Your campus IT help desk’s actual guidance always overrides what you see here.</p>
+    <p>Each scenario is built around a pattern that's actually hit students recently. Phishing, MFA fatigue, fake job offers, financial-aid scams, ransomware on a personal laptop, account takeover of a club's cloud drive, lost or stolen devices, social pressure to share credentials, and physical-media tricks. The choices and explanations come from public guidance: <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. None of it tells you how to attack anything. It tells you how to recognize and respond.</p>
+    <p>This is a simulation. Whatever your campus IT help desk says, that wins.</p>
   </section>
 """
     return page(
         "Scenarios",
         body,
         depth=0,
-        description="Ten interactive branching scenarios that let college and university students practice spotting phishing, account takeover, ransomware, and common campus cyber scams — with feedback on every choice.",
+        description="Ten interactive branching scenarios that let college and university students practice spotting phishing, account takeover, ransomware, and common campus cyber scams, with feedback on every choice.",
+    )
+
+
+# ---------- Dorm Room Incident Lab --------------------------------------
+# Each hotspot in the SVG and in the tile grid has data-hotspot="<key>" matching
+# the LAB module's "hotspot" field. Coordinates here are tuned to the 1000x600
+# viewBox below; the dorm scene is drawn flat using the strict orange/black/gray
+# palette only.
+HOTSPOT_GEOMETRY = {
+    # key:        (cx, cy, label)
+    "laptop":     (470, 360, "Laptop"),
+    "phone":      (650, 420, "Phone"),
+    "console":    (810, 470, "Console"),
+    "router":     (110, 110, "Wi-Fi router"),
+    "printer":    (250, 480, "Printer"),
+    "roommate":   (180, 290, "Roommate's PC"),
+    "clouddrive": (560, 130, "Cloud drive"),
+    "campusemail":(370, 130, "Campus email"),
+    "clubaccount":(770, 200, "Club account"),
+    "usbstick":   (350, 410, "USB stick"),
+}
+
+
+def _dorm_svg() -> str:
+    """Return inline SVG of a flat dorm-room scene with clickable hotspots.
+
+    The scene is intentionally diagrammatic, not photoreal: it uses only the
+    strict palette (orange #f68212, black, white, and grays from --c-line /
+    --c-bg-2) so it works in light and dark mode and prints cleanly.
+    Each hotspot is an <a> with data-hotspot="<key>" so the JS engine can
+    treat clicks the same as taps on the tile grid below.
+    """
+    # Build hotspot <a> dots. We draw an orange ring around each so it reads
+    # as interactive without color-coding meaning (still mono-orange).
+    dots = []
+    for key, (cx, cy, label) in HOTSPOT_GEOMETRY.items():
+        dots.append(
+            f'<a class="lab-hotspot" href="#lab" data-hotspot="{key}" role="button" '
+            f'aria-label="Open module: {html.escape(label)}" tabindex="0">'
+            f'<circle cx="{cx}" cy="{cy}" r="22" class="lab-hotspot-ring"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="9" class="lab-hotspot-dot"/>'
+            f'<text x="{cx}" y="{cy + 44}" text-anchor="middle" class="lab-hotspot-label">{html.escape(label)}</text>'
+            f'</a>'
+        )
+    hotspots = "".join(dots)
+    # Flat room: floor strip + back wall + furniture rectangles. Keep simple.
+    return f'''<svg class="lab-svg" viewBox="0 0 1000 600" role="img" aria-label="Diagrammatic dorm room with clickable items" xmlns="http://www.w3.org/2000/svg">
+  <!-- Walls + floor -->
+  <rect x="0" y="0" width="1000" height="430" class="lab-wall"/>
+  <rect x="0" y="430" width="1000" height="170" class="lab-floor"/>
+  <line x1="0" y1="430" x2="1000" y2="430" class="lab-edge"/>
+  <!-- Window -->
+  <rect x="380" y="60" width="240" height="140" class="lab-window"/>
+  <line x1="500" y1="60" x2="500" y2="200" class="lab-edge"/>
+  <line x1="380" y1="130" x2="620" y2="130" class="lab-edge"/>
+  <!-- Wi-Fi router on a small shelf, top-left -->
+  <rect x="60" y="140" width="110" height="10" class="lab-furn"/>
+  <rect x="80" y="105" width="70" height="30" rx="4" class="lab-furn"/>
+  <line x1="95" y1="95" x2="105" y2="75" class="lab-edge"/>
+  <line x1="130" y1="95" x2="140" y2="75" class="lab-edge"/>
+  <!-- Roommate's PC tower + monitor, mid-left -->
+  <rect x="120" y="260" width="130" height="80" rx="4" class="lab-furn"/>
+  <rect x="170" y="340" width="30" height="60" class="lab-furn"/>
+  <rect x="140" y="400" width="90" height="10" class="lab-furn"/>
+  <!-- Printer, bottom-left -->
+  <rect x="200" y="455" width="110" height="55" rx="4" class="lab-furn"/>
+  <rect x="215" y="445" width="80" height="10" class="lab-furn"/>
+  <!-- Desk surface, center -->
+  <rect x="330" y="395" width="380" height="15" class="lab-furn"/>
+  <rect x="340" y="410" width="15" height="90" class="lab-furn"/>
+  <rect x="685" y="410" width="15" height="90" class="lab-furn"/>
+  <!-- Laptop on the desk -->
+  <rect x="425" y="330" width="100" height="65" rx="3" class="lab-furn"/>
+  <rect x="415" y="395" width="120" height="6" class="lab-furn"/>
+  <!-- USB stick to the left of the laptop -->
+  <rect x="335" y="400" width="30" height="10" class="lab-furn"/>
+  <rect x="325" y="402" width="10" height="6" class="lab-furn"/>
+  <!-- Phone on the desk, right of laptop -->
+  <rect x="625" y="395" width="50" height="30" rx="4" class="lab-furn"/>
+  <!-- Console + TV stand, bottom-right -->
+  <rect x="760" y="455" width="100" height="40" rx="4" class="lab-furn"/>
+  <rect x="790" y="495" width="40" height="6" class="lab-furn"/>
+  <rect x="740" y="335" width="140" height="95" rx="3" class="lab-furn"/>
+  <!-- Cloud drive (poster) on back wall, center-right -->
+  <rect x="500" y="80" width="120" height="100" class="lab-poster"/>
+  <text x="560" y="135" text-anchor="middle" class="lab-poster-text">CLOUD</text>
+  <!-- Campus email (poster) on back wall, center-left -->
+  <rect x="310" y="80" width="120" height="100" class="lab-poster"/>
+  <text x="370" y="135" text-anchor="middle" class="lab-poster-text">EMAIL</text>
+  <!-- Club account (whiteboard) on back wall, right -->
+  <rect x="700" y="150" width="160" height="110" class="lab-poster"/>
+  <text x="780" y="205" text-anchor="middle" class="lab-poster-text">CLUB</text>
+  <!-- Roommate marker (a chair near the PC) -->
+  <rect x="130" y="345" width="40" height="40" rx="3" class="lab-furn"/>
+  <!-- Hotspots (always drawn last so they sit on top) -->
+  {hotspots}
+</svg>'''
+
+
+def render_dorm_lab() -> str:
+    """Dorm Room Incident Lab — 10 short room-anchored modules.
+
+    Single static page. SVG dorm scene shows clickable hotspots; below it,
+    an accessible tile grid lists every module (used as the small-screen and
+    reduced-motion fallback, and for keyboard users who prefer text targets).
+    Engine, scoring, readiness meter, and per-module AAR live in
+    assets/js/dorm-lab.js. Module data is embedded as JSON in a single
+    <script type="application/json"> so the page is fully static.
+    """
+    tiles = []
+    for i, m in enumerate(LAB):
+        tiles.append(
+            f'<a class="lab-tile" href="#lab" data-hotspot="{html.escape(m["hotspot"])}" data-lab-id="{html.escape(m["id"])}">'
+            f'<span class="lab-num" aria-hidden="true">{i+1:02d}</span>'
+            f'<h3>{html.escape(m["title"])}</h3>'
+            f'<p>{html.escape(m["blurb"])}</p>'
+            f'<span class="lab-status" data-lab-status="{html.escape(m["id"])}" aria-hidden="true"></span>'
+            f'</a>'
+        )
+    grid = "".join(tiles)
+    payload = json.dumps(LAB, ensure_ascii=False)
+    svg = _dorm_svg()
+    body = f"""
+  <section class="container read">
+    <h1>Dorm Room Incident Lab</h1>
+    <p class="lead">A simulated dorm room. Click anything in the room to run a quick incident drill. Each one takes about a minute and ends with a short after-action review. Progress saves on this device only. No accounts, no servers.</p>
+    <div class="alert">
+      <h4>How this works</h4>
+      <p>Click a hotspot in the room, or pick a tile from the list below. Read the situation, choose what you'd do, then go through the after-action checklist. Your overall readiness meter goes up as you finish modules and check off habits you've already built.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="lab-readiness">
+      <div class="lab-readiness-head">
+        <strong>Overall readiness</strong>
+        <span data-role="lab-readiness-pct">0%</span>
+      </div>
+      <div class="lab-readiness-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-role="lab-readiness-bar-outer">
+        <span class="lab-readiness-fill" data-role="lab-readiness-fill" style="width:0%"></span>
+      </div>
+      <p class="muted lab-readiness-meta">
+        <span data-role="lab-counter">0 of {len(LAB)} modules complete</span>
+        &nbsp;·&nbsp; <span data-role="lab-habit-counter">0 habits checked</span>
+        &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="lab-reset">↺ Reset progress</button>
+      </p>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Click anything in the room</h2>
+    <div class="lab-scene">
+      {svg}
+    </div>
+    <p class="muted lab-scene-help">If the scene is hard to read on your screen, use the labeled list below. It does the same thing.</p>
+  </section>
+
+  <section class="container">
+    <h2>Or pick from the list</h2>
+    <div class="lab-grid">
+      {grid}
+    </div>
+  </section>
+
+  <section class="container" id="lab">
+    <div class="lab-runner" hidden>
+      <div class="lab-runner-head">
+        <button type="button" class="btn btn-secondary btn-sm" data-action="lab-close">← Back to room</button>
+        <span class="lab-runner-title" data-role="lab-title"></span>
+      </div>
+      <div class="lab-setup" data-role="lab-setup"></div>
+      <div class="lab-question" data-role="lab-question"></div>
+      <div class="lab-choices" data-role="lab-choices"></div>
+      <div class="lab-outcome" data-role="lab-outcome" hidden></div>
+      <div class="lab-aar" data-role="lab-aar" hidden></div>
+    </div>
+    <script type="application/json" id="lab-data">{payload}</script>
+  </section>
+
+  <section class="container read">
+    <h2>What this lab is, and what it isn't</h2>
+    <p>This lab is built around things that actually happen in dorms. A roommate clicks a sketchy link. A laptop gets encrypted before finals. A club account starts hitting up members for money. The choices and the after-action checklists come from plain-language guidance: <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. Nothing here tells you how to attack anything. It tells you how to recognize and respond.</p>
+    <p>Whatever your campus IT help desk says, that wins.</p>
+  </section>
+"""
+    return page(
+        "Dorm lab",
+        body,
+        depth=0,
+        description="A simulated dorm room with ten clickable incident modules. Practice what to do when a roommate clicks a sketchy link, your laptop gets encrypted before finals, or your club account is taken over.",
     )
 
 
@@ -875,6 +1068,7 @@ def main() -> None:
     (out / "response.html").write_text(render_response(), encoding="utf-8")
     (out / "readiness.html").write_text(render_readiness(), encoding="utf-8")
     (out / "scenarios.html").write_text(render_scenarios(), encoding="utf-8")
+    (out / "dorm-lab.html").write_text(render_dorm_lab(), encoding="utf-8")
     (out / "glossary.html").write_text(render_glossary(), encoding="utf-8")
     (out / "faq.html").write_text(render_faq(), encoding="utf-8")
     (out / "references.html").write_text(render_references(), encoding="utf-8")

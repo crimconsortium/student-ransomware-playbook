@@ -58,7 +58,7 @@
         certBtn.textContent = '🎓 Download certificate';
         certBtn.title = '';
       } else {
-        certBtn.textContent = '🔒 Certificate locked — finish ' + (total - done.size) + ' more';
+        certBtn.textContent = '🔒 Certificate locked. Finish ' + (total - done.size) + ' more';
         certBtn.title = 'Complete all ' + total + ' scenarios to unlock your certificate.';
       }
     }
