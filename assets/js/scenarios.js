@@ -49,7 +49,19 @@
     var done = getDoneSet();
     var total = SCENARIOS.length;
     if (counter) counter.textContent = done.size + ' of ' + total + ' complete';
-    if (certBtn) certBtn.hidden = done.size < total;
+    if (certBtn) {
+      var unlocked = done.size >= total;
+      certBtn.disabled = !unlocked;
+      certBtn.setAttribute('aria-disabled', String(!unlocked));
+      certBtn.classList.toggle('btn-secondary', !unlocked);
+      if (unlocked) {
+        certBtn.textContent = '🎓 Download certificate';
+        certBtn.title = '';
+      } else {
+        certBtn.textContent = '🔒 Certificate locked — finish ' + (total - done.size) + ' more';
+        certBtn.title = 'Complete all ' + total + ' scenarios to unlock your certificate.';
+      }
+    }
     // tile status badges
     SCENARIOS.forEach(function (s) {
       var b = document.querySelector('[data-scn-status="' + s.id + '"]');
@@ -259,6 +271,13 @@
         closeScenario();
       }
     } else if (a === 'scn-certificate') {
+      // Hard guard: never generate a certificate unless every scenario is done.
+      var doneNow = getDoneSet();
+      if (doneNow.size < SCENARIOS.length) {
+        alert('Finish all ' + SCENARIOS.length + ' scenarios to unlock your certificate. '
+          + 'You have ' + doneNow.size + ' of ' + SCENARIOS.length + ' complete.');
+        return;
+      }
       downloadCertificate();
     } else if (a === 'scn-close' || a === 'scn-close-inline') {
       closeScenario();

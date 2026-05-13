@@ -836,7 +836,7 @@ def render_scenarios() -> str:
     <p class="scn-progress-bar" aria-live="polite">
       <span data-role="scn-counter">0 of {len(SCENARIOS)} complete</span>
       &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="scn-reset">↺ Reset progress</button>
-      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" hidden>🎓 Download certificate</button>
+      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" data-role="scn-cert-btn" aria-disabled="true" disabled>🔒 Certificate locked — finish all {len(SCENARIOS)}</button>
     </p>
   </section>
 
