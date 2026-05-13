@@ -31,7 +31,7 @@ def lifecycle_figure(emphasize: str, caption: str) -> str:
       <figcaption>{caption}</figcaption>
     </figure>'''
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES  # noqa: E402
+from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, SCENARIOS  # noqa: E402
 
 
 def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str:
@@ -64,6 +64,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}prevention.html">Protect yourself</a></li>
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
+        <li><a href="{rel}scenarios.html">Scenarios</a></li>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
@@ -89,6 +90,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}prevention.html">Protect yourself</a></li>
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
+        <li><a href="{rel}scenarios.html">Scenarios</a></li>
       </ul>
     </div>
     <div>
@@ -111,6 +113,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
 </footer>
 
 <script src="{rel}assets/js/app.js"></script>
+<script src="{rel}assets/js/scenarios.js" defer></script>
 </body>
 </html>
 """
@@ -796,12 +799,82 @@ def render_404() -> str:
     return page("Not found", body, depth=0)
 
 
+def render_scenarios() -> str:
+    """Choose-Your-Response — interactive branching scenarios for students.
+
+    Renders a single page with an index card per scenario plus a card-shaped
+    interactive ‘runner’ that mounts when the student opens a scenario.
+    Engine + scoring + certificate logic lives in assets/js/scenarios.js.
+    The full SCENARIOS data is embedded as JSON inside a single <script type=\"application/json\">
+    tag so the page works fully offline and the build remains static.
+    """
+    cards = "".join(
+        f'<a class="scn-tile" href="#scn" data-scn-id="{html.escape(s["id"])}">'
+        f'<span class="scn-num" aria-hidden="true">{i+1:02d}</span>'
+        f'<h3>{html.escape(s["title"])}</h3>'
+        f'<p>{html.escape(s["blurb"])}</p>'
+        f'<span class="scn-status" data-scn-status="{html.escape(s["id"])}" aria-hidden="true"></span>'
+        f'</a>'
+        for i, s in enumerate(SCENARIOS)
+    )
+    payload = json.dumps(SCENARIOS, ensure_ascii=False)
+    body = f"""
+  <section class="container read">
+    <h1>Choose-Your-Response</h1>
+    <p class="lead">Ten short, realistic situations students actually run into. Pick what you’d do; see what would happen; learn the reason behind the right answer. Progress saves on this device only — no accounts, no servers.</p>
+    <div class="alert">
+      <h4>How this works</h4>
+      <p>Each scenario takes 1–2 minutes. Choose an option, read the outcome, and either retry or move on. After you’ve finished all ten, you can download a printable completion certificate.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Pick a scenario</h2>
+    <div class="scn-grid">
+      {cards}
+    </div>
+    <p class="scn-progress-bar" aria-live="polite">
+      <span data-role="scn-counter">0 of {len(SCENARIOS)} complete</span>
+      &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="scn-reset">↺ Reset progress</button>
+      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" hidden>🎓 Download certificate</button>
+    </p>
+  </section>
+
+  <section class="container" id="scn">
+    <div class="scn-runner" hidden>
+      <div class="scn-runner-head">
+        <button type="button" class="btn btn-secondary btn-sm" data-action="scn-close">← Back to list</button>
+        <span class="scn-runner-title" data-role="scn-title"></span>
+      </div>
+      <div class="scn-situation" data-role="scn-situation"></div>
+      <div class="scn-question" data-role="scn-question"></div>
+      <div class="scn-choices" data-role="scn-choices"></div>
+      <div class="scn-outcome" data-role="scn-outcome" hidden></div>
+    </div>
+    <script type="application/json" id="scn-data">{payload}</script>
+  </section>
+
+  <section class="container read">
+    <h2>Why these ten?</h2>
+    <p>Each scenario is built around a pattern that has actually hit college and university students recently — phishing, MFA fatigue, fake job offers, financial-aid scams, ransomware on a personal laptop, account-takeover of a club’s cloud storage, lost or stolen devices, social pressure to share credentials, and physical-media tricks. The decisions and explanations are based on public guidance from <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. None of the scenarios describe how to attack anything — they describe how a student can recognize and respond.</p>
+    <p>This is an educational simulation. Your campus IT help desk’s actual guidance always overrides what you see here.</p>
+  </section>
+"""
+    return page(
+        "Scenarios",
+        body,
+        depth=0,
+        description="Ten interactive branching scenarios that let college and university students practice spotting phishing, account takeover, ransomware, and common campus cyber scams — with feedback on every choice.",
+    )
+
+
 def main() -> None:
     out = ROOT
     # Top-level student-focused pages only
     (out / "prevention.html").write_text(render_prevention(), encoding="utf-8")
     (out / "response.html").write_text(render_response(), encoding="utf-8")
     (out / "readiness.html").write_text(render_readiness(), encoding="utf-8")
+    (out / "scenarios.html").write_text(render_scenarios(), encoding="utf-8")
     (out / "glossary.html").write_text(render_glossary(), encoding="utf-8")
     (out / "faq.html").write_text(render_faq(), encoding="utf-8")
     (out / "references.html").write_text(render_references(), encoding="utf-8")

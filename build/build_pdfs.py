@@ -8,7 +8,7 @@ import sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, GLOSSARY, FAQ, REFERENCES  # noqa: E402
+from content import ROLES, GLOSSARY, FAQ, REFERENCES, SCENARIOS  # noqa: E402
 
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -118,6 +118,19 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
     story.append(Paragraph("Quick checklist", s["h2"]))
     for item in student["checklist_items"]:
         story.append(Paragraph("☐ &nbsp; " + _esc(item), s["body"]))
+
+    story.append(PageBreak())
+
+    story.append(Paragraph("Practice scenarios", s["h1"]))
+    story.append(Paragraph(
+        "Ten short, realistic situations you can practice on the live site — each with branching "
+        "decisions and feedback on every choice. Open the interactive version at "
+        "crimconsortium.github.io/student-ransomware-playbook/scenarios.html and earn a "
+        "printable Cyber-Smart Student certificate after all ten.",
+        s["body"]))
+    for i, scn in enumerate(SCENARIOS, 1):
+        story.append(Paragraph(f"{i:02d}. {_esc(scn['title'])}", s["h3"]))
+        story.append(Paragraph(_esc(scn['situation']), s["body"]))
 
     story.append(PageBreak())
 

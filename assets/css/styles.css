@@ -197,16 +197,17 @@ nav.primary ul {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 1rem;
+  gap: 0.45rem;
   align-items: center;
   flex-wrap: wrap;
 }
 nav.primary a {
   color: var(--fg);
   text-decoration: none;
-  font-size: 0.95rem;
-  padding: 0.4rem 0.6rem;
+  font-size: 0.93rem;
+  padding: 0.35rem 0.5rem;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
 }
 nav.primary a:hover, nav.primary a[aria-current="page"] {
   background: var(--bg-soft);
@@ -599,3 +600,176 @@ html[data-theme="dark"] .diagram.emphasize-resp .prev-band { opacity: 0.35; }
 ol.how-to { padding-left: 1.25rem; margin: 0.5rem 0 0; }
 ol.how-to li { margin: 0.5rem 0; line-height: 1.55; }
 ol.how-to li::marker { color: var(--brand-orange); font-weight: 700; }
+
+/* =============================================================================
+   Scenarios — Choose-Your-Response
+   Strict palette: orange + black/gray/white. Tag variants use border weight and
+   small leading glyphs rather than additional hues.
+   ============================================================================= */
+.scn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.9rem;
+  margin: 0.8rem 0 1rem;
+}
+.scn-tile {
+  position: relative;
+  display: block;
+  background: var(--bg-elev);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  padding: 1rem 1rem 2.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.scn-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.scn-tile h3 { margin: 0.4rem 0 0.3rem; font-size: 1.1rem; }
+.scn-tile p  { margin: 0; color: var(--fg-muted); font-size: 0.95rem; }
+.scn-num {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.scn-status {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+.scn-status.done {
+  color: var(--accent);
+  font-weight: 600;
+}
+.scn-progress-bar {
+  margin-top: 0.6rem;
+  font-family: var(--font-sans);
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Runner card */
+.scn-runner {
+  background: var(--bg-elev);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin: 1rem 0;
+}
+.scn-runner-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.scn-runner-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.scn-situation {
+  background: var(--bg-soft);
+  border-left: 4px solid var(--accent);
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+.scn-question {
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.scn-crumbs {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+.scn-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.scn-choice {
+  text-align: left;
+  background: var(--bg-elev);
+  color: inherit;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+.scn-choice:hover { border-color: var(--accent); background: var(--bg-soft); }
+.scn-choice:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Outcome cards — color-blind-friendly + monochrome palette */
+.scn-outcome-card {
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 6px solid var(--accent);
+  background: var(--bg-soft);
+}
+.scn-outcome-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+.scn-outcome-card h3::before {
+  display: inline-block;
+  margin-right: 0.4rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  vertical-align: 0.12em;
+  background: var(--accent);
+  color: #fff;
+}
+.scn-tag-good h3::before    { content: "STRONG"; }
+.scn-tag-ok h3::before      { content: "OK";      background: var(--fg-muted); }
+.scn-tag-risky h3::before   { content: "RISKY";   background: #0d0d0d; color: #fff; }
+.scn-tag-bad h3::before     { content: "AVOID";   background: #0d0d0d; color: #fff; }
+.scn-tag-good   { border-left-color: var(--accent); }
+.scn-tag-ok     { border-left-color: var(--fg-muted); }
+.scn-tag-risky  { border-left-color: #0d0d0d; }
+.scn-tag-bad    { border-left-color: #0d0d0d; border-left-width: 10px; }
+
+.scn-outcome-links {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0.6rem;
+  color: var(--fg-muted);
+}
+.scn-outcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+/* Print: hide the interactive runner, expand grid to readable list */
+@media print {
+  .scn-runner, .scn-progress-bar [data-action] { display: none; }
+  .scn-tile { border-color: #888; break-inside: avoid; }
+}
