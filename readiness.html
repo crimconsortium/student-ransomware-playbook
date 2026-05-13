@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Readiness · Campus Ransomware Playbook</title>
+<meta name="description" content="Self-audit checklists for individuals and the campus baseline.">
+<link rel="stylesheet" href="assets/css/styles.css">
+<meta name="theme-color" content="#f68212">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="title">Campus Ransomware Playbook</span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">☰ Menu</button>
+    <nav class="primary" id="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="prevention.html">Prevention</a></li>
+        <li><a href="response.html">Response</a></li>
+        <li><a href="readiness.html">Readiness</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="emergency.html">If an incident occurs</a></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="container">
+      <h1>Self-audit &amp; readiness</h1>
+      <p class="lead">Use these checklists to gauge readiness — by individual role and overall. Progress is saved on this device only.</p>
+    </div>
+  </section>
+
+  <section class="container read">
+    <h2>Per-role checklists</h2>
+    <table>
+      <thead><tr><th>Role</th><th>Items</th><th>Open</th></tr></thead>
+      <tbody><tr><td><a href="roles/student.html">Student</a></td><td>7 items</td><td><a href="roles/student.html">Open</a></td></tr><tr><td><a href="roles/faculty.html">Faculty (incl. adjuncts and researchers)</a></td><td>7 items</td><td><a href="roles/faculty.html">Open</a></td></tr><tr><td><a href="roles/staff.html">Staff and department personnel</a></td><td>7 items</td><td><a href="roles/staff.html">Open</a></td></tr><tr><td><a href="roles/it.html">IT and Security teams</a></td><td>9 items</td><td><a href="roles/it.html">Open</a></td></tr><tr><td><a href="roles/leadership.html">Senior leadership and administrators</a></td><td>7 items</td><td><a href="roles/leadership.html">Open</a></td></tr><tr><td><a href="roles/comms.html">Communications, public affairs, and legal</a></td><td>6 items</td><td><a href="roles/comms.html">Open</a></td></tr></tbody>
+    </table>
+    <p class="muted">Tip: each role page also includes its own checklist with progress saved on this device.</p>
+
+    <h2 id="campus">Campus-wide readiness (for IT/security and leadership)</h2>
+    <p>A short, opinionated baseline for institutions just starting or refreshing their ransomware posture.</p>
+
+    <div class="checklist" data-checklist-id="campus-baseline">
+      <h3>Campus baseline <span class="badge-earned" data-role="badge" hidden>Complete</span></h3>
+      <p class="muted" data-role="counter"></p>
+      <div class="progress" aria-hidden="true"><span></span></div>
+      <ul>
+        <li><input type="checkbox"><label>Phishing-resistant MFA enforced on privileged accounts; MFA required campus-wide.</label></li>
+        <li><input type="checkbox"><label>Immutable or offline backups exist for all tier-1 systems and are restored end-to-end at least quarterly.</label></li>
+        <li><input type="checkbox"><label>Network segmentation isolates research, admin, student, and IoT/lab environments.</label></li>
+        <li><input type="checkbox"><label>RDP is not exposed to the internet; remote access requires MFA and conditional access.</label></li>
+        <li><input type="checkbox"><label>Asset and SaaS inventory exists; high-severity third-party CVEs are tracked and acted on.</label></li>
+        <li><input type="checkbox"><label>EDR is on every endpoint and tied to documented response playbooks.</label></li>
+        <li><input type="checkbox"><label>Identity-provider hunting checks (impossible travel, OAuth, mailbox rules) run on a schedule.</label></li>
+        <li><input type="checkbox"><label>Annual tabletop exercise has been completed with cabinet, comms, and legal participation.</label></li>
+        <li><input type="checkbox"><label>IR retainer, cyber-insurance, legal counsel, and FBI/CISA contacts are documented and current.</label></li>
+        <li><input type="checkbox"><label>Pre-drafted holding statements, FAQs, and stakeholder lists exist for cyber incidents.</label></li>
+        <li><input type="checkbox"><label>Out-of-band communication channels (mass notification, off-domain status page) are tested.</label></li>
+        <li><input type="checkbox"><label>Decision authorities (take systems offline, ransom posture, board comms) are documented.</label></li>
+      </ul>
+      <div class="actions">
+        <button class="btn btn-secondary btn-sm" data-action="reset" type="button">Reset</button>
+        <button class="btn btn-secondary btn-sm" data-action="print" type="button">Print</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <h4>Campus Ransomware Playbook</h4>
+      <p>Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium.</p>
+      <p><a href="https://github.com/crimconsortium/campus-ransomware-playbook">View source on GitHub</a></p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="roles/">All roles</a></li>
+        <li><a href="prevention.html">Prevention</a></li>
+        <li><a href="response.html">Response</a></li>
+        <li><a href="readiness.html">Self-audit</a></li>
+        <li><a href="emergency.html">If an incident occurs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>References</h4>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="references.html">Sources &amp; further reading</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Licensing</h4>
+      <ul>
+        <li>Code: <a href="LICENSE">MIT</a></li>
+        <li>Content: <a href="LICENSE-content">CC BY 4.0</a></li>
+      </ul>
+      <p class="muted">© <span data-year></span> Joshua Gerstenfeld &amp; Scott Jacques.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

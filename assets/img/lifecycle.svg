@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Ransomware response lifecycle — six phases.
+  Campus Ransomware Playbook · CrimRxiv Consortium · CC BY 4.0
+  by Joshua Gerstenfeld and Scott Jacques.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 380" role="img"
+     aria-labelledby="lc-title lc-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="lc-title">Ransomware response lifecycle</title>
+  <desc id="lc-desc">Six chained phases — Prepare, Detect, Contain, Communicate, Recover, Learn — with prevention spanning Prepare and Detect, and response spanning Contain through Learn. Lessons from Learn feed back into Prepare.</desc>
+  <style>
+    .bg     { fill: #ffffff; }
+    .card   { fill: #ffffff; stroke: #d9d9d9; stroke-width: 1; }
+    .label  { fill: #111111; font-weight: 700; font-size: 18px; }
+    .sub    { fill: #555555; font-size: 11px; }
+    .stage  { fill: #555555; font-size: 11px; letter-spacing: .08em; }
+    .loop   { fill: #f68212; font-size: 12px; font-style: italic; }
+    .brown  { fill: #f68212; }
+    .red    { fill: #111111; }
+  </style>
+
+  <rect class="bg" width="920" height="380"/>
+
+  <!-- stage labels -->
+  <g class="prev-band">
+    <text class="stage" x="230" y="32" text-anchor="middle">PREVENTION</text>
+    <!-- band -->
+    <rect x="40"  y="48" width="380" height="170" rx="14" fill="none"
+          stroke="#f68212" stroke-dasharray="6 5" stroke-width="2"/>
+  </g>
+  <g class="resp-band">
+    <text class="stage" x="660" y="32" text-anchor="middle">RESPONSE</text>
+    <!-- band -->
+    <rect x="430" y="48" width="450" height="280" rx="14" fill="none"
+          stroke="#111111" stroke-dasharray="6 5" stroke-width="2"/>
+  </g>
+
+  <!-- Row 1: Prepare, Detect (prevention) | Contain, Communicate (response) -->
+  <g class="prev-band">
+  <!-- 1 Prepare -->
+  <g>
+    <rect class="card" x="60"  y="100" width="160" height="100" rx="10"/>
+    <circle class="brown" cx="84" cy="128" r="14"/>
+    <text x="84" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">1</text>
+    <text class="label" x="110" y="134">Prepare</text>
+    <text class="sub" x="76" y="160">MFA · backups · segments</text>
+    <text class="sub" x="76" y="178">tabletops · training</text>
+  </g>
+  <!-- 2 Detect -->
+  <g>
+    <rect class="card" x="240" y="100" width="160" height="100" rx="10"/>
+    <circle class="brown" cx="264" cy="128" r="14"/>
+    <text x="264" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">2</text>
+    <text class="label" x="290" y="134">Detect</text>
+    <text class="sub" x="256" y="160">EDR · identity hunting</text>
+    <text class="sub" x="256" y="178">user reporting</text>
+  </g>
+  </g>
+  <g class="resp-band">
+  <!-- 3 Contain -->
+  <g>
+    <rect class="card" x="450" y="100" width="160" height="100" rx="10"/>
+    <circle class="red" cx="474" cy="128" r="14"/>
+    <text x="474" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">3</text>
+    <text class="label" x="500" y="134">Contain</text>
+    <text class="sub" x="466" y="160">isolate · revoke · preserve</text>
+    <text class="sub" x="466" y="178">block C2</text>
+  </g>
+  <!-- 4 Communicate -->
+  <g>
+    <rect class="card" x="630" y="100" width="220" height="100" rx="10"/>
+    <circle class="red" cx="654" cy="128" r="14"/>
+    <text x="654" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">4</text>
+    <text class="label" x="680" y="134">Communicate</text>
+    <text class="sub" x="646" y="160">out-of-band · cadence · one source</text>
+    <text class="sub" x="646" y="178">counsel · insurer · law enforcement</text>
+  </g>
+
+  <!-- horizontal arrows row 1 -->
+  <g stroke="#555555" stroke-width="2" fill="none">
+    <path d="M222 150 L238 150"/>
+    <path d="M236 145 L240 150 L236 155" />
+    <path d="M402 150 L448 150"/>
+    <path d="M446 145 L450 150 L446 155"/>
+    <path d="M612 150 L628 150"/>
+    <path d="M626 145 L630 150 L626 155"/>
+  </g>
+
+  <!-- Row 2: Recover, Learn (response) -->
+  <g>
+    <rect class="card" x="450" y="230" width="160" height="80" rx="10"/>
+    <circle class="red" cx="474" cy="258" r="14"/>
+    <text x="474" y="263" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">5</text>
+    <text class="label" x="500" y="264">Recover</text>
+    <text class="sub" x="466" y="288">rebuild · validate · rotate</text>
+  </g>
+  <g>
+    <rect class="card" x="630" y="230" width="220" height="80" rx="10"/>
+    <circle class="red" cx="654" cy="258" r="14"/>
+    <text x="654" y="263" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">6</text>
+    <text class="label" x="680" y="264">Learn</text>
+    <text class="sub" x="646" y="288">AAR · update · brief board</text>
+  </g>
+  </g>
+
+  <!-- elbow Communicate(4) -> Recover(5): down then left to top of Recover -->
+  <g stroke="#555555" stroke-width="2" fill="none">
+    <path d="M740 200 L740 220 L530 220 L530 230"/>
+    <path d="M526 226 L530 230 L534 226"/>
+    <!-- Recover -> Learn -->
+    <path d="M612 270 L628 270"/>
+    <path d="M626 265 L630 270 L626 275"/>
+  </g>
+
+  <!-- feedback loop Learn -> Prepare, routed below cards across the bottom -->
+  <g stroke="#f68212" stroke-width="2" stroke-dasharray="5 4" fill="none">
+    <path d="M740 310 L740 360 L140 360 L140 200"/>
+    <path d="M136 204 L140 200 L144 204"/>
+  </g>
+  <!-- white background behind label so the dashed line reads as broken -->
+  <rect x="260" y="347" width="360" height="20" fill="#ffffff"/>
+  <text class="loop" x="440" y="362" text-anchor="middle">Lessons from Learn feed back into Prepare</text>
+</svg>

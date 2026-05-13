@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>If an incident occurs · Campus Ransomware Playbook</title>
+<meta name="description" content="Educational summary of public guidance from CISA, NIST, and the FBI on what to do during a ransomware incident on campus. Not for live-incident use.">
+<link rel="stylesheet" href="assets/css/styles.css">
+<meta name="theme-color" content="#f68212">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="title">Campus Ransomware Playbook</span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">☰ Menu</button>
+    <nav class="primary" id="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="prevention.html">Prevention</a></li>
+        <li><a href="response.html">Response</a></li>
+        <li><a href="readiness.html">Readiness</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="emergency.html">If an incident occurs</a></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="container">
+      <h1>If an incident occurs</h1>
+      <p class="lead">An educational summary of what authoritative public guidance says people on a college campus should do if they ever face a ransomware incident. This page is for advance reading and planning — not for use during a live incident.</p>
+    </div>
+  </section>
+
+  <section class="container read">
+    <div class="alert danger" role="note">
+      <h4>This is not a real-time incident-response service</h4>
+      <p>If you believe an incident is happening right now, <strong>contact your campus IT or information-security team immediately</strong> using a phone or a known-good device. In the United States, public reporting and assistance are also available from the U.S. Cybersecurity &amp; Infrastructure Security Agency at <a href="https://www.cisa.gov/stopransomware/report-ransomware">cisa.gov/stopransomware/report-ransomware</a> and the FBI Internet Crime Complaint Center at <a href="https://www.ic3.gov/">ic3.gov</a>.</p>
+      <p>This page summarizes published guidance from sources such as <a href="https://www.nist.gov/news-events/news/2025/04/nist-revises-sp-800-61-incident-response-recommendations-and-considerations">NIST SP 800-61r3</a>, <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, and <a href="https://www.ic3.gov/">FBI IC3</a>. It is not professional incident-response advice and is not a substitute for trained responders, qualified counsel, or your institution’s policies and contracts.</p>
+    </div>
+
+    <h2>What public guidance generally recommends</h2>
+    <p class="muted">The items below paraphrase guidance from CISA, NIST, and the FBI. Your institution’s policies, contracts, insurance terms, and applicable law take precedence.</p>
+
+    <div class="alert">
+      <h4>If a ransom note, mass file renames, or unavailable files are reported</h4>
+      <ol>
+        <li>CISA and the FBI generally recommend disconnecting affected devices from the network (Wi-Fi off, Ethernet unplugged) rather than powering them off, to preserve evidence in memory.</li>
+        <li>Public guidance recommends not deleting the ransom note, files, or related emails, since they may be needed for investigation and potential decryption.</li>
+        <li>Authoritative sources advise contacting your IT or security team using a separate phone or device, not the affected one.</li>
+        <li>CISA, FBI, and most insurers recommend against unilaterally paying or negotiating, and against downloading “decryption” tools from web search results.</li>
+      </ol>
+    </div>
+
+    <div class="alert">
+      <h4>If a person reports clicking a phishing link or entering credentials</h4>
+      <ol>
+        <li>Most published guidance recommends moving to a different, known-good device.</li>
+        <li>It generally recommends changing the affected password, reviewing account recovery information, and reporting the message to IT/security.</li>
+        <li>Sources advise preserving the original message as evidence rather than deleting it.</li>
+      </ol>
+    </div>
+
+    <div class="alert">
+      <h4>If a department leader sees a system become unavailable</h4>
+      <ol>
+        <li>Public guidance commonly recommends pausing sensitive workflows — payments, banking changes, and sensitive data exports — until IT/security confirms it is safe to resume.</li>
+        <li>Sources recommend using pre-arranged out-of-band contact lists (printed or phone-stored) rather than potentially affected systems.</li>
+        <li>They also recommend waiting for official guidance before making public statements and ignoring unverified rumors.</li>
+      </ol>
+    </div>
+
+    <div class="alert">
+      <h4>What incident-response teams typically do (background reading only)</h4>
+      <p class="muted">For pre-incident familiarity — actual response should be led by trained personnel and qualified counsel, following your institution’s plan.</p>
+      <ol>
+        <li>NIST SP 800-61r3 describes triggering the documented IR plan and coordinating through an out-of-band channel.</li>
+        <li>CISA #StopRansomware describes isolating affected network segments, disabling compromised identities, and revoking sessions and tokens.</li>
+        <li>Both sources describe preserving evidence (e.g., memory and disk images) before reimaging where feasible.</li>
+        <li>Most guidance describes engaging legal counsel, the cyber-insurance hotline, and law enforcement — in the U.S., <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and <a href="https://www.ic3.gov/">FBI IC3</a>.</li>
+        <li>It also describes coordinating with communications on cadence and channels and keeping a written timeline of decisions.</li>
+      </ol>
+    </div>
+
+    <h2>By role — background reading</h2>
+    <p>Each role page summarizes what published guidance says that role might do before, during, and after an incident. These are educational summaries for planning, not live-incident instructions.</p>
+    <ul>
+      <li><a href="roles/student.html#during"><strong>Student</strong></a> — during-incident background reading</li>
+      <li><a href="roles/faculty.html#during"><strong>Faculty (incl. adjuncts and researchers)</strong></a> — during-incident background reading</li>
+      <li><a href="roles/staff.html#during"><strong>Staff and department personnel</strong></a> — during-incident background reading</li>
+      <li><a href="roles/it.html#during"><strong>IT and Security teams</strong></a> — during-incident background reading</li>
+      <li><a href="roles/leadership.html#during"><strong>Senior leadership and administrators</strong></a> — during-incident background reading</li>
+      <li><a href="roles/comms.html#during"><strong>Communications, public affairs, and legal</strong></a> — during-incident background reading</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <h4>Campus Ransomware Playbook</h4>
+      <p>Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium.</p>
+      <p><a href="https://github.com/crimconsortium/campus-ransomware-playbook">View source on GitHub</a></p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="roles/">All roles</a></li>
+        <li><a href="prevention.html">Prevention</a></li>
+        <li><a href="response.html">Response</a></li>
+        <li><a href="readiness.html">Self-audit</a></li>
+        <li><a href="emergency.html">If an incident occurs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>References</h4>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="references.html">Sources &amp; further reading</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Licensing</h4>
+      <ul>
+        <li>Code: <a href="LICENSE">MIT</a></li>
+        <li>Content: <a href="LICENSE-content">CC BY 4.0</a></li>
+      </ul>
+      <p class="muted">© <span data-year></span> Joshua Gerstenfeld &amp; Scott Jacques.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
