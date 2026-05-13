@@ -1,34 +1,23 @@
-# Campus Ransomware Playbook
+# Student Ransomware Playbook
 
-An open-access, evidence-based playbook helping every role on campus prevent and respond to ransomware. Created by **Joshua Gerstenfeld** and **Scott Jacques** with support from the **CrimRxiv Consortium**.
+A plain-language, open-access guide for **college and university students** on how to spot phishing, protect their accounts and devices, and act fast if something goes wrong. Created by **Joshua Gerstenfeld** and **Scott Jacques** with support from the **CrimRxiv Consortium**.
 
-🌐 **Live site:** https://crimconsortium.github.io/campus-ransomware-playbook/
+🌐 **Live site:** https://crimconsortium.github.io/student-ransomware-playbook/
 
 ## What this is
 
-A self-contained static website with role-based guidance for higher-education institutions — public and private universities, community colleges, and other colleges. It covers prevention and response across the full lifecycle: prepare, detect, contain, communicate, recover, and learn.
+A self-contained static website written **for students**, not for IT staff or campus leadership. It explains, in everyday language, how ransomware and the scams that lead to it actually affect students — and what to do about them.
 
-Every role on campus is treated as equally important:
+It is a sibling project to the broader [Campus Ransomware Playbook](https://crimconsortium.github.io/campus-ransomware-playbook/), which covers every role on campus (faculty, staff, IT, leadership, communications/legal). This student edition focuses entirely on what a student can do.
 
-- **Students**
-- **Faculty** (including adjuncts and researchers)
-- **Staff and department personnel**
-- **Campus IT and security teams**
-- **Senior leadership and administrators**
-- **Communications, public affairs, and legal**
+## What's inside
 
-## Features
-
-- Role-based navigation with persistent (browser-only) role memory.
-- Per-role checklists with progress saved on-device — no accounts, no servers.
-- "What should I do right now?" decision trees for common situations.
-- Mini-scenarios and quizzes with immediate feedback.
-- A campus-wide self-audit checklist.
-- A concise **Emergency** page for active incidents.
-- Glossary and FAQ for non-technical readers.
-- Light/dark mode honoring system preferences.
-- WCAG-aware semantic HTML, keyboard navigation, and accessible contrast.
-- Print-friendly CSS and downloadable PDFs of every role guide plus an overall summary.
+- **Protect yourself** — phishing red flags, password and MFA hygiene, device security on campus Wi-Fi, backups, and common student-targeted scams (fake jobs, fake financial-aid portals, fake course pages).
+- **If something goes wrong** — a decision tree and step-by-step guidance for a locked device, a hijacked account, a suspicious email, or a scam payment.
+- **Checklist** — a short, save-as-you-go list of the most important things to do this week.
+- **Glossary** and **FAQ** in plain English.
+- Downloadable **PDF** of the full playbook.
+- Light/dark mode, keyboard navigation, accessible contrast, and print-friendly CSS.
 
 The site is fully static — works on GitHub Pages out of the box. No backend, no database, no third-party JavaScript.
 
@@ -36,93 +25,47 @@ The site is fully static — works on GitHub Pages out of the box. No backend, n
 
 ```
 .
-├── index.html              # Home / role selector
-├── prevention.html         # Prepare + detect
-├── response.html           # Contain, communicate, recover, learn
-├── emergency.html          # Action-oriented "right now" page
-├── readiness.html          # Campus-wide and per-role self-audit
+├── index.html              # Student-facing home page
+├── prevention.html         # Protect yourself
+├── response.html           # If something goes wrong
+├── readiness.html          # Checklist
 ├── glossary.html
 ├── faq.html
 ├── references.html
 ├── 404.html
-├── roles/                  # Per-role guides (built)
-│   ├── index.html
-│   ├── student.html
-│   ├── faculty.html
-│   ├── staff.html
-│   ├── it.html
-│   ├── leadership.html
-│   └── comms.html
 ├── assets/
 │   ├── css/styles.css
-│   ├── js/app.js
-│   └── pdf/                # Generated role PDFs + summary PDF
-├── build/
-│   ├── content.py          # Source-of-truth content for pages and PDFs
-│   ├── build_pages.py      # Generates HTML pages
-│   └── build_pdfs.py       # Generates PDFs (ReportLab)
-├── LICENSE                 # MIT (code)
-└── LICENSE-content         # CC BY 4.0 (content)
+│   ├── js/app.js           # Checklist + decision tree + quiz logic
+│   ├── img/                # SVG figures and icons
+│   └── pdf/student-playbook.pdf
+└── build/
+    ├── content.py          # Single source of truth for all content
+    ├── build_pages.py      # Renders HTML pages from content.py
+    └── build_pdfs.py       # Renders the PDF from content.py
 ```
 
-## Build locally
+## Build
 
-Requires Python 3.10+ and `reportlab` (only for PDF builds).
+Requires Python 3 and [`weasyprint`](https://weasyprint.org/) for PDFs.
 
-```bash
-# Pages
-python build/build_pages.py
-
-# PDFs (requires reportlab)
-pip install reportlab
-python build/build_pdfs.py
-
-# Preview
-python -m http.server 5000
-# then open http://localhost:5000/
+```
+python build/build_pages.py    # regenerate HTML pages
+python build/build_pdfs.py     # regenerate assets/pdf/student-playbook.pdf
 ```
 
-GitHub Pages is configured to serve from the `main` branch root.
+`index.html` is hand-maintained and is **not** regenerated by `build_pages.py`.
 
-## Maintenance cadence
+## Updating content
 
-The playbook is reviewed and updated **quarterly**. Each cycle:
+Edit `build/content.py` (FAQ, glossary, references, decision trees, quizzes) or the relevant `render_*` function in `build/build_pages.py` (prevention, response, readiness body copy), then rebuild.
 
-1. Re-checks credible sources (EDUCAUSE, NIST, CISA, peer-reviewed reporting).
-2. Updates content where new or clearer guidance justifies it.
-3. Keeps URLs and major headings stable to avoid breaking external references.
-4. Regenerates HTML and PDFs.
-5. Commits to `main` with a meaningful message and produces a short change summary.
+Keep URLs and major headings stable so external links don't break. Maintain plain, directive, student-friendly language. Do not add exploit code, offensive techniques, or anything that meaningfully lowers the barrier to ransomware.
 
-## Licensing
+## License
 
-- **Code** (HTML, CSS, JS, build scripts, configuration): [MIT License](LICENSE).
-- **Content** (text, checklists, decision trees, quizzes, glossary, illustrations, PDFs): [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-content).
+- **Code:** [MIT](LICENSE)
+- **Content:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
-When reusing or adapting content, please credit:
+## Disclaimer
 
-> *Campus Ransomware Playbook* by Joshua Gerstenfeld and Scott Jacques (CrimRxiv Consortium), CC BY 4.0, https://github.com/crimconsortium/campus-ransomware-playbook
-
-## Safety and scope
-
-This playbook is **strictly defensive and educational**. It does not include exploit code, offensive techniques, or anything that meaningfully lowers the barrier to committing ransomware or related crimes. It distinguishes general guidance from institution-specific legal or regulatory obligations and does not constitute legal advice; coordinate with counsel for jurisdiction- and contract-specific decisions.
-
-## Contributing
-
-Improvements, corrections, and additional examples are welcome via GitHub Issues and Pull Requests. Please keep:
-
-- Language plain and directive.
-- Roles equally represented.
-- Content vendor-neutral.
-- Sources reputable and recent.
-
-## Acknowledgements
-
-Guidance synthesized from publicly available material, including:
-
-- NIST SP 800-61r3 (Incident Response, 2025) and NIST IR 8374 (Ransomware Risk Management).
-- CISA #StopRansomware and the CISA/MS-ISAC Ransomware Guide.
-- EDUCAUSE cybersecurity articles and benchmarks.
-- Reporting on higher-ed ransomware (Higher Ed Dive, GovTech, Comparitech).
-
-See the [References page](https://crimconsortium.github.io/campus-ransomware-playbook/references.html) for the full list.
+This playbook is an educational resource. It is **not** a substitute for your campus IT help desk, campus police, or law-enforcement guidance during a live incident. If something is happening to you right now, contact your campus IT help desk first. If you have lost money or sensitive data, also report to the [FBI Internet Crime Complaint Center (IC3)](https://www.ic3.gov/) and review guidance from [CISA #StopRansomware](https://www.cisa.gov/stopransomware).

@@ -37,14 +37,14 @@ from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES  # noqa: E402
 def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str:
     """Return a full HTML page. depth = directory depth from repo root."""
     rel = "../" * depth
-    desc = description or "Campus Ransomware Playbook — open-access prevention and response guidance for higher education, by role."
+    desc = description or "Student Ransomware Playbook — a plain-language educational guide for college and university students."
     desc = html.escape(desc)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(title)} · Campus Ransomware Playbook</title>
+<title>{html.escape(title)} · Student Ransomware Playbook</title>
 <meta name="description" content="{desc}">
 <link rel="stylesheet" href="{rel}assets/css/styles.css">
 <meta name="theme-color" content="#f68212">
@@ -55,18 +55,17 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
 <header class="site-header">
   <div class="container">
     <a class="brand" href="{rel}index.html">
-      <span class="title">Campus Ransomware Playbook</span>
+      <span class="title">Student Ransomware Playbook</span>
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">☰ Menu</button>
     <nav class="primary" id="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="{rel}index.html">Home</a></li>
-        <li><a href="{rel}prevention.html">Prevention</a></li>
-        <li><a href="{rel}response.html">Response</a></li>
-        <li><a href="{rel}readiness.html">Readiness</a></li>
+        <li><a href="{rel}prevention.html">Protect yourself</a></li>
+        <li><a href="{rel}response.html">If something goes wrong</a></li>
+        <li><a href="{rel}readiness.html">Checklist</a></li>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
-        <li><a href="{rel}emergency.html">If an incident occurs</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
       </ul>
     </nav>
@@ -80,18 +79,16 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
 <footer class="site-footer">
   <div class="container grid">
     <div>
-      <h4>Campus Ransomware Playbook</h4>
+      <h4>Student Ransomware Playbook</h4>
       <p>Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium.</p>
-      <p><a href="https://github.com/crimconsortium/campus-ransomware-playbook">View source on GitHub</a></p>
+      <p><a href="https://github.com/crimconsortium/student-ransomware-playbook">View source on GitHub</a></p>
     </div>
     <div>
       <h4>Sections</h4>
       <ul>
-        <li><a href="{rel}roles/">All roles</a></li>
-        <li><a href="{rel}prevention.html">Prevention</a></li>
-        <li><a href="{rel}response.html">Response</a></li>
-        <li><a href="{rel}readiness.html">Self-audit</a></li>
-        <li><a href="{rel}emergency.html">If an incident occurs</a></li>
+        <li><a href="{rel}prevention.html">Protect yourself</a></li>
+        <li><a href="{rel}response.html">If something goes wrong</a></li>
+        <li><a href="{rel}readiness.html">Checklist</a></li>
       </ul>
     </div>
     <div>
@@ -541,102 +538,87 @@ def render_phase_section(pid: str) -> str:
 
 
 def render_prevention() -> str:
+    student = ROLES[0]
+    items = "".join(f"<li>{html.escape(x)}</li>" for x in student['before'])
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>Prevention</h1>
-      <p class="lead">An educational summary of how published guidance suggests campuses can reduce attack surface, raise the cost of intrusion, and detect intrusions earlier. Most successful response begins with good prevention.</p>
-      {render_phase_pills(['prepare'])}
+      <h1>Protect yourself</h1>
+      <p class="lead">Simple, durable habits that make your accounts, devices, and coursework much harder to ransom or steal. None of these require IT expertise.</p>
     </div>
   </section>
+
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Educational summary of public guidance</h4>
-      <p>The recommendations on this page paraphrase publicly available guidance from sources such as <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.nist.gov/news-events/news/2025/04/nist-revises-sp-800-61-incident-response-recommendations-and-considerations">NIST SP 800-61r3</a>, and <a href="https://library.educause.edu/">EDUCAUSE</a>. They are not professional advice and not a substitute for your institution’s plan, contracts, insurance terms, or applicable law.</p>
+      <h4>Educational summary — not for use during a live incident</h4>
+      <p>This page paraphrases public guidance from sources such as <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>. It is general advice for advance reading. If something is happening right now, contact your campus IT or information-security team using a phone or known-good device.</p>
     </div>
-  </section>
-  <section class="container">
-{lifecycle_figure('prevention', 'Prevention sits at the front of the lifecycle (highlighted). Response phases shown for context. Diagram CC BY 4.0.')}
-  </section>
-{render_phase_section('prepare')}
-{render_phase_section('detect')}
-
-  <section class="container read">
-    <h2>Early-warning signals to watch</h2>
-    <figure class="diagram">
-      <img src="assets/img/early-warnings.svg" alt="Three columns of early-warning indicators — Identity, Endpoint, and People — with the rule: two or more signals at once should be treated as a likely incident and investigated immediately." loading="lazy" width="900" height="320">
-      <figcaption>Pre-encryption tells. Diagram CC BY 4.0.</figcaption>
-    </figure>
-    <p>Most ransomware intrusions show identity, endpoint, and human-reported signals before encryption begins. Watch for combinations rather than single events.</p>
   </section>
 
   <section class="container read">
-    <h2>Top prevention controls for higher ed</h2>
-    <ol>
-      <li><strong>Phishing-resistant MFA</strong> on privileged accounts; MFA campus-wide. Per <a href="https://www.cisa.gov/MFA">CISA</a>, only FIDO/WebAuthn and PKI reliably resist phishing.</li>
-      <li><strong>Immutable, tested backups</strong> for tier-1 systems, restored end-to-end at least quarterly.</li>
-      <li><strong>Network segmentation</strong> separating research, administrative, student, and IoT/lab environments.</li>
-      <li><strong>Hardened remote access</strong>: disable internet-exposed RDP; place VPNs behind MFA and conditional access.</li>
-      <li><strong>Asset and SaaS inventory</strong> with monitored exposure to high-impact CVEs — recent higher-ed breaches have been driven heavily by exploited third-party software.</li>
-      <li><strong>EDR everywhere</strong> with documented response playbooks.</li>
-      <li><strong>Continuous identity hunting</strong>: impossible travel, MFA fatigue, OAuth grants, mailbox rules.</li>
-      <li><strong>Phishing simulations and short, frequent training</strong>; reward reporting.</li>
-      <li><strong>Annual tabletop exercises</strong> across IT, leadership, communications, and legal.</li>
-    </ol>
+    <h2>Do these before anything goes wrong</h2>
+    <ul>{items}</ul>
   </section>
 
-  <section class="container">
-    <h2>Find your role’s prevention steps</h2>
-    <div class="role-grid">
-      {''.join(f'<a class="role-tile" href="roles/{r["id"]}.html#before"><span class="icon" aria-hidden="true">{r["icon"]}</span><h3>{html.escape(r["label"])}</h3><p>Before-incident checklist for this role.</p></a>' for r in ROLES)}
-    </div>
+  <section class="container read">
+    <h2>Phishing red flags</h2>
+    <p>Most successful attacks on students start with phishing — an email, text, DM, or fake login page that looks legitimate. Pause if you notice:</p>
+    <ul>
+      <li><strong>Urgency.</strong> “Your account will be locked in 24 hours.” “Your aid will be canceled.”</li>
+      <li><strong>A login link in the message.</strong> Type your campus URL into the browser yourself.</li>
+      <li><strong>A sender domain that’s close but not exact</strong> (e.g., <code>support@my-college.edu.help</code> instead of <code>support@my-college.edu</code>).</li>
+      <li><strong>Unexpected attachments</strong> — especially zip files, OneNote files, or HTML “invoices.”</li>
+      <li><strong>An offer that’s too good to be true</strong>: high-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund.</li>
+      <li><strong>MFA prompts you didn’t trigger.</strong> Never approve a prompt you didn’t start. Repeated prompts are <a href="glossary.html#mfa-fatigue">MFA fatigue</a> — a known attack.</li>
+    </ul>
   </section>
 """
-    return page("Prevention", body, depth=0, description="Prevention guidance for ransomware in higher education, including the prepare and detect phases.")
+    return page("Protect yourself", body, depth=0, description="Plain-language steps students can take to prevent ransomware and account takeover.")
 
 
 def render_response() -> str:
+    student = ROLES[0]
+    during_items = "".join(f"<li>{html.escape(x)}</li>" for x in student['during'])
+    after_items = "".join(f"<li>{html.escape(x)}</li>" for x in student['after'])
+    tree_json = html.escape(json.dumps(DECISION_TREES['student']), quote=False)
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>Response</h1>
-      <p class="lead">An educational summary of how published guidance organizes the response phases that follow a ransomware incident. The phases below paraphrase <a href="https://www.nist.gov/news-events/news/2025/04/nist-revises-sp-800-61-incident-response-recommendations-and-considerations">NIST SP 800-61r3</a> and the <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a> guide.</p>
-      {render_phase_pills(['contain', 'communicate', 'recover', 'learn'])}
+      <h1>If something goes wrong</h1>
+      <p class="lead">A short, plain-language guide to what to do if you suspect a ransomware attack, phishing hit, or account compromise. Read it before you need it.</p>
     </div>
   </section>
+
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>For planning and study — not for live-incident use</h4>
-      <p>This page is an educational synthesis of public guidance. If you believe an incident is occurring right now, contact your campus IT or information-security team using a phone or known-good device, and consider reporting to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. Nothing here is professional incident-response advice or a substitute for trained responders, qualified counsel, your institution’s plan, or applicable law.</p>
+      <h4>Read this in advance — not during a live incident</h4>
+      <p>If you believe something is happening right now, <strong>call your campus IT help desk</strong> using a phone or another known-good device, and follow their instructions. In the U.S., you can also report incidents to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
     </div>
   </section>
-  <section class="container">
-{lifecycle_figure('response', 'Response phases at a glance (highlighted). Prevention shown for context. Diagram CC BY 4.0.')}
-  </section>
-{render_phase_section('contain')}
-{render_phase_section('communicate')}
-{render_phase_section('recover')}
-{render_phase_section('learn')}
 
   <section class="container read">
-    <h2>Common pitfalls described in published guidance</h2>
-    <ul>
-      <li><strong>Powering off systems</strong> can destroy volatile memory used for forensics; CISA and NIST guidance generally recommend disconnecting from the network instead.</li>
-      <li><strong>Restoring backups into a still-compromised environment</strong> may reintroduce the attacker; published guidance recommends hardening before restore.</li>
-      <li><strong>Ad-hoc communication</strong> through potentially compromised channels; sources recommend out-of-band communication and a single source of truth.</li>
-      <li><strong>Treating ransom as a technical decision.</strong> Most guidance treats it as strategic, legal, and ethical — to be coordinated with counsel, insurer, and law enforcement.</li>
-      <li><strong>Skipping the after-action review.</strong> Reports often note that the biggest improvements are funded the week after an incident, not months later.</li>
-    </ul>
+    <h2>In the moment</h2>
+    <ul>{during_items}</ul>
   </section>
 
   <section class="container">
-    <h2>Find your role’s response background reading</h2>
-    <div class="role-grid">
-      {''.join(f'<a class="role-tile" href="roles/{r["id"]}.html#during"><span class="icon" aria-hidden="true">{r["icon"]}</span><h3>{html.escape(r["label"])}</h3><p>During-incident background reading for this role.</p></a>' for r in ROLES)}
+    <h2>What should I do right now?</h2>
+    <p>A short decision tree for the most common situations students run into.</p>
+    <div class="decision" data-decision-id="student-decision">
+      <p class="breadcrumbs"></p>
+      <p class="question"></p>
+      <div class="choices"></div>
+      <div class="result" hidden></div>
+      <script type="application/json">{tree_json}</script>
     </div>
   </section>
+
+  <section class="container read">
+    <h2>After the dust settles</h2>
+    <ul>{after_items}</ul>
+  </section>
 """
-    return page("Response", body, depth=0, description="Response phases for higher-ed ransomware incidents: contain, communicate, recover, learn.")
+    return page("If something goes wrong", body, depth=0, description="Student-focused guidance on what to do during and after a ransomware or phishing incident.")
 
 
 def render_emergency() -> str:
@@ -708,48 +690,27 @@ def render_emergency() -> str:
 
 
 def render_readiness() -> str:
-    rows = "".join(
-        f'<tr><td><a href="roles/{r["id"]}.html">{html.escape(r["label"])}</a></td>'
-        f'<td>{len(r["checklist_items"])} items</td>'
-        f'<td><a href="roles/{r["id"]}.html">Open</a></td></tr>'
-        for r in ROLES
+    student = ROLES[0]
+    chk_html = "".join(
+        f'<li><input type="checkbox"><label>{html.escape(x)}</label></li>'
+        for x in student["checklist_items"]
     )
+    quiz_json = html.escape(json.dumps(QUIZZES['student']), quote=False)
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>Self-audit &amp; readiness</h1>
-      <p class="lead">Use these checklists to gauge readiness — by individual role and overall. Progress is saved on this device only.</p>
+      <h1>Quick checklist</h1>
+      <p class="lead">A short self-audit to gauge your readiness. Check items off as you complete them — progress is saved on this device only, no accounts, no servers.</p>
     </div>
   </section>
 
-  <section class="container read">
-    <h2>Per-role checklists</h2>
-    <table>
-      <thead><tr><th>Role</th><th>Items</th><th>Open</th></tr></thead>
-      <tbody>{rows}</tbody>
-    </table>
-    <p class="muted">Tip: each role page also includes its own checklist with progress saved on this device.</p>
-
-    <h2 id="campus">Campus-wide readiness (for IT/security and leadership)</h2>
-    <p>A short, opinionated baseline for institutions just starting or refreshing their ransomware posture.</p>
-
-    <div class="checklist" data-checklist-id="campus-baseline">
-      <h3>Campus baseline <span class="badge-earned" data-role="badge" hidden>Complete</span></h3>
-      <p class="muted" data-role="counter"></p>
+  <section class="container">
+    <div class="checklist" data-checklist-id="student-readiness">
+      <h3>{html.escape(student['checklist_title'])} <span class="badge-earned" data-role="badge" hidden>Complete</span></h3>
+      <p class="muted" data-role="counter">0 of {len(student['checklist_items'])} complete</p>
       <div class="progress" aria-hidden="true"><span></span></div>
       <ul>
-        <li><input type="checkbox"><label>Phishing-resistant MFA enforced on privileged accounts; MFA required campus-wide.</label></li>
-        <li><input type="checkbox"><label>Immutable or offline backups exist for all tier-1 systems and are restored end-to-end at least quarterly.</label></li>
-        <li><input type="checkbox"><label>Network segmentation isolates research, admin, student, and IoT/lab environments.</label></li>
-        <li><input type="checkbox"><label>RDP is not exposed to the internet; remote access requires MFA and conditional access.</label></li>
-        <li><input type="checkbox"><label>Asset and SaaS inventory exists; high-severity third-party CVEs are tracked and acted on.</label></li>
-        <li><input type="checkbox"><label>EDR is on every endpoint and tied to documented response playbooks.</label></li>
-        <li><input type="checkbox"><label>Identity-provider hunting checks (impossible travel, OAuth, mailbox rules) run on a schedule.</label></li>
-        <li><input type="checkbox"><label>Annual tabletop exercise has been completed with cabinet, comms, and legal participation.</label></li>
-        <li><input type="checkbox"><label>IR retainer, cyber-insurance, legal counsel, and FBI/CISA contacts are documented and current.</label></li>
-        <li><input type="checkbox"><label>Pre-drafted holding statements, FAQs, and stakeholder lists exist for cyber incidents.</label></li>
-        <li><input type="checkbox"><label>Out-of-band communication channels (mass notification, off-domain status page) are tested.</label></li>
-        <li><input type="checkbox"><label>Decision authorities (take systems offline, ransom posture, board comms) are documented.</label></li>
+        {chk_html}
       </ul>
       <div class="actions">
         <button class="btn btn-secondary btn-sm" data-action="reset" type="button">Reset</button>
@@ -757,8 +718,20 @@ def render_readiness() -> str:
       </div>
     </div>
   </section>
+
+  <section class="container">
+    <h2>Practice scenario</h2>
+    <p>A quick scenario to turn this guidance into reflexes.</p>
+    <div class="quiz" data-quiz-id="student-quiz">
+      <p class="meta"></p>
+      <p class="question"></p>
+      <div class="options"></div>
+      <div class="feedback" hidden></div>
+      <script type="application/json">{quiz_json}</script>
+    </div>
+  </section>
 """
-    return page("Readiness", body, depth=0, description="Self-audit checklists for individuals and the campus baseline.")
+    return page("Checklist", body, depth=0, description="A short self-audit checklist for college and university students.")
 
 
 def render_glossary() -> str:
@@ -784,11 +757,11 @@ def render_faq() -> str:
     body = f"""
   <section class="container read">
     <h1>Frequently asked questions</h1>
-    <p class="lead">Quick answers to common questions from across campus.</p>
+    <p class="lead">Quick answers to common student questions about ransomware, phishing, and account safety.</p>
     {items}
   </section>
 """
-    return page("FAQ", body, depth=0, description="Frequently asked questions about ransomware in higher education.")
+    return page("FAQ", body, depth=0, description="Frequently asked questions for college and university students about ransomware, phishing, and account safety.")
 
 
 def render_references() -> str:
@@ -801,7 +774,7 @@ def render_references() -> str:
     <h1>Sources &amp; further reading</h1>
     <p class="lead">A short list of credible, current resources used to maintain this playbook.</p>
     <ul>{items}</ul>
-    <p class="muted">This list is reviewed quarterly. Suggest additions on <a href="https://github.com/crimconsortium/campus-ransomware-playbook/issues">GitHub Issues</a>.</p>
+    <p class="muted">This list is reviewed quarterly. Suggest additions on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
   </section>
 """
     return page("References", body, depth=0, description="Curated sources and further reading.")
@@ -813,9 +786,10 @@ def render_404() -> str:
     <h1>Page not found</h1>
     <p>That page isn’t here. Try one of these:</p>
     <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/emergency.html">If an incident occurs</a></li>
-      <li><a href="/glossary.html">Glossary</a></li>
+      <li><a href="/student-ransomware-playbook/">Home</a></li>
+      <li><a href="/student-ransomware-playbook/prevention.html">Protect yourself</a></li>
+      <li><a href="/student-ransomware-playbook/response.html">If something goes wrong</a></li>
+      <li><a href="/student-ransomware-playbook/glossary.html">Glossary</a></li>
     </ul>
   </section>
 """
@@ -824,15 +798,9 @@ def render_404() -> str:
 
 def main() -> None:
     out = ROOT
-    (out / "roles").mkdir(exist_ok=True)
-    # Role pages
-    for r in ROLES:
-        (out / "roles" / f"{r['id']}.html").write_text(render_role_page(r), encoding="utf-8")
-    (out / "roles" / "index.html").write_text(render_role_index_redirect(), encoding="utf-8")
-    # Top-level
+    # Top-level student-focused pages only
     (out / "prevention.html").write_text(render_prevention(), encoding="utf-8")
     (out / "response.html").write_text(render_response(), encoding="utf-8")
-    (out / "emergency.html").write_text(render_emergency(), encoding="utf-8")
     (out / "readiness.html").write_text(render_readiness(), encoding="utf-8")
     (out / "glossary.html").write_text(render_glossary(), encoding="utf-8")
     (out / "faq.html").write_text(render_faq(), encoding="utf-8")

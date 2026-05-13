@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prevention · Campus Ransomware Playbook</title>
-<meta name="description" content="Prevention guidance for ransomware in higher education, including the prepare and detect phases.">
+<title>Protect yourself · Student Ransomware Playbook</title>
+<meta name="description" content="Plain-language steps students can take to prevent ransomware and account takeover.">
 <link rel="stylesheet" href="assets/css/styles.css">
 <meta name="theme-color" content="#f68212">
 </head>
@@ -14,18 +14,17 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="index.html">
-      <span class="title">Campus Ransomware Playbook</span>
+      <span class="title">Student Ransomware Playbook</span>
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">☰ Menu</button>
     <nav class="primary" id="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="prevention.html">Prevention</a></li>
-        <li><a href="response.html">Response</a></li>
-        <li><a href="readiness.html">Readiness</a></li>
+        <li><a href="prevention.html">Protect yourself</a></li>
+        <li><a href="response.html">If something goes wrong</a></li>
+        <li><a href="readiness.html">Checklist</a></li>
         <li><a href="glossary.html">Glossary</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><a href="emergency.html">If an incident occurs</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
       </ul>
     </nav>
@@ -36,187 +35,34 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Prevention</h1>
-      <p class="lead">An educational summary of how published guidance suggests campuses can reduce attack surface, raise the cost of intrusion, and detect intrusions earlier. Most successful response begins with good prevention.</p>
-      <div class="phases"><a href="#prepare">Prepare</a></div>
+      <h1>Protect yourself</h1>
+      <p class="lead">Simple, durable habits that make your accounts, devices, and coursework much harder to ransom or steal. None of these require IT expertise.</p>
     </div>
   </section>
+
   <section class="container">
     <div class="alert danger" role="note">
-      <h4>Educational summary of public guidance</h4>
-      <p>The recommendations on this page paraphrase publicly available guidance from sources such as <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.nist.gov/news-events/news/2025/04/nist-revises-sp-800-61-incident-response-recommendations-and-considerations">NIST SP 800-61r3</a>, and <a href="https://library.educause.edu/">EDUCAUSE</a>. They are not professional advice and not a substitute for your institution’s plan, contracts, insurance terms, or applicable law.</p>
+      <h4>Educational summary — not for use during a live incident</h4>
+      <p>This page paraphrases public guidance from sources such as <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>. It is general advice for advance reading. If something is happening right now, contact your campus IT or information-security team using a phone or known-good device.</p>
     </div>
-  </section>
-  <section class="container">
-    <figure class="diagram emphasize-prev" role="img" aria-label="Six-phase ransomware lifecycle. Prevention spans Prepare and Detect; response spans Contain, Communicate, Recover, and Learn. Lessons from Learn feed back into Prepare.">
-<!--
-  Ransomware response lifecycle — six phases.
-  Campus Ransomware Playbook · CrimRxiv Consortium · CC BY 4.0
-  by Joshua Gerstenfeld and Scott Jacques.
--->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 380" role="img"
-     aria-labelledby="lc-title lc-desc" font-family="Georgia, 'Times New Roman', serif">
-  <title id="lc-title">Ransomware response lifecycle</title>
-  <desc id="lc-desc">Six chained phases — Prepare, Detect, Contain, Communicate, Recover, Learn — with prevention spanning Prepare and Detect, and response spanning Contain through Learn. Lessons from Learn feed back into Prepare.</desc>
-  <style>
-    .bg     { fill: #ffffff; }
-    .card   { fill: #ffffff; stroke: #d9d9d9; stroke-width: 1; }
-    .label  { fill: #111111; font-weight: 700; font-size: 18px; }
-    .sub    { fill: #555555; font-size: 11px; }
-    .stage  { fill: #555555; font-size: 11px; letter-spacing: .08em; }
-    .loop   { fill: #f68212; font-size: 12px; font-style: italic; }
-    .brown  { fill: #f68212; }
-    .red    { fill: #111111; }
-  </style>
-
-  <rect class="bg" width="920" height="380"/>
-
-  <!-- stage labels -->
-  <g class="prev-band">
-    <text class="stage" x="230" y="32" text-anchor="middle">PREVENTION</text>
-    <!-- band -->
-    <rect x="40"  y="48" width="380" height="170" rx="14" fill="none"
-          stroke="#f68212" stroke-dasharray="6 5" stroke-width="2"/>
-  </g>
-  <g class="resp-band">
-    <text class="stage" x="660" y="32" text-anchor="middle">RESPONSE</text>
-    <!-- band -->
-    <rect x="430" y="48" width="450" height="280" rx="14" fill="none"
-          stroke="#111111" stroke-dasharray="6 5" stroke-width="2"/>
-  </g>
-
-  <!-- Row 1: Prepare, Detect (prevention) | Contain, Communicate (response) -->
-  <g class="prev-band">
-  <!-- 1 Prepare -->
-  <g>
-    <rect class="card" x="60"  y="100" width="160" height="100" rx="10"/>
-    <circle class="brown" cx="84" cy="128" r="14"/>
-    <text x="84" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">1</text>
-    <text class="label" x="110" y="134">Prepare</text>
-    <text class="sub" x="76" y="160">MFA · backups · segments</text>
-    <text class="sub" x="76" y="178">tabletops · training</text>
-  </g>
-  <!-- 2 Detect -->
-  <g>
-    <rect class="card" x="240" y="100" width="160" height="100" rx="10"/>
-    <circle class="brown" cx="264" cy="128" r="14"/>
-    <text x="264" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">2</text>
-    <text class="label" x="290" y="134">Detect</text>
-    <text class="sub" x="256" y="160">EDR · identity hunting</text>
-    <text class="sub" x="256" y="178">user reporting</text>
-  </g>
-  </g>
-  <g class="resp-band">
-  <!-- 3 Contain -->
-  <g>
-    <rect class="card" x="450" y="100" width="160" height="100" rx="10"/>
-    <circle class="red" cx="474" cy="128" r="14"/>
-    <text x="474" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">3</text>
-    <text class="label" x="500" y="134">Contain</text>
-    <text class="sub" x="466" y="160">isolate · revoke · preserve</text>
-    <text class="sub" x="466" y="178">block C2</text>
-  </g>
-  <!-- 4 Communicate -->
-  <g>
-    <rect class="card" x="630" y="100" width="220" height="100" rx="10"/>
-    <circle class="red" cx="654" cy="128" r="14"/>
-    <text x="654" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">4</text>
-    <text class="label" x="680" y="134">Communicate</text>
-    <text class="sub" x="646" y="160">out-of-band · cadence · one source</text>
-    <text class="sub" x="646" y="178">counsel · insurer · law enforcement</text>
-  </g>
-
-  <!-- horizontal arrows row 1 -->
-  <g stroke="#555555" stroke-width="2" fill="none">
-    <path d="M222 150 L238 150"/>
-    <path d="M236 145 L240 150 L236 155" />
-    <path d="M402 150 L448 150"/>
-    <path d="M446 145 L450 150 L446 155"/>
-    <path d="M612 150 L628 150"/>
-    <path d="M626 145 L630 150 L626 155"/>
-  </g>
-
-  <!-- Row 2: Recover, Learn (response) -->
-  <g>
-    <rect class="card" x="450" y="230" width="160" height="80" rx="10"/>
-    <circle class="red" cx="474" cy="258" r="14"/>
-    <text x="474" y="263" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">5</text>
-    <text class="label" x="500" y="264">Recover</text>
-    <text class="sub" x="466" y="288">rebuild · validate · rotate</text>
-  </g>
-  <g>
-    <rect class="card" x="630" y="230" width="220" height="80" rx="10"/>
-    <circle class="red" cx="654" cy="258" r="14"/>
-    <text x="654" y="263" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">6</text>
-    <text class="label" x="680" y="264">Learn</text>
-    <text class="sub" x="646" y="288">AAR · update · brief board</text>
-  </g>
-  </g>
-
-  <!-- elbow Communicate(4) -> Recover(5): down then left to top of Recover -->
-  <g stroke="#555555" stroke-width="2" fill="none">
-    <path d="M740 200 L740 220 L530 220 L530 230"/>
-    <path d="M526 226 L530 230 L534 226"/>
-    <!-- Recover -> Learn -->
-    <path d="M612 270 L628 270"/>
-    <path d="M626 265 L630 270 L626 275"/>
-  </g>
-
-  <!-- feedback loop Learn -> Prepare, routed below cards across the bottom -->
-  <g stroke="#f68212" stroke-width="2" stroke-dasharray="5 4" fill="none">
-    <path d="M740 310 L740 360 L140 360 L140 200"/>
-    <path d="M136 204 L140 200 L144 204"/>
-  </g>
-  <!-- white background behind label so the dashed line reads as broken -->
-  <rect x="260" y="347" width="360" height="20" fill="#ffffff"/>
-  <text class="loop" x="440" y="362" text-anchor="middle">Lessons from Learn feed back into Prepare</text>
-</svg>
-
-      <figcaption>Prevention sits at the front of the lifecycle (highlighted). Response phases shown for context. Diagram CC BY 4.0.</figcaption>
-    </figure>
-  </section>
-
-  <section class="container read" id="prepare">
-    <h2>Prepare</h2>
-    <p class="lead">Reduce attack surface, raise the cost of a successful intrusion, and rehearse the response.</p>
-    <ul><li>Enforce MFA — phishing-resistant where you can.</li><li>Maintain immutable, tested backups for tier-1 systems.</li><li>Segment networks and harden remote access.</li><li>Patch on a defined cadence; track third-party SaaS exposure.</li><li>Run regular phishing simulations and security training.</li><li>Hold annual tabletop exercises across roles.</li></ul>
-  </section>
-
-  <section class="container read" id="detect">
-    <h2>Detect</h2>
-    <p class="lead">Catch ransomware activity early — before encryption, ideally during initial access.</p>
-    <ul><li>Deploy EDR on all endpoints with tuned alerting.</li><li>Centralize identity provider logs and hunt continuously.</li><li>Monitor for impossible travel, MFA fatigue, OAuth grants, and rogue mailbox rules.</li><li>Empower users to report suspicious activity in one click and reward reports.</li><li>Watch for early indicators: mass file renames, shadow-copy deletion, unexpected admin tool use.</li></ul>
   </section>
 
   <section class="container read">
-    <h2>Early-warning signals to watch</h2>
-    <figure class="diagram">
-      <img src="assets/img/early-warnings.svg" alt="Three columns of early-warning indicators — Identity, Endpoint, and People — with the rule: two or more signals at once should be treated as a likely incident and investigated immediately." loading="lazy" width="900" height="320">
-      <figcaption>Pre-encryption tells. Diagram CC BY 4.0.</figcaption>
-    </figure>
-    <p>Most ransomware intrusions show identity, endpoint, and human-reported signals before encryption begins. Watch for combinations rather than single events.</p>
+    <h2>Do these before anything goes wrong</h2>
+    <ul><li>Turn on multi-factor authentication (MFA) for your campus account, email, and any system holding your records.</li><li>Use a password manager and a unique password for your campus identity. Never reuse it on other sites.</li><li>Keep your laptop, phone, and browser updated. Install updates within 7 days of release.</li><li>Back up your coursework to campus cloud storage (and a second copy where allowed). Don’t rely on a single drive.</li><li>Save the IT help desk and security team contact info in your phone before you need it.</li><li>Complete any phishing or security training the campus offers — even short modules build real skill.</li><li>Review your account recovery options (backup email, phone) so an attacker can’t reset your password.</li></ul>
   </section>
 
   <section class="container read">
-    <h2>Top prevention controls for higher ed</h2>
-    <ol>
-      <li><strong>Phishing-resistant MFA</strong> on privileged accounts; MFA campus-wide. Per <a href="https://www.cisa.gov/MFA">CISA</a>, only FIDO/WebAuthn and PKI reliably resist phishing.</li>
-      <li><strong>Immutable, tested backups</strong> for tier-1 systems, restored end-to-end at least quarterly.</li>
-      <li><strong>Network segmentation</strong> separating research, administrative, student, and IoT/lab environments.</li>
-      <li><strong>Hardened remote access</strong>: disable internet-exposed RDP; place VPNs behind MFA and conditional access.</li>
-      <li><strong>Asset and SaaS inventory</strong> with monitored exposure to high-impact CVEs — recent higher-ed breaches have been driven heavily by exploited third-party software.</li>
-      <li><strong>EDR everywhere</strong> with documented response playbooks.</li>
-      <li><strong>Continuous identity hunting</strong>: impossible travel, MFA fatigue, OAuth grants, mailbox rules.</li>
-      <li><strong>Phishing simulations and short, frequent training</strong>; reward reporting.</li>
-      <li><strong>Annual tabletop exercises</strong> across IT, leadership, communications, and legal.</li>
-    </ol>
-  </section>
-
-  <section class="container">
-    <h2>Find your role’s prevention steps</h2>
-    <div class="role-grid">
-      <a class="role-tile" href="roles/student.html#before"><span class="icon" aria-hidden="true">🎓</span><h3>Student</h3><p>Before-incident checklist for this role.</p></a><a class="role-tile" href="roles/faculty.html#before"><span class="icon" aria-hidden="true">📚</span><h3>Faculty (incl. adjuncts and researchers)</h3><p>Before-incident checklist for this role.</p></a><a class="role-tile" href="roles/staff.html#before"><span class="icon" aria-hidden="true">🗂️</span><h3>Staff and department personnel</h3><p>Before-incident checklist for this role.</p></a><a class="role-tile" href="roles/it.html#before"><span class="icon" aria-hidden="true">🛡️</span><h3>IT and Security teams</h3><p>Before-incident checklist for this role.</p></a><a class="role-tile" href="roles/leadership.html#before"><span class="icon" aria-hidden="true">🏛️</span><h3>Senior leadership and administrators</h3><p>Before-incident checklist for this role.</p></a><a class="role-tile" href="roles/comms.html#before"><span class="icon" aria-hidden="true">📣</span><h3>Communications, public affairs, and legal</h3><p>Before-incident checklist for this role.</p></a>
-    </div>
+    <h2>Phishing red flags</h2>
+    <p>Most successful attacks on students start with phishing — an email, text, DM, or fake login page that looks legitimate. Pause if you notice:</p>
+    <ul>
+      <li><strong>Urgency.</strong> “Your account will be locked in 24 hours.” “Your aid will be canceled.”</li>
+      <li><strong>A login link in the message.</strong> Type your campus URL into the browser yourself.</li>
+      <li><strong>A sender domain that’s close but not exact</strong> (e.g., <code>support@my-college.edu.help</code> instead of <code>support@my-college.edu</code>).</li>
+      <li><strong>Unexpected attachments</strong> — especially zip files, OneNote files, or HTML “invoices.”</li>
+      <li><strong>An offer that’s too good to be true</strong>: high-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund.</li>
+      <li><strong>MFA prompts you didn’t trigger.</strong> Never approve a prompt you didn’t start. Repeated prompts are <a href="glossary.html#mfa-fatigue">MFA fatigue</a> — a known attack.</li>
+    </ul>
   </section>
 
 </main>
@@ -224,18 +70,16 @@
 <footer class="site-footer">
   <div class="container grid">
     <div>
-      <h4>Campus Ransomware Playbook</h4>
+      <h4>Student Ransomware Playbook</h4>
       <p>Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium.</p>
-      <p><a href="https://github.com/crimconsortium/campus-ransomware-playbook">View source on GitHub</a></p>
+      <p><a href="https://github.com/crimconsortium/student-ransomware-playbook">View source on GitHub</a></p>
     </div>
     <div>
       <h4>Sections</h4>
       <ul>
-        <li><a href="roles/">All roles</a></li>
-        <li><a href="prevention.html">Prevention</a></li>
-        <li><a href="response.html">Response</a></li>
-        <li><a href="readiness.html">Self-audit</a></li>
-        <li><a href="emergency.html">If an incident occurs</a></li>
+        <li><a href="prevention.html">Protect yourself</a></li>
+        <li><a href="response.html">If something goes wrong</a></li>
+        <li><a href="readiness.html">Checklist</a></li>
       </ul>
     </div>
     <div>
