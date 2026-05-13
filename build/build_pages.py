@@ -879,22 +879,18 @@ def render_scenarios() -> str:
 HOTSPOT_GEOMETRY = {
     # key:        (cx, cy, label)
     # Coordinates are tuned to the 1000x600 viewBox of _dorm_svg().
-    # New positions match the richer scene: laptop on the center desk,
-    # phone next to it, console near the TV stand bottom-right, router
-    # on the high shelf top-left, printer on the dresser bottom-right,
-    # roommate's PC at the left wall desk, cloud drive poster above the
-    # bed (right), campus email poster above the main desk (center),
-    # club account whiteboard top-right, USB stick on the center desk.
-    "router":     (118, 100, "Wi-Fi router"),
+    # roommate's desk on the left, student's desk on the right, with a
+    # small stand between them holding the Wi-Fi router on top and the
+    # printer on a lower shelf. Posters are on the back wall above.
     "campusemail":(565, 120, "Campus email"),
     "clubaccount":(860, 130, "Club account"),
     "clouddrive": (707, 120, "Cloud drive"),
-    "roommate":   (165, 320, "Roommate's PC"),
-    "laptop":     (460, 360, "Laptop"),
-    "usbstick":   (385, 405, "USB stick"),
-    "phone":      (560, 405, "Phone"),
-    "printer":    (820, 425, "Printer"),
-    "console":    (855, 510, "Console"),
+    "roommate":   (205, 325, "Roommate's PC"),
+    "router":     (510, 415, "Wi-Fi router"),
+    "printer":    (510, 478, "Printer"),
+    "laptop":     (735, 355, "Laptop"),
+    "usbstick":   (658, 423, "USB stick"),
+    "phone":      (831, 427, "Phone"),
 }
 
 
@@ -986,26 +982,7 @@ def _dorm_svg() -> str:
   <!-- sunbeam falling across the room -->
   <polygon points="285,200 455,200 600,470 220,470" fill="url(#lab-sunbeam)"/>
 
-  <!-- Wi-Fi router on a shelf, top-left -->
-  <!-- shelf -->
-  <rect x="40" y="140" width="170" height="8" fill="#5a4f3e"/>
-  <rect x="42" y="148" width="6" height="14" fill="#5a4f3e"/>
-  <rect x="202" y="148" width="6" height="14" fill="#5a4f3e"/>
-  <!-- router body -->
-  <rect x="85" y="95" width="80" height="38" rx="5" fill="#222"/>
-  <rect x="90" y="100" width="70" height="3" fill="#f68212"/>
-  <circle cx="100" cy="122" r="3" fill="#f68212"/>
-  <circle cx="112" cy="122" r="3" fill="#f68212" opacity="0.7"/>
-  <circle cx="124" cy="122" r="3" fill="#f68212" opacity="0.4"/>
-  <!-- antennas -->
-  <line x1="95" y1="95" x2="75" y2="60" stroke="#222" stroke-width="3"/>
-  <line x1="155" y1="95" x2="175" y2="60" stroke="#222" stroke-width="3"/>
-  <circle cx="75" cy="60" r="4" fill="#222"/>
-  <circle cx="175" cy="60" r="4" fill="#222"/>
-  <!-- a couple of small books on the shelf -->
-  <rect x="170" y="118" width="10" height="22" fill="#3a3a3a"/>
-  <rect x="180" y="114" width="10" height="26" fill="#7a6d59"/>
-  <rect x="190" y="120" width="10" height="20" fill="#f68212"/>
+  <!-- (Router moved to the center stand between the desks; back wall stays clean.) -->
 
   <!-- Posters on back wall -->
   <!-- EMAIL poster (right of window, above main desk) -->
@@ -1039,97 +1016,113 @@ def _dorm_svg() -> str:
     <text x="800" y="186" font-family="sans-serif" font-size="11" fill="#3a3a3a">Meet: Thu 7pm</text>
   </g>
 
-  <!-- 3. LEFT-WALL: Roommate's desk + monitor + tower + chair -->
-  <!-- desk -->
-  <rect x="30" y="340" width="230" height="14" fill="#7a6d59"/>
-  <rect x="40" y="354" width="10" height="110" fill="#5a4f3e"/>
-  <rect x="240" y="354" width="10" height="110" fill="#5a4f3e"/>
+  <!-- 3. ROOMMATE'S DESK (left) -->
+  <!-- desk top -->
+  <rect x="30" y="380" width="410" height="16" fill="#7a6d59"/>
+  <rect x="30" y="396" width="410" height="4" fill="#5a4f3e"/>
+  <!-- legs -->
+  <rect x="40" y="396" width="12" height="100" fill="#5a4f3e"/>
+  <rect x="418" y="396" width="12" height="100" fill="#5a4f3e"/>
   <!-- monitor (off, shows a small label) -->
-  <rect x="105" y="245" width="130" height="90" rx="4" fill="#1a1a1a"/>
-  <rect x="112" y="252" width="116" height="76" fill="#222"/>
-  <text x="170" y="295" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#f68212" font-weight="700">ROOMMATE</text>
+  <rect x="130" y="275" width="150" height="100" rx="5" fill="#1a1a1a"/>
+  <rect x="138" y="283" width="134" height="84" fill="#222"/>
+  <text x="205" y="330" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f68212" font-weight="700">ROOMMATE</text>
   <!-- monitor stand -->
-  <rect x="160" y="335" width="20" height="8" fill="#222"/>
+  <rect x="195" y="375" width="22" height="8" fill="#222"/>
   <!-- tower beside the desk -->
-  <rect x="40" y="360" width="40" height="95" rx="3" fill="#2b2b2b"/>
-  <circle cx="60" cy="375" r="4" fill="#f68212"/>
-  <rect x="50" y="385" width="20" height="3" fill="#444"/>
-  <rect x="50" y="392" width="20" height="3" fill="#444"/>
-  <!-- chair -->
-  <rect x="125" y="395" width="70" height="60" rx="6" fill="#3a3a3a"/>
-  <rect x="130" y="455" width="60" height="10" fill="#222"/>
-  <rect x="155" y="465" width="10" height="30" fill="#222"/>
+  <rect x="55" y="395" width="42" height="105" rx="3" fill="#2b2b2b"/>
+  <circle cx="76" cy="410" r="4" fill="#f68212"/>
+  <rect x="65" y="420" width="22" height="3" fill="#444"/>
+  <rect x="65" y="427" width="22" height="3" fill="#444"/>
   <!-- keyboard on the desk -->
-  <rect x="108" y="344" width="120" height="10" rx="2" fill="#444"/>
+  <rect x="155" y="384" width="130" height="10" rx="2" fill="#444"/>
+  <!-- mouse -->
+  <ellipse cx="305" cy="388" rx="8" ry="5" fill="#444"/>
+  <!-- chair (tucked under) -->
+  <rect x="180" y="445" width="80" height="55" rx="6" fill="#3a3a3a"/>
+  <rect x="212" y="500" width="16" height="40" fill="#222"/>
+  <rect x="185" y="540" width="70" height="6" fill="#222"/>
 
-  <!-- 4. MAIN DESK (center) -->
-  <rect x="310" y="395" width="410" height="18" fill="#7a6d59"/>
-  <rect x="315" y="413" width="12" height="95" fill="#5a4f3e"/>
-  <rect x="703" y="413" width="12" height="95" fill="#5a4f3e"/>
-  <!-- desk drawer hint -->
-  <rect x="335" y="413" width="360" height="22" fill="#6a5e4a"/>
-  <circle cx="515" cy="424" r="3" fill="#3a3a3a"/>
-  <!-- lamp on left side of desk -->
-  <rect x="335" y="380" width="6" height="-50" fill="#3a3a3a"/>
-  <line x1="338" y1="395" x2="338" y2="330" stroke="#3a3a3a" stroke-width="4"/>
-  <line x1="338" y1="330" x2="370" y2="310" stroke="#3a3a3a" stroke-width="4"/>
-  <polygon points="360,305 392,305 396,330 356,330" fill="#3a3a3a"/>
+  <!-- 4. CENTER STAND between the two desks (Wi-Fi router on top, printer on lower shelf) -->
+  <!-- back panel -->
+  <rect x="462" y="360" width="96" height="180" fill="#7a6d59"/>
+  <!-- top edge highlight -->
+  <rect x="462" y="360" width="96" height="4" fill="#5a4f3e"/>
+  <!-- side shadows -->
+  <rect x="462" y="360" width="4" height="180" fill="#5a4f3e"/>
+  <rect x="554" y="360" width="4" height="180" fill="#5a4f3e"/>
+  <!-- middle shelf line -->
+  <rect x="462" y="445" width="96" height="4" fill="#5a4f3e"/>
+  <!-- bottom edge -->
+  <rect x="462" y="536" width="96" height="4" fill="#3a3a3a"/>
+  <!-- ROUTER on top shelf -->
+  <rect x="472" y="395" width="76" height="40" rx="5" fill="#222"/>
+  <rect x="477" y="400" width="66" height="3" fill="#f68212"/>
+  <circle cx="487" cy="425" r="3" fill="#f68212"/>
+  <circle cx="499" cy="425" r="3" fill="#f68212" opacity="0.7"/>
+  <circle cx="511" cy="425" r="3" fill="#f68212" opacity="0.4"/>
+  <!-- router antennas -->
+  <line x1="482" y1="395" x2="472" y2="362" stroke="#222" stroke-width="3"/>
+  <line x1="538" y1="395" x2="548" y2="362" stroke="#222" stroke-width="3"/>
+  <circle cx="472" cy="362" r="3" fill="#222"/>
+  <circle cx="548" cy="362" r="3" fill="#222"/>
+  <!-- PRINTER on lower shelf -->
+  <rect x="472" y="460" width="76" height="38" rx="4" fill="#cfc4b3" stroke="#3a3a3a" stroke-width="1.5"/>
+  <rect x="478" y="472" width="64" height="6" fill="#fff" stroke="#3a3a3a" stroke-width="1"/>
+  <rect x="478" y="464" width="22" height="3" fill="#222"/>
+  <circle cx="540" cy="466" r="2.5" fill="#f68212"/>
+
+  <!-- 5. STUDENT'S DESK (right) -->
+  <rect x="580" y="395" width="380" height="16" fill="#7a6d59"/>
+  <rect x="580" y="411" width="380" height="4" fill="#5a4f3e"/>
+  <!-- drawer -->
+  <rect x="590" y="415" width="360" height="22" fill="#6a5e4a"/>
+  <circle cx="770" cy="426" r="3" fill="#3a3a3a"/>
+  <!-- legs -->
+  <rect x="590" y="415" width="12" height="85" fill="#5a4f3e"/>
+  <rect x="938" y="415" width="12" height="85" fill="#5a4f3e"/>
+  <!-- lamp on left side of student's desk -->
+  <line x1="610" y1="395" x2="610" y2="330" stroke="#3a3a3a" stroke-width="4"/>
+  <line x1="610" y1="330" x2="642" y2="310" stroke="#3a3a3a" stroke-width="4"/>
+  <polygon points="632,305 664,305 668,330 628,330" fill="#3a3a3a"/>
   <!-- lamp glow -->
-  <ellipse cx="378" cy="345" rx="75" ry="55" fill="url(#lab-lamp-glow)"/>
+  <ellipse cx="650" cy="345" rx="75" ry="55" fill="url(#lab-lamp-glow)"/>
   <!-- mug -->
-  <rect x="345" y="370" width="22" height="26" rx="3" fill="#f68212"/>
-  <path d="M 367,375 q 8,0 8,8 q 0,8 -8,8" fill="none" stroke="#f68212" stroke-width="3"/>
-  <!-- stack of books -->
-  <rect x="665" y="378" width="50" height="7" fill="#3a3a3a"/>
-  <rect x="662" y="385" width="55" height="6" fill="#7a6d59"/>
-  <rect x="668" y="391" width="48" height="4" fill="#f68212"/>
+  <rect x="618" y="370" width="22" height="26" rx="3" fill="#f68212"/>
+  <path d="M 640,375 q 8,0 8,8 q 0,8 -8,8" fill="none" stroke="#f68212" stroke-width="3"/>
+  <!-- stack of books on right side -->
+  <rect x="890" y="378" width="50" height="7" fill="#3a3a3a"/>
+  <rect x="887" y="385" width="55" height="6" fill="#7a6d59"/>
+  <rect x="893" y="391" width="48" height="4" fill="#f68212"/>
   <!-- LAPTOP (open, glowing screen) -->
-  <!-- screen -->
-  <polygon points="420,322 510,322 520,388 410,388" fill="#1a1a1a"/>
-  <polygon points="428,328 502,328 510,382 420,382" fill="#2a2a2a"/>
-  <!-- screen content: a fake browser bar in orange -->
-  <rect x="425" y="332" width="82" height="9" fill="#0d0d0d"/>
-  <rect x="428" y="335" width="3" height="3" fill="#f68212"/>
-  <rect x="434" y="335" width="3" height="3" fill="#f68212" opacity="0.6"/>
-  <rect x="440" y="335" width="3" height="3" fill="#f68212" opacity="0.3"/>
-  <rect x="450" y="335" width="55" height="3" fill="#444"/>
+  <polygon points="690,322 780,322 790,388 680,388" fill="#1a1a1a"/>
+  <polygon points="698,328 772,328 780,382 690,382" fill="#2a2a2a"/>
+  <!-- screen browser bar -->
+  <rect x="695" y="332" width="82" height="9" fill="#0d0d0d"/>
+  <rect x="698" y="335" width="3" height="3" fill="#f68212"/>
+  <rect x="704" y="335" width="3" height="3" fill="#f68212" opacity="0.6"/>
+  <rect x="710" y="335" width="3" height="3" fill="#f68212" opacity="0.3"/>
+  <rect x="720" y="335" width="55" height="3" fill="#444"/>
   <!-- screen text lines -->
-  <rect x="428" y="346" width="68" height="3" fill="#f68212"/>
-  <rect x="428" y="353" width="55" height="3" fill="#888"/>
-  <rect x="428" y="360" width="60" height="3" fill="#888"/>
-  <rect x="428" y="367" width="45" height="3" fill="#888"/>
-  <rect x="428" y="374" width="40" height="3" fill="#f68212"/>
+  <rect x="698" y="346" width="68" height="3" fill="#f68212"/>
+  <rect x="698" y="353" width="55" height="3" fill="#888"/>
+  <rect x="698" y="360" width="60" height="3" fill="#888"/>
+  <rect x="698" y="367" width="45" height="3" fill="#888"/>
+  <rect x="698" y="374" width="40" height="3" fill="#f68212"/>
   <!-- base (keyboard) -->
-  <polygon points="395,388 525,388 540,400 380,400" fill="#2b2b2b"/>
-  <polygon points="395,388 525,388 522,391 398,391" fill="#444"/>
+  <polygon points="665,388 795,388 810,400 650,400" fill="#2b2b2b"/>
+  <polygon points="665,388 795,388 792,391 668,391" fill="#444"/>
   <!-- USB stick on the desk to the left of laptop -->
-  <rect x="370" y="398" width="30" height="10" rx="1" fill="#f68212"/>
-  <rect x="398" y="399" width="8" height="8" fill="#cfc4b3"/>
+  <rect x="640" y="418" width="30" height="10" rx="1" fill="#f68212"/>
+  <rect x="668" y="419" width="8" height="8" fill="#cfc4b3"/>
   <!-- PHONE on the desk, right of laptop, charging -->
-  <rect x="540" y="395" width="42" height="24" rx="4" fill="#1a1a1a"/>
-  <rect x="544" y="399" width="34" height="16" rx="1" fill="#2a2a2a"/>
-  <circle cx="561" cy="407" r="4" fill="#f68212"/>
+  <rect x="810" y="415" width="42" height="24" rx="4" fill="#1a1a1a"/>
+  <rect x="814" y="419" width="34" height="16" rx="1" fill="#2a2a2a"/>
+  <circle cx="831" cy="427" r="4" fill="#f68212"/>
   <!-- charging cable hint -->
-  <path d="M 582,407 q 30,0 30,15 q 0,15 -10,15" stroke="#444" stroke-width="2" fill="none"/>
+  <path d="M 852,427 q 30,0 30,15 q 0,15 -10,15" stroke="#444" stroke-width="2" fill="none"/>
 
-  <!-- 5. (Bed removed; right wall is open) -->
-
-  <!-- 6. DRESSER / PRINTER (bottom right) and TV STAND / CONSOLE -->
-  <!-- Dresser/printer combo, far right -->
-  <rect x="760" y="440" width="165" height="55" fill="#7a6d59"/>
-  <rect x="760" y="440" width="165" height="4" fill="#5a4f3e"/>
-  <!-- printer body -->
-  <rect x="785" y="402" width="80" height="38" rx="4" fill="#cfc4b3" stroke="#3a3a3a" stroke-width="1.5"/>
-  <rect x="790" y="414" width="70" height="6" fill="#fff" stroke="#3a3a3a" stroke-width="1"/>
-  <rect x="790" y="406" width="24" height="3" fill="#222"/>
-  <circle cx="855" cy="408" r="2.5" fill="#f68212"/>
-  <!-- TV stand under the dresser line, left of dresser -->
-  <rect x="775" y="495" width="180" height="40" fill="#5a4f3e"/>
-  <rect x="775" y="495" width="180" height="4" fill="#3a3a3a"/>
-  <!-- console (slim, slotted) -->
-  <rect x="815" y="500" width="90" height="22" rx="3" fill="#1a1a1a"/>
-  <rect x="825" y="510" width="30" height="3" fill="#3a3a3a"/>
-  <circle cx="890" cy="511" r="2.5" fill="#f68212"/>
+  <!-- 6. (Console/TV stand removed; right side is just the desk.) -->
 
   <!-- 7. (Rug removed) -->
 
@@ -1139,7 +1132,7 @@ def _dorm_svg() -> str:
 
 
 def render_dorm_lab() -> str:
-    """Dorm Room Incident Lab — 10 short room-anchored modules.
+    """Dorm Room Incident Lab — short room-anchored modules.
 
     Single static page. SVG dorm scene shows clickable hotspots; below it,
     an accessible tile grid lists every module (used as the small-screen and

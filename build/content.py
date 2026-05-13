@@ -703,7 +703,7 @@ SCENARIOS = [
 #   id, hotspot, title, blurb, setup, start (node id), nodes {...}, aar [list].
 #
 # hotspot       short label tied to a fixture in the dorm scene
-#                ("laptop","phone","console","router","printer","roommate",
+#                ("laptop","phone","router","printer","roommate",
 #                 "clouddrive","campusemail","clubaccount","usbstick")
 # nodes         same shape as SCENARIOS but shorter — 2 decisions max + outcome
 # aar           after-action review checklist (4–6 items, each a 1-line habit)
@@ -958,54 +958,9 @@ LAB = [
             "Report odd-looking prompts on shared hardware to housing or IT.",
         ],
     },
-    {
-        "id": "gaming-takeover",
-        "hotspot": "console",
-        "title": "Your gaming account was taken over",
-        "blurb": "Steam emails you about a login from a country you've never visited.",
-        "setup": (
-            "You get an email: 'New sign-in to your Steam account from <country you've never been to>.' "
-            "You weren't playing. You try to log in. Your password no longer works."
-        ),
-        "start": "n0",
-        "nodes": {
-            "n0": {"type": "decision", "q": "First move?", "choices": [
-                {"label": "From the official account-recovery page (not the email link), reset my password and lock the account; then check whether the same password was used anywhere else, especially email and campus.",
-                 "next": "n1", "score": -2, "tag": "good"},
-                {"label": "Reply to the email asking what happened.",
-                 "next": "out_reply", "score": 1, "tag": "risky"},
-                {"label": "Buy 'account recovery' help from a website in the search results.",
-                 "next": "out_buy", "score": 2, "tag": "bad"},
-            ]},
-            "n1": {"type": "decision", "q": "Account locked. Now what?", "choices": [
-                {"label": "Turn on the strongest available MFA, generate a unique new password from my password manager, and review connected payment methods.",
-                 "next": "out_good", "score": -2, "tag": "good"},
-                {"label": "Use the same password I just reset, with a number on the end.",
-                 "next": "out_weak", "score": 1, "tag": "risky"},
-            ]},
-            "out_reply": {"type": "outcome", "tag": "risky", "score": 1,
-                "title": "Don't engage by reply.",
-                "body": "If the email was a phish, replying confirms your address. If it was real, replying doesn't reach a human. Always go to the service's official site to recover.",
-                "links": [("If something goes wrong", "response.html")]},
-            "out_buy": {"type": "outcome", "tag": "bad", "score": 2,
-                "title": "'Recovery services' in ads are scams.",
-                "body": "Almost every paid 'account recovery' site is a scam. Use the platform's own recovery flow. If you've already paid, dispute the charge with your bank.",
-                "links": [("If something goes wrong", "response.html")]},
-            "out_good": {"type": "outcome", "tag": "good", "score": -2,
-                "title": "Account back, and harder to hit next time.",
-                "body": "Unique password plus the strongest MFA available means the same takeover doesn't happen twice. Check whether you used the same password on your email or campus account. If so, change those too. That reuse is how most gaming compromises turn into school compromises.",
-                "links": [("Protect yourself", "prevention.html")]},
-            "out_weak": {"type": "outcome", "tag": "risky", "score": 1,
-                "title": "Same password = same outcome.",
-                "body": "Attackers try variations. A password manager exists exactly so you don't have to memorize a unique one for every site. Set one up before you leave this page.",
-                "links": [("Protect yourself", "prevention.html")]},
-        },
-        "aar": [
-            "Use a password manager for every account.",
-            "Never reuse my school password on game, social, or shopping sites.",
-            "Turn on MFA on my gaming and store accounts.",
-        ],
-    },
+    # NOTE: removed gaming-takeover (was hotspot="console") when the
+    # console/TV-stand was dropped from the dorm scene. Password reuse
+    # and MFA are still covered in other modules and on prevention.html.
     {
         "id": "clouddrive-massshare",
         "hotspot": "clouddrive",
