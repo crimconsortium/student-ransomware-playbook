@@ -8,8 +8,6 @@ A plain-language, open-access guide for **college and university students** on h
 
 A self-contained static website written **for students**, not for IT staff or campus leadership. It explains, in everyday language, how ransomware and the scams that lead to it actually affect students — and what to do about them.
 
-It is a sibling project to the broader [Campus Ransomware Playbook](https://crimconsortium.github.io/campus-ransomware-playbook/), which covers every role on campus (faculty, staff, IT, leadership, communications/legal). This student edition focuses entirely on what a student can do.
-
 ## What's inside
 
 - **Protect yourself** — phishing red flags, password and MFA hygiene, device security on campus Wi-Fi, backups, and common student-targeted scams (fake jobs, fake financial-aid portals, fake course pages).

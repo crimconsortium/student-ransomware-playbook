@@ -125,7 +125,7 @@ GLOSSARY = [
     ("FIDO2 / WebAuthn", "Phishing-resistant authentication standards. Hardware keys and platform authenticators (Touch ID, Face ID, Windows Hello) implement them."),
     ("Incident Commander", "The single person responsible for directing the response during an incident, regardless of normal seniority."),
     ("Indicator of Compromise (IOC)", "An observable artifact (file hash, IP, domain, behavior) that suggests a system has been attacked."),
-    ("MFA / Multi-factor authentication", "Requiring more than a password to sign in, typically a code or hardware key. Phishing-resistant MFA (FIDO2) defeats most credential phishing."),
+    ("MFA / Multi-factor authentication", "Requiring more than a password to sign in, typically a code or hardware key. Phishing-resistant MFA (FIDO2/WebAuthn) binds the credential to the real site, so it cannot be replayed on a fake login page."),
     ("MFA fatigue", "Attack where an attacker repeatedly triggers MFA prompts hoping the user approves one out of frustration."),
     ("NIST", "U.S. National Institute of Standards and Technology. Publishes the Cybersecurity Framework and SP 800-61 for incident response."),
     ("Phishing", "Deceptive messages (email, SMS, voice, web) that trick users into entering credentials, running malware, or approving fraudulent transactions."),
@@ -141,17 +141,48 @@ FAQ = [
     ("What even is ransomware, in plain terms?",
      "Software that locks up your files (and usually steals copies first) so someone can charge you to unlock them, or to not leak them. As a student you mostly see the way in: phishing emails, fake login pages, and account takeovers."),
     ("Why should I care? Isn't this an IT problem?",
-     "Your account is the easiest way in. Compromised student accounts have been used to attack faculty, raid scholarship funds, exfiltrate course rosters, and reset other passwords. A single careless click can affect your grades, financial aid, and roommates."),
+     # Every clause in the answer below is anchored to a named higher-ed institution
+     # documenting compromised STUDENT (not faculty/staff) accounts, on the record:
+     #
+     #   - "taken over by phishing, used to send more phishing to classmates":
+     #     Morehouse College ITS, reported by The Maroon Tiger (2 Aug 2025).
+     #     Morehouse ITS confirmed student accounts were compromised and used to send
+     #     phishing to other students (fake job, work-study, and direct-funding lures).
+     #     https://maroontigermedia.com/2025/08/phishing-morehouse-emails-student-hacking/
+     #
+     #   - "reset passwords or change account-recovery settings to keep access":
+     #     University of Utah Information Security Office (Nov 2021).
+     #     "recent attackers have used a combination of phished and socially-engineered
+     #     information to reset user passwords, allowing the attackers to keep using
+     #     compromised accounts even after the password has been changed."
+     #     https://attheu.utah.edu/announcements/students-face-increasing-phishing-and-other-cyberattacks/
+     #
+     # Claims removed during 2026-05 review for lack of clean public-source support
+     # for the *compromised-student-account* pathway specifically:
+     #   - "attack faculty" (cited cases like Sac State 2020, Oregon State 2019, Duke 2014
+     #     are all compromised FACULTY/STAFF accounts, not students)
+     #   - "raid scholarship funds" (documented federal aid fraud is overwhelmingly
+     #     synthetic-identity / bot fraud, not real student account takeover)
+     #   - "exfiltrate course rosters" (no clean documented case of a compromised
+     #     student account being used to exfiltrate rosters)
+     "Your account is the easiest way in. Universities have documented student accounts being taken over by phishing, then used to send more phishing to classmates from a trusted address, and to reset passwords or change account-recovery settings so attackers keep access even after the original password is changed. A single careless click can affect your grades, financial aid, and the people around you."),
     ("I think I clicked a phishing link. What now?",
      "Stop using the device. From a different device (your phone is fine), change the password for the affected account, then call the campus IT help desk. Keep the original message. IT may need it. Speed matters more than embarrassment."),
     ("My laptop is showing a ransom note. What should I do?",
      "Don't pay anything. Disconnect from Wi-Fi and unplug any cables, but leave the device powered on (forensics may need volatile memory). Call campus IT right now. Don't try to 'fix' it yourself."),
     ("Is the campus going to discipline me if I report a mistake?",
-     "Most campuses have a non-punitive reporting culture for honest reports. They need the data to defend everyone. Check your campus policy, but the cost of not reporting is almost always worse than the cost of reporting."),
+     # "Most campuses have a non-punitive reporting culture" was an unsourced empirical
+     # claim about institutional behavior; reframed to "Check your campus policy" with
+     # a directional argument that doesn't require quantifying campus policies.
+     "Many campuses encourage honest reporting and treat accidental clicks differently from intentional misconduct. They need the data to defend everyone. Check your campus policy, but in general the cost of not reporting is worse than the cost of reporting."),
     ("Should I use a personal device for schoolwork?",
      "Generally fine if it's up to date, has MFA on your campus account, and you don't pirate software on it. Some courses or programs (e.g., clinical, legal, research with sensitive data) require institution-managed devices. Check your syllabus."),
     ("Is MFA actually worth the hassle?",
-     "Yes. Multi-factor authentication blocks almost all bulk credential-phishing. Phishing-resistant MFA (FIDO2 / passkeys / hardware keys like YubiKey) is even stronger. Enable it wherever your campus offers it."),
+     # MFA effectiveness framing anchored to CISA's public position; specific quantitative
+     # claims (e.g., the older Microsoft "99.9%") have been eroded by adversary-in-the-middle
+     # and Duo-OTP-theft campaigns documented in 2024-2025, so we describe it directionally.
+     # See: https://www.cisa.gov/MFA
+     "Yes. Multi-factor authentication is one of the most important things you can do to protect an account, and CISA recommends it for everyone. Phishing-resistant MFA (FIDO2 / passkeys / hardware keys like YubiKey) is the strongest form because the credential is bound to the legitimate site. Enable it wherever your campus offers it."),
     ("Is public Wi-Fi at the coffee shop dangerous?",
      "Less than it used to be. Most sites and apps use HTTPS by default. Still a good idea to avoid logging into your campus account from networks you don't trust, and to use your campus VPN if your school provides one."),
     ("Can this site substitute for legal advice?",
@@ -173,6 +204,14 @@ REFERENCES = [
      "Where U.S. individuals and institutions can report cyber incidents to the FBI."),
     ("Higher Ed Dive: Ransomware in Education, H1 2025", "https://www.highereddive.com/news/ransomware-attacks-education-jump-23-percent-h1-2025/754011/",
      "Reporting on the scale and trends of ransomware affecting colleges and schools."),
+    ("University of Utah ISO: Students Face Increasing Phishing and Other Cyberattacks (2021)", "https://attheu.utah.edu/announcements/students-face-increasing-phishing-and-other-cyberattacks/",
+     "University of Utah Information Security Office advisory documenting compromised student accounts and attackers using socially-engineered information to reset passwords and maintain access."),
+    ("The Maroon Tiger: Several Morehouse students fall victim to phishing emails (2025)", "https://maroontigermedia.com/2025/08/phishing-morehouse-emails-student-hacking/",
+     "Student newspaper reporting, with Morehouse College ITS confirmation, of compromised student accounts being used to send phishing to other students (fake job, work-study, and direct-funding lures)."),
+    ("Tischer et al., 'Users Really Do Plug in USB Drives They Find' (IEEE Security & Privacy, 2016)", "https://research.google/pubs/users-really-do-plug-in-usb-drives-they-find/",
+     "University of Illinois / Google research demonstrating that 45-98% of dropped USB drives were plugged in by finders, with first drives connected in under six minutes."),
+    ("No More Ransom Project", "https://www.nomoreransom.org/",
+     "Europol-backed clearinghouse of legitimate, free ransomware decryption tools. Use only at the direction of IT or law enforcement, never as a first response."),
 ]
 
 
@@ -356,7 +395,11 @@ SCENARIOS = [
                 "body": "Isolate, photograph, call. That sequence, even if it's your roommate's personal device, gives the responders volatile memory, the lock-screen text, and an accurate timeline. Tell your roommate as soon as you reach them.",
                 "links": [("Protect yourself", "prevention.html")]},
             "out_decryptor": {"type": "outcome", "tag": "bad", "score": 2,
-                "title": "'Free decryptors' are almost always more malware.",
+                # Original draft said "almost always more malware" — that's too strong.
+                # Legitimate free decryptors do exist (NoMoreRansom.org, Emsisoft, Kaspersky
+                # No Ransom). The actionable point is: do NOT download decryptors from
+                # random search/YouTube results without IT's go-ahead.
+                "title": "Search-result 'decryptors' are a common scam.",
                 "body": "Search results for 'ransomware decryptor' are saturated with second-stage malware that finishes the job. Real decryption tools (when they exist) are released by law enforcement or vetted vendors like Europol's No More Ransom. Applying them is something IT or a forensic responder should do, not a panicking student.",
                 "links": [("If something goes wrong", "response.html")]},
             "out_paid": {"type": "outcome", "tag": "bad", "score": 2,
@@ -396,7 +439,11 @@ SCENARIOS = [
             ]},
             "out_approved": {"type": "outcome", "tag": "bad", "score": 2,
                 "title": "MFA fatigue attack succeeded.",
-                "body": "MFA fatigue (also called 'push bombing') is one of the most effective attacks against student accounts. By approving one push, you almost certainly handed someone full access. From a different device, change your password, sign out of all sessions, and call IT first thing in the morning. Earlier if your campus has 24/7 IT.",
+                # "Most effective against student accounts" was a stronger claim than the
+                # public evidence supports. MFA fatigue / push bombing is a well-documented
+                # tactic generally (e.g., CISA AA22-074A) but I don't have a clean source
+                # specifically ranking it for student-account compromise.
+                "body": "MFA fatigue (also called 'push bombing') is a documented attack tactic — attackers spam you with prompts hoping you'll tap 'approve' just to make them stop. By approving one push, you likely handed someone access. From a different device, change your password, sign out of all sessions, and call IT first thing in the morning. Earlier if your campus has 24/7 IT.",
                 "links": [("If something goes wrong", "response.html")]},
             "out_dnd": {"type": "outcome", "tag": "risky", "score": 1,
                 "title": "Quiet doesn't mean safe.",
@@ -677,7 +724,13 @@ SCENARIOS = [
             ]},
             "out_plugged": {"type": "outcome", "tag": "bad", "score": 2,
                 "title": "USB drop attacks are real.",
-                "body": "A surprising fraction of found USB drives are deliberate 'drop' attacks. Some emulate keyboards, some auto-run malware, some install hardware-level implants. Don't plug an unknown drive into any device you care about. If you already did, disconnect from the network and call IT.",
+                # Original draft claimed "a surprising fraction of found USB drives are
+                # deliberate drop attacks." The actual citable research finding is the
+                # ATTACK SUCCESS RATE (Tischer et al., 2016, UIUC/Google: 45-98% of dropped
+                # drives get plugged in), not the share of found drives that are malicious.
+                # Rewrote to match what the research actually says.
+                # Source: https://research.google/pubs/users-really-do-plug-in-usb-drives-they-find/
+                "body": "Researchers have shown USB drop attacks work: in a 2016 University of Illinois study, 45-98% of dropped drives got plugged in. Some emulate keyboards, some auto-run malware, some install hardware-level implants. Don't plug an unknown drive into any device you care about. If you already did, disconnect from the network and call IT.",
                 "links": [("If something goes wrong", "response.html"), ("Sources", "references.html")]},
             "out_lostfound": {"type": "outcome", "tag": "good", "score": -2,
                 "title": "Right answer.",
@@ -908,7 +961,10 @@ LAB = [
             ]},
             "out_skip": {"type": "outcome", "tag": "good", "score": -2,
                 "title": "Good call.",
-                "body": "Free open Wi-Fi in a dorm is almost always either a neighbor's misconfigured hotspot or a malicious access point trying to harvest credentials. Stay on the campus SSID. If campus Wi-Fi is consistently slow, file a ticket rather than working around it.",
+                # "Almost always" was too strong — base rates for malicious-vs-misconfigured
+                # open Wi-Fi aren't established in public research. Reframed to describe
+                # the two real possibilities without quantifying them.
+                "body": "An unexpected open Wi-Fi network in a dorm is either a neighbor's open router or, in some cases, a rogue 'evil twin' access point set up to intercept traffic. Either way, it's not what you want to send your credentials over. Stay on the campus SSID. If campus Wi-Fi is consistently slow, file a ticket rather than working around it.",
                 "links": [("Protect yourself", "prevention.html")]},
             "out_signed_in": {"type": "outcome", "tag": "bad", "score": 2,
                 "title": "Credentials may be captured.",
@@ -1135,3 +1191,112 @@ LAB = [
         ],
     },
 ]
+
+
+# ============================================================================
+# DRILLS = merged + deduped SCENARIOS + LAB.
+# ----------------------------------------------------------------------------
+# We collapsed the old "Scenarios" and "Dorm lab" pages into one. Both were
+# decision-tree drills, just at different angles. Now they all live in one
+# DRILLS list and one page (drills.html). The dorm SVG is one entry point (for
+# the items that have a hotspot in the scene). The tile grid is the other and
+# is the complete list.
+#
+# Build rules:
+#   - Scenarios use "situation"; the unified engine expects "setup". Normalize.
+#   - Scenarios had no AAR; add a short, voice-matched checklist per scenario
+#     mined from the "good" outcome bodies.
+#   - Lab modules have a hotspot key. Scenarios without one get hotspot = "".
+#   - One genuine dup is dropped: dorm-ransom-note (kept laptop-encrypted, which
+#     is tighter, has an AAR, and is already anchored to the dorm laptop).
+#
+# Order: lab modules first (dorm-anchored, the showpiece), then the remaining
+# scenarios (off-screen drills). Within each group, original order preserved.
+# ============================================================================
+
+# Per-scenario AAR checklists, written to match the "I will..." voice of the
+# lab AARs and grounded in each scenario's "good" outcome.
+_SCENARIO_AARS: dict = {
+    "phishing-it-helpdesk": [
+        "Hover the sender and the link before I click.",
+        "Report suspicious emails through my campus phishing button or inbox.",
+        "If I might have typed credentials, change my password from a different device.",
+    ],
+    "fake-canvas-login": [
+        "Verify suspicious links out-of-band (text, in-person, official email).",
+        "Type campus URLs myself or use my own bookmark; don't trust links sent to me.",
+        "Report the original link so IT can take it down for everyone else.",
+    ],
+    "mfa-fatigue": [
+        "Deny any MFA prompt I didn't start.",
+        "After a push-bomb, change my password and sign out all sessions.",
+        "Enroll in phishing-resistant MFA (passkey or hardware key) if my school offers it.",
+    ],
+    "job-scam": [
+        "Treat any 'upfront fee,' off-platform contact, or too-good-to-be-true rate as a job scam.",
+        "Verify a recruiter's identity through the company's real website, not their DM.",
+        "Report fake job posts to the platform and to my campus career center.",
+    ],
+    "financial-aid": [
+        "Check my student portal directly; never trust a financial-aid link in a text.",
+        "Call the financial-aid office using a number from the school's real website.",
+        "Treat 'verify within X hours' urgency as a phishing signal.",
+    ],
+    "club-drive": [
+        "Revoke unknown shares immediately, then restore from version history.",
+        "Change the owner account's password and sign out all sessions after any club-account weirdness.",
+        "Loop in campus IT and the club's faculty advisor on shared-account incidents.",
+    ],
+    "stolen-laptop": [
+        "Sign out of campus accounts everywhere and change my password the moment a device is missing.",
+        "File a police or campus-security report; use Find My to mark the device lost.",
+        "Keep full-disk encryption (FileVault or BitLocker) on so a thief is mostly facing a brick.",
+    ],
+    "roommate-login": [
+        "Never share my campus password, even with a roommate, even \"just this once.\"",
+        "Help friends use 24/7 self-service password reset or the after-hours help desk instead.",
+        "Reach paywalled articles through the library, Google Scholar, or publisher 'read-only' links.",
+    ],
+    "usb-found": [
+        "Never plug an unknown USB stick into any device I care about.",
+        "Drop found USB sticks at the library lost-and-found or campus IT.",
+        "Don't use lab PCs as a 'sandbox' for unknown drives; they're on the campus network.",
+    ],
+}
+
+# IDs of scenarios to drop in the merge (genuine duplicates of lab modules).
+_DROP_SCENARIO_IDS: set = {
+    # Same situation as LAB's laptop-encrypted, weaker copy. Keep the lab one.
+    "dorm-ransom-note",
+}
+
+
+def _scenario_to_drill(s: dict) -> dict:
+    """Normalize a SCENARIOS-shaped dict into the unified DRILLS shape."""
+    drill = dict(s)
+    # situation -> setup
+    if "situation" in drill and "setup" not in drill:
+        drill["setup"] = drill.pop("situation")
+    # no hotspot in the dorm SVG for off-screen scenarios
+    drill.setdefault("hotspot", "")
+    # voice-matched AAR
+    drill.setdefault("aar", _SCENARIO_AARS.get(s["id"], []))
+    return drill
+
+
+def _build_drills() -> list:
+    # Lab modules first (dorm-anchored), then the surviving scenarios.
+    out = []
+    seen = set()
+    for m in LAB:
+        out.append(m)
+        seen.add(m["id"])
+    for s in SCENARIOS:
+        if s["id"] in _DROP_SCENARIO_IDS or s["id"] in seen:
+            continue
+        out.append(_scenario_to_drill(s))
+        seen.add(s["id"])
+    return out
+
+
+DRILLS = _build_drills()

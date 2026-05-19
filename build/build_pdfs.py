@@ -8,7 +8,7 @@ import sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, GLOSSARY, FAQ, REFERENCES, SCENARIOS, LAB  # noqa: E402
+from content import ROLES, GLOSSARY, FAQ, REFERENCES, DRILLS  # noqa: E402
 
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -106,6 +106,14 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
         "Offers too good to be true: surprise scholarships, refunds, high-paying student jobs.",
         "MFA prompts you didn't trigger. Never approve a prompt you didn't start.",
     ], s["body"]))
+    story.append(Paragraph(
+        "And sometimes there are no red flags. A real account from someone you actually know — a friend, "
+        "a professor, your RA, the campus help desk — can be compromised and used to send phishing. Same "
+        "name, same email address, normal-looking signature. If a message asks you to click a link, log in "
+        "somewhere, pay something, share an MFA code, or move money, treat the request with suspicion — "
+        "not just the sender. Verify out-of-band: text or call the person on a number you already had, or "
+        "walk over.",
+        s["body"]))
 
     story.append(PageBreak())
 
@@ -121,29 +129,19 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
 
     story.append(PageBreak())
 
-    story.append(Paragraph("Practice scenarios", s["h1"]))
+    story.append(Paragraph("Drills", s["h1"]))
     story.append(Paragraph(
-        "Ten short, realistic situations you can practice on the live site — each with branching "
-        "decisions and feedback on every choice. Open the interactive version at "
-        "crimconsortium.github.io/student-ransomware-playbook/scenarios.html and earn a "
-        "printable Cyber-Smart Student certificate after all ten.",
+        f"{len(DRILLS)} short incident rehearsals. Some are anchored in a simulated dorm room "
+        "you can click around; the rest are off-screen patterns (fake login page, MFA fatigue, "
+        "job and financial-aid scams, lost or stolen devices). Each drill has branching choices "
+        "and a short after-action review. Play the interactive version at "
+        "crimconsortium.github.io/student-ransomware-playbook/drills.html and earn a printable "
+        "Cyber-Smart Student certificate after finishing them all. The drills are listed below "
+        "for quick offline reference.",
         s["body"]))
-    for i, scn in enumerate(SCENARIOS, 1):
-        story.append(Paragraph(f"{i:02d}. {_esc(scn['title'])}", s["h3"]))
-        story.append(Paragraph(_esc(scn['situation']), s["body"]))
-
-    story.append(PageBreak())
-
-    story.append(Paragraph("Dorm Room Incident Lab", s["h1"]))
-    story.append(Paragraph(
-        "Ten room-anchored incident drills, each ending with a short after-action review. "
-        "Play the interactive version at "
-        "crimconsortium.github.io/student-ransomware-playbook/dorm-lab.html. The drills are "
-        "listed below for quick offline reference.",
-        s["body"]))
-    for i, mod in enumerate(LAB, 1):
+    for i, mod in enumerate(DRILLS, 1):
         story.append(Paragraph(f"{i:02d}. {_esc(mod['title'])}", s["h3"]))
-        story.append(Paragraph(_esc(mod['setup']), s["body"]))
+        story.append(Paragraph(_esc(mod.get('setup', '')), s["body"]))
         for habit in mod.get('aar', []):
             story.append(Paragraph("☐ &nbsp; " + _esc(habit), s["body"]))
 

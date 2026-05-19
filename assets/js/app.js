@@ -121,8 +121,6 @@
         saveCk(id, []);
         updateCkProgress(cl);
       });
-      const printBtn = cl.querySelector('[data-action="print"]');
-      if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
       updateCkProgress(cl);
     });
   }
@@ -229,7 +227,13 @@
         const oEl = q.querySelector('.options');
         const fEl = q.querySelector('.feedback');
         const mEl = q.querySelector('.meta');
-        if (mEl) mEl.textContent = 'Question ' + (i + 1) + ' of ' + questions.length + ' · Score: ' + score;
+        if (mEl) {
+          if (cur) {
+            mEl.textContent = 'Question ' + (i + 1) + ' of ' + questions.length + ' · Score: ' + score;
+          } else {
+            mEl.textContent = 'Results · Score: ' + score + ' of ' + questions.length;
+          }
+        }
         if (!cur) {
           // Done
           if (qEl) qEl.textContent = 'Quiz complete';

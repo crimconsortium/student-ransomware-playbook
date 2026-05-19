@@ -4,6 +4,6 @@ The non-software content of this site (text, checklists, decision trees, quizzes
 
 When reusing or adapting, please credit:
 
-> *Campus Ransomware Playbook* by Joshua Gerstenfeld and Scott Jacques (CrimRxiv Consortium), CC BY 4.0, https://github.com/crimconsortium/campus-ransomware-playbook
+> *Student Ransomware Playbook* by Joshua Gerstenfeld and Scott Jacques (CrimRxiv Consortium), CC BY 4.0, https://github.com/crimconsortium/student-ransomware-playbook
 
 Source code is separately licensed under the [MIT License](LICENSE).

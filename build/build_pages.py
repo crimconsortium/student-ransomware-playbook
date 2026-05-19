@@ -31,7 +31,7 @@ def lifecycle_figure(emphasize: str, caption: str) -> str:
       <figcaption>{caption}</figcaption>
     </figure>'''
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, SCENARIOS, LAB  # noqa: E402
+from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, DRILLS  # noqa: E402
 
 
 def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str:
@@ -64,8 +64,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}prevention.html">Protect yourself</a></li>
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
-        <li><a href="{rel}scenarios.html">Scenarios</a></li>
-        <li><a href="{rel}dorm-lab.html">Dorm lab</a></li>
+        <li><a href="{rel}drills.html">Drills</a></li>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
@@ -91,8 +90,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}prevention.html">Protect yourself</a></li>
         <li><a href="{rel}response.html">If something goes wrong</a></li>
         <li><a href="{rel}readiness.html">Checklist</a></li>
-        <li><a href="{rel}scenarios.html">Scenarios</a></li>
-        <li><a href="{rel}dorm-lab.html">Dorm lab</a></li>
+        <li><a href="{rel}drills.html">Drills</a></li>
       </ul>
     </div>
     <div>
@@ -115,8 +113,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
 </footer>
 
 <script src="{rel}assets/js/app.js"></script>
-<script src="{rel}assets/js/scenarios.js" defer></script>
-<script src="{rel}assets/js/dorm-lab.js" defer></script>
+<script src="{rel}assets/js/drills.js" defer></script>
 </body>
 </html>
 """
@@ -150,7 +147,7 @@ DECISION_TREES = {
                 {"label": "Yes, doing it now.", "next": "n_device_disc"},
                 {"label": "No.", "next": "n_device_call"},
             ]},
-            "n_device_disc": {"type": "result", "title": "Stay disconnected, leave it on, call IT.",
+            "n_device_disc": {"type": "result", "title": "Leave it on, stay off the network, call IT.",
                 "body": "Don't power off the device. IT may need volatile memory. Don't try to recover files yourself. Call the help desk and describe exactly what you saw."},
             "n_device_call": {"type": "result", "title": "Call IT now.",
                 "body": "Call the help desk immediately and describe what you’re seeing. They’ll guide containment from there."},
@@ -290,7 +287,7 @@ QUIZZES = {
              "Antivirus software.",
              "Avoiding sketchy websites."],
          "correct": 1,
-         "explanation": "Long passwords help, but phishing-resistant MFA (FIDO2/WebAuthn) defeats most credential phishing because the credential is bound to the legitimate site."},
+         "explanation": "Long passwords help, but phishing-resistant MFA (FIDO2/WebAuthn) binds the credential to the legitimate site, so it cannot be replayed on a fake login page."},
     ],
     "faculty": [
         {"q": "A ‘publisher’ emails inviting you to co-author or peer-review and asks you to log in via a link to access the manuscript. Best move?",
@@ -470,7 +467,6 @@ def render_role_page(role: dict) -> str:
       </ul>
       <div class="actions">
         <button class="btn btn-secondary btn-sm" data-action="reset" type="button">Reset</button>
-        <button class="btn btn-secondary btn-sm" data-action="print" type="button">Print</button>
       </div>
     </div>
   </section>
@@ -519,7 +515,7 @@ def render_role_index_redirect() -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Roles · Campus Ransomware Playbook</title>
+<title>Roles · Student Ransomware Playbook</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="refresh" content="0; url=../#choose-role">
 <link rel="canonical" href="../">
@@ -577,6 +573,10 @@ def render_prevention() -> str:
       <li><strong>An offer that's too good to be true.</strong> High-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund.</li>
       <li><strong>MFA prompts you didn't trigger.</strong> Never approve a prompt you didn't start. Repeated prompts are <a href="glossary.html#mfa-fatigue">MFA fatigue</a>. It's a known attack.</li>
     </ul>
+    <div class="alert">
+      <h4>And sometimes there are no red flags.</h4>
+      <p>A real account from someone you actually know — a friend, a professor, your RA, the campus help desk — can be compromised and used to send phishing. Same name, same email address, normal-looking signature. The message will <em>look</em> legitimate because, technically, it is. If a message asks you to click a link, log in somewhere, pay something, share an MFA code, or move money, treat the <em>request</em> with suspicion — not just the sender. Verify out-of-band: text or call the person on a number you already had, or walk over.</p>
+    </div>
   </section>
 """
     return page("Protect yourself", body, depth=0, description="Plain-language steps students can take to prevent ransomware and account takeover.")
@@ -652,7 +652,7 @@ def render_emergency() -> str:
         <li>CISA and the FBI generally recommend disconnecting affected devices from the network (Wi-Fi off, Ethernet unplugged) rather than powering them off, to preserve evidence in memory.</li>
         <li>Public guidance recommends not deleting the ransom note, files, or related emails, since they may be needed for investigation and potential decryption.</li>
         <li>Authoritative sources advise contacting your IT or security team using a separate phone or device, not the affected one.</li>
-        <li>CISA, FBI, and most insurers recommend against unilaterally paying or negotiating, and against downloading “decryption” tools from web search results.</li>
+        <li>CISA and the FBI recommend against paying or negotiating with attackers on your own, and against downloading “decryption” tools from web search results.</li>
       </ol>
     </div>
 
@@ -701,7 +701,6 @@ def render_readiness() -> str:
         f'<li><input type="checkbox"><label>{html.escape(x)}</label></li>'
         for x in student["checklist_items"]
     )
-    quiz_json = html.escape(json.dumps(QUIZZES['student']), quote=False)
     body = f"""
   <section class="hero">
     <div class="container">
@@ -720,22 +719,10 @@ def render_readiness() -> str:
       </ul>
       <div class="actions">
         <button class="btn btn-secondary btn-sm" data-action="reset" type="button">Reset</button>
-        <button class="btn btn-secondary btn-sm" data-action="print" type="button">Print</button>
       </div>
     </div>
   </section>
 
-  <section class="container">
-    <h2>Practice scenario</h2>
-    <p>One quick scenario to turn this into a reflex.</p>
-    <div class="quiz" data-quiz-id="student-quiz">
-      <p class="meta"></p>
-      <p class="question"></p>
-      <div class="options"></div>
-      <div class="feedback" hidden></div>
-      <script type="application/json">{quiz_json}</script>
-    </div>
-  </section>
 """
     return page("Checklist", body, depth=0, description="A short self-audit checklist for college and university students.")
 
@@ -802,76 +789,7 @@ def render_404() -> str:
     return page("Not found", body, depth=0)
 
 
-def render_scenarios() -> str:
-    """Choose-Your-Response — interactive branching scenarios for students.
-
-    Renders a single page with an index card per scenario plus a card-shaped
-    interactive ‘runner’ that mounts when the student opens a scenario.
-    Engine + scoring + certificate logic lives in assets/js/scenarios.js.
-    The full SCENARIOS data is embedded as JSON inside a single <script type=\"application/json\">
-    tag so the page works fully offline and the build remains static.
-    """
-    cards = "".join(
-        f'<a class="scn-tile" href="#scn" data-scn-id="{html.escape(s["id"])}">'
-        f'<span class="scn-num" aria-hidden="true">{i+1:02d}</span>'
-        f'<h3>{html.escape(s["title"])}</h3>'
-        f'<p>{html.escape(s["blurb"])}</p>'
-        f'<span class="scn-status" data-scn-status="{html.escape(s["id"])}" aria-hidden="true"></span>'
-        f'</a>'
-        for i, s in enumerate(SCENARIOS)
-    )
-    payload = json.dumps(SCENARIOS, ensure_ascii=False)
-    body = f"""
-  <section class="container read">
-    <h1>Choose-Your-Response</h1>
-    <p class="lead">Ten short, real situations students actually run into. Pick what you'd do, see what would happen, and find out why. Progress saves on this device only. No accounts, no servers.</p>
-    <div class="alert">
-      <h4>How this works</h4>
-      <p>Each scenario takes a minute or two. Pick an option, read the outcome, retry or move on. Finish all ten and you can download a printable completion certificate.</p>
-    </div>
-  </section>
-
-  <section class="container">
-    <h2>Pick a scenario</h2>
-    <div class="scn-grid">
-      {cards}
-    </div>
-    <p class="scn-progress-bar" aria-live="polite">
-      <span data-role="scn-counter">0 of {len(SCENARIOS)} complete</span>
-      &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="scn-reset">↺ Reset progress</button>
-      &nbsp;<button type="button" class="btn btn-sm" data-action="scn-certificate" data-role="scn-cert-btn" aria-disabled="true" disabled>🔒 Certificate locked. Finish all {len(SCENARIOS)}</button>
-    </p>
-  </section>
-
-  <section class="container" id="scn">
-    <div class="scn-runner" hidden>
-      <div class="scn-runner-head">
-        <button type="button" class="btn btn-secondary btn-sm" data-action="scn-close">← Back to list</button>
-        <span class="scn-runner-title" data-role="scn-title"></span>
-      </div>
-      <div class="scn-situation" data-role="scn-situation"></div>
-      <div class="scn-question" data-role="scn-question"></div>
-      <div class="scn-choices" data-role="scn-choices"></div>
-      <div class="scn-outcome" data-role="scn-outcome" hidden></div>
-    </div>
-    <script type="application/json" id="scn-data">{payload}</script>
-  </section>
-
-  <section class="container read">
-    <h2>Why these ten?</h2>
-    <p>Each scenario is built around a pattern that's actually hit students recently. Phishing, MFA fatigue, fake job offers, financial-aid scams, ransomware on a personal laptop, account takeover of a club's cloud drive, lost or stolen devices, social pressure to share credentials, and physical-media tricks. The choices and explanations come from public guidance: <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. None of it tells you how to attack anything. It tells you how to recognize and respond.</p>
-    <p>This is a simulation. Whatever your campus IT help desk says, that wins.</p>
-  </section>
-"""
-    return page(
-        "Scenarios",
-        body,
-        depth=0,
-        description="Ten interactive branching scenarios that let college and university students practice spotting phishing, account takeover, ransomware, and common campus cyber scams, with feedback on every choice.",
-    )
-
-
-# ---------- Dorm Room Incident Lab --------------------------------------
+# ---------- Drills (merged Dorm Lab + Scenarios) ------------------------
 # Each hotspot in the SVG and in the tile grid has data-hotspot="<key>" matching
 # the LAB module's "hotspot" field. Coordinates here are tuned to the 1000x600
 # viewBox below; the dorm scene is drawn flat using the strict orange/black/gray
@@ -1131,20 +1049,24 @@ def _dorm_svg() -> str:
 </svg>'''
 
 
-def render_dorm_lab() -> str:
-    """Dorm Room Incident Lab — short room-anchored modules.
+def render_drills() -> str:
+    """Drills — unified short incident rehearsals.
 
-    Single static page. SVG dorm scene shows clickable hotspots; below it,
-    an accessible tile grid lists every module (used as the small-screen and
-    reduced-motion fallback, and for keyboard users who prefer text targets).
-    Engine, scoring, readiness meter, and per-module AAR live in
-    assets/js/dorm-lab.js. Module data is embedded as JSON in a single
-    <script type="application/json"> so the page is fully static.
+    A single static page that merges the former Dorm Lab and Scenarios into
+    one set of drills. Some are anchored in the dorm room (clickable hotspots
+    in an SVG scene); the rest are off-screen patterns students hit elsewhere
+    (phishing emails, fake portals, MFA fatigue, job/aid scams, lost devices).
+    Engine, scoring, readiness meter, after-action checklists, and the
+    completion certificate live in assets/js/drills.js. Drill data is embedded
+    as JSON in a single <script type=\"application/json\"> so the page is
+    fully static and works offline.
     """
     tiles = []
-    for i, m in enumerate(LAB):
+    for i, m in enumerate(DRILLS):
+        hotspot = m.get("hotspot", "") or ""
+        hotspot_attr = f' data-hotspot="{html.escape(hotspot)}"' if hotspot else ""
         tiles.append(
-            f'<a class="lab-tile" href="#lab" data-hotspot="{html.escape(m["hotspot"])}" data-lab-id="{html.escape(m["id"])}">'
+            f'<a class="lab-tile" href="#drill"{hotspot_attr} data-drill-id="{html.escape(m["id"])}">'
             f'<span class="lab-num" aria-hidden="true">{i+1:02d}</span>'
             f'<h3>{html.escape(m["title"])}</h3>'
             f'<p>{html.escape(m["blurb"])}</p>'
@@ -1152,15 +1074,16 @@ def render_dorm_lab() -> str:
             f'</a>'
         )
     grid = "".join(tiles)
-    payload = json.dumps(LAB, ensure_ascii=False)
+    payload = json.dumps(DRILLS, ensure_ascii=False)
     svg = _dorm_svg()
+    n = len(DRILLS)
     body = f"""
   <section class="container read">
-    <h1>Dorm Room Incident Lab</h1>
-    <p class="lead">A simulated dorm room. Click anything in the room to run a quick incident drill. Each one takes about a minute and ends with a short after-action review. Progress saves on this device only. No accounts, no servers.</p>
+    <h1>Drills</h1>
+    <p class="lead">Short incident rehearsals. Some are anchored in a simulated dorm room you can click around. Others are off-screen patterns — a fake login page, a too-good job offer, an MFA prompt at 2 a.m. Each one takes about a minute and ends with a short after-action review. Progress saves on this device only. No accounts, no servers.</p>
     <div class="alert">
       <h4>How this works</h4>
-      <p>Click a hotspot in the room, or pick a tile from the list below. Read the situation, choose what you'd do, then go through the after-action checklist. Your overall readiness meter goes up as you finish modules and check off habits you've already built.</p>
+      <p>Click a hotspot in the dorm scene, or pick a drill from the list below. Read the setup, choose what you'd do, then go through the after-action checklist. Your overall readiness meter goes up as you finish drills and check off habits you've already built. Finish them all to unlock a printable completion certificate.</p>
     </div>
   </section>
 
@@ -1174,9 +1097,10 @@ def render_dorm_lab() -> str:
         <span class="lab-readiness-fill" data-role="lab-readiness-fill" style="width:0%"></span>
       </div>
       <p class="muted lab-readiness-meta">
-        <span data-role="lab-counter">0 of {len(LAB)} modules complete</span>
+        <span data-role="lab-counter">0 of {n} drills complete</span>
         &nbsp;·&nbsp; <span data-role="lab-habit-counter">0 habits checked</span>
-        &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="lab-reset">↺ Reset progress</button>
+        &nbsp;·&nbsp; <button type="button" class="btn btn-secondary btn-sm" data-action="drills-reset">↺ Reset progress</button>
+        &nbsp;<button type="button" class="btn btn-sm" data-action="drills-certificate" data-role="drills-cert-btn" aria-disabled="true" disabled>🔒 Certificate locked. Finish all {n}</button>
       </p>
     </div>
   </section>
@@ -1186,7 +1110,7 @@ def render_dorm_lab() -> str:
     <div class="lab-scene">
       {svg}
     </div>
-    <p class="muted lab-scene-help">If the scene is hard to read on your screen, use the labeled list below. It does the same thing.</p>
+    <p class="muted lab-scene-help">The dorm scene covers nine drills. The rest are in the list below. If the scene is hard to read on your screen, the list does the same thing.</p>
   </section>
 
   <section class="container">
@@ -1196,10 +1120,10 @@ def render_dorm_lab() -> str:
     </div>
   </section>
 
-  <section class="container" id="lab">
+  <section class="container" id="drill">
     <div class="lab-runner" hidden>
       <div class="lab-runner-head">
-        <button type="button" class="btn btn-secondary btn-sm" data-action="lab-close">← Back to room</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-action="drill-close">← Back to drills</button>
         <span class="lab-runner-title" data-role="lab-title"></span>
       </div>
       <div class="lab-setup" data-role="lab-setup"></div>
@@ -1208,20 +1132,20 @@ def render_dorm_lab() -> str:
       <div class="lab-outcome" data-role="lab-outcome" hidden></div>
       <div class="lab-aar" data-role="lab-aar" hidden></div>
     </div>
-    <script type="application/json" id="lab-data">{payload}</script>
+    <script type="application/json" id="drills-data">{payload}</script>
   </section>
 
   <section class="container read">
-    <h2>What this lab is, and what it isn't</h2>
-    <p>This lab is built around things that actually happen in dorms. A roommate clicks a sketchy link. A laptop gets encrypted before finals. A club account starts hitting up members for money. The choices and the after-action checklists come from plain-language guidance: <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. Nothing here tells you how to attack anything. It tells you how to recognize and respond.</p>
-    <p>Whatever your campus IT help desk says, that wins.</p>
+    <h2>What these drills are, and what they aren't</h2>
+    <p>Every drill is built around something that's actually happened to students: a roommate clicks a sketchy link, a laptop gets encrypted before finals, a club's cloud drive starts hitting up members for money, a recruiter offers $40/hr to "process payments," an MFA prompt shows up at 2 a.m. when you didn't try to log in. The choices and the after-action checklists come from plain-language guidance: <a href="https://www.cisa.gov/stopransomware">CISA #StopRansomware</a>, <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, <a href="https://library.educause.edu/">EDUCAUSE</a>, and the <a href="https://www.ic3.gov/">FBI Internet Crime Complaint Center</a>. Nothing here tells you how to attack anything. It tells you how to recognize and respond.</p>
+    <p>This is a simulation. Whatever your campus IT help desk says, that wins.</p>
   </section>
 """
     return page(
-        "Dorm lab",
+        "Drills",
         body,
         depth=0,
-        description="A simulated dorm room with ten clickable incident modules. Practice what to do when a roommate clicks a sketchy link, your laptop gets encrypted before finals, or your club account is taken over.",
+        description="Short incident drills for college and university students. Practice phishing, MFA fatigue, ransomware on a personal laptop, fake job offers, financial-aid scams, account takeover of a club's cloud drive, lost devices, and more — with feedback on every choice.",
     )
 
 
@@ -1231,8 +1155,18 @@ def main() -> None:
     (out / "prevention.html").write_text(render_prevention(), encoding="utf-8")
     (out / "response.html").write_text(render_response(), encoding="utf-8")
     (out / "readiness.html").write_text(render_readiness(), encoding="utf-8")
-    (out / "scenarios.html").write_text(render_scenarios(), encoding="utf-8")
-    (out / "dorm-lab.html").write_text(render_dorm_lab(), encoding="utf-8")
+    (out / "drills.html").write_text(render_drills(), encoding="utf-8")
+    # Redirect stubs so old external links to scenarios.html / dorm-lab.html keep working.
+    _redirect = (
+        '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        '<meta http-equiv="refresh" content="0; url=drills.html">'
+        '<link rel="canonical" href="https://crimconsortium.github.io/student-ransomware-playbook/drills.html">'
+        '<title>Moved to Drills · Student Ransomware Playbook</title>'
+        '<meta name="robots" content="noindex"></head>'
+        '<body><p>This page moved to <a href="drills.html">Drills</a>.</p></body></html>\n'
+    )
+    (out / "scenarios.html").write_text(_redirect, encoding="utf-8")
+    (out / "dorm-lab.html").write_text(_redirect, encoding="utf-8")
     (out / "glossary.html").write_text(render_glossary(), encoding="utf-8")
     (out / "faq.html").write_text(render_faq(), encoding="utf-8")
     (out / "references.html").write_text(render_references(), encoding="utf-8")

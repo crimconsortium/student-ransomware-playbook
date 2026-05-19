@@ -475,8 +475,28 @@ main.read-section { padding-top: 1.5rem; }
   font: inherit;
 }
 .quiz .options button:hover { border-color: var(--accent); }
-.quiz .options button.correct { background: color-mix(in srgb, var(--success) 25%, var(--bg-elev)); border-color: var(--success); }
-.quiz .options button.incorrect { background: color-mix(in srgb, var(--danger) 25%, var(--bg-elev)); border-color: var(--danger); }
+/* Quiz answer feedback uses semantic green/red to distinguish right from wrong;
+   the rest of the site is intentionally monochrome, so we hard-code the colors here. */
+.quiz .options button.correct {
+  background: color-mix(in srgb, #1f8a3a 18%, var(--bg-elev));
+  border-color: #1f8a3a;
+  color: var(--fg);
+}
+.quiz .options button.incorrect {
+  background: color-mix(in srgb, #c0392b 18%, var(--bg-elev));
+  border-color: #c0392b;
+  color: var(--fg);
+}
+@media (prefers-color-scheme: dark) {
+  .quiz .options button.correct {
+    background: color-mix(in srgb, #4ade80 22%, var(--bg-elev));
+    border-color: #4ade80;
+  }
+  .quiz .options button.incorrect {
+    background: color-mix(in srgb, #f87171 22%, var(--bg-elev));
+    border-color: #f87171;
+  }
+}
 .quiz .feedback { margin-top: 0.7rem; padding: 0.7rem 0.9rem; background: var(--bg-soft); border-radius: var(--radius-sm); }
 .quiz .meta { color: var(--fg-muted); font-size: 0.9rem; }
 

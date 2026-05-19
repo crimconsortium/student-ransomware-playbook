@@ -23,8 +23,7 @@
         <li><a href="prevention.html">Protect yourself</a></li>
         <li><a href="response.html">If something goes wrong</a></li>
         <li><a href="readiness.html">Checklist</a></li>
-        <li><a href="scenarios.html">Scenarios</a></li>
-        <li><a href="dorm-lab.html">Dorm lab</a></li>
+        <li><a href="drills.html">Drills</a></li>
         <li><a href="glossary.html">Glossary</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
@@ -62,7 +61,7 @@
       <p class="question"></p>
       <div class="choices"></div>
       <div class="result" hidden></div>
-      <script type="application/json">{"start": "n0", "nodes": {"n0": {"type": "q", "q": "What just happened?", "choices": [{"label": "I got a suspicious email or text.", "next": "n_phish_1"}, {"label": "My device is acting strange or shows a ransom note.", "next": "n_device_1"}, {"label": "I think I already entered my password into a fake site.", "next": "n_creds_1"}]}, "n_phish_1": {"type": "q", "q": "Did you click a link or open an attachment?", "choices": [{"label": "No.", "next": "n_phish_no"}, {"label": "Yes.", "next": "n_creds_1"}]}, "n_phish_no": {"type": "result", "title": "Report it and move on.", "body": "Use the campus \u2018Report Phishing\u2019 button or forward as an attachment to your security team. Do not reply to the sender. Delete after reporting."}, "n_creds_1": {"type": "q", "q": "Are you on the same device that may have been compromised right now?", "choices": [{"label": "Yes.", "next": "n_creds_same"}, {"label": "No.", "next": "n_creds_other"}]}, "n_creds_same": {"type": "result", "title": "Switch devices, then act.", "body": "Move to a different device (your phone is fine) and: (1) change the affected password, (2) review your account recovery info, (3) report to IT immediately. Don\u2019t use the suspect device until IT has reviewed it."}, "n_creds_other": {"type": "result", "title": "Change the password and report.", "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened. Keep the original phishing message as evidence."}, "n_device_1": {"type": "q", "q": "Can you safely disconnect from Wi-Fi and unplug any cables?", "choices": [{"label": "Yes, doing it now.", "next": "n_device_disc"}, {"label": "No.", "next": "n_device_call"}]}, "n_device_disc": {"type": "result", "title": "Stay disconnected, leave it on, call IT.", "body": "Don't power off the device. IT may need volatile memory. Don't try to recover files yourself. Call the help desk and describe exactly what you saw."}, "n_device_call": {"type": "result", "title": "Call IT now.", "body": "Call the help desk immediately and describe what you\u2019re seeing. They\u2019ll guide containment from there."}}}</script>
+      <script type="application/json">{"start": "n0", "nodes": {"n0": {"type": "q", "q": "What just happened?", "choices": [{"label": "I got a suspicious email or text.", "next": "n_phish_1"}, {"label": "My device is acting strange or shows a ransom note.", "next": "n_device_1"}, {"label": "I think I already entered my password into a fake site.", "next": "n_creds_1"}]}, "n_phish_1": {"type": "q", "q": "Did you click a link or open an attachment?", "choices": [{"label": "No.", "next": "n_phish_no"}, {"label": "Yes.", "next": "n_creds_1"}]}, "n_phish_no": {"type": "result", "title": "Report it and move on.", "body": "Use the campus \u2018Report Phishing\u2019 button or forward as an attachment to your security team. Do not reply to the sender. Delete after reporting."}, "n_creds_1": {"type": "q", "q": "Are you on the same device that may have been compromised right now?", "choices": [{"label": "Yes.", "next": "n_creds_same"}, {"label": "No.", "next": "n_creds_other"}]}, "n_creds_same": {"type": "result", "title": "Switch devices, then act.", "body": "Move to a different device (your phone is fine) and: (1) change the affected password, (2) review your account recovery info, (3) report to IT immediately. Don\u2019t use the suspect device until IT has reviewed it."}, "n_creds_other": {"type": "result", "title": "Change the password and report.", "body": "Change the affected password right now from this safe device. Then call or email IT to report what happened. Keep the original phishing message as evidence."}, "n_device_1": {"type": "q", "q": "Can you safely disconnect from Wi-Fi and unplug any cables?", "choices": [{"label": "Yes, doing it now.", "next": "n_device_disc"}, {"label": "No.", "next": "n_device_call"}]}, "n_device_disc": {"type": "result", "title": "Leave it on, stay off the network, call IT.", "body": "Don't power off the device. IT may need volatile memory. Don't try to recover files yourself. Call the help desk and describe exactly what you saw."}, "n_device_call": {"type": "result", "title": "Call IT now.", "body": "Call the help desk immediately and describe what you\u2019re seeing. They\u2019ll guide containment from there."}}}</script>
     </div>
   </section>
 
@@ -86,8 +85,7 @@
         <li><a href="prevention.html">Protect yourself</a></li>
         <li><a href="response.html">If something goes wrong</a></li>
         <li><a href="readiness.html">Checklist</a></li>
-        <li><a href="scenarios.html">Scenarios</a></li>
-        <li><a href="dorm-lab.html">Dorm lab</a></li>
+        <li><a href="drills.html">Drills</a></li>
       </ul>
     </div>
     <div>
@@ -110,7 +108,6 @@
 </footer>
 
 <script src="assets/js/app.js"></script>
-<script src="assets/js/scenarios.js" defer></script>
-<script src="assets/js/dorm-lab.js" defer></script>
+<script src="assets/js/drills.js" defer></script>
 </body>
 </html>
