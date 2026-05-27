@@ -83,7 +83,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
   <div class="container grid">
     <div>
       <h4>Student Ransomware Playbook</h4>
-      <p>Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium.</p>
+      <p>Created by Joshua Gerstenfeld and Scott Jacques with support from <a href="https://crimconsortium.com">CrimConsortium</a>.</p>
       <p><a href="https://github.com/crimconsortium/student-ransomware-playbook">View source on GitHub</a></p>
     </div>
     <div>
@@ -99,7 +99,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
       <ul>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
-        <li><a href="{rel}references.html">Sources &amp; further reading</a></li>
+        <li><a href="{rel}references.html">Where to read more</a></li>
       </ul>
     </div>
     <div>
@@ -772,13 +772,13 @@ def render_references() -> str:
     body = f"""
   <section class="container read">
     <span class="eyebrow">Student Ransomware Playbook · Reference</span>
-    <h1>Sources &amp; <span class="accent">further reading</span></h1>
-    <p class="lead">The sources we use to keep this playbook current.</p>
+    <h1>Where to <span class="accent">read more</span></h1>
+    <p class="lead">Authoritative sources for current student-facing ransomware guidance. This playbook was built from these; use them to check what's current.</p>
     <ul>{items}</ul>
-    <p class="muted">We review this list every quarter. If something's missing, suggest it on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
+    <p class="muted">If something's missing or out of date, suggest it on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
   </section>
 """
-    return page("References", body, depth=0, description="Curated sources and further reading.")
+    return page("Where to read more", body, depth=0, description="Where to read more: curated authoritative sources for current ransomware guidance.")
 
 
 def render_404() -> str:
@@ -1308,7 +1308,7 @@ def render_verify_index() -> str:
       <li><a href="readiness.html">Quick checklist</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="glossary.html">Glossary</a></li>
-      <li><a href="references.html">Sources &amp; further reading</a></li>
+      <li><a href="references.html">Where to read more</a></li>
     </ul>
   </section>
 
@@ -1578,14 +1578,14 @@ def render_verify_references() -> str:
     body = f'''
   <section class="container read">
     <span class="eyebrow">Student Ransomware Playbook · Verify · References</span>
-    <h1>Sources &amp; further reading — <span class="accent">citation view</span></h1>
+    <h1>Where to read more — <span class="accent">citation view</span></h1>
     <p class="lead">{lead_html}</p>
     <p class="muted"><a href="../references.html">Plain view →</a></p>
     <ul>{items}</ul>
     <p class="muted">Every entry on this page is itself a source. The other pages in the citation view link back into this list via numbered footnotes.</p>
   </section>
 '''
-    return _verify_page('References (citation view)', body)
+    return _verify_page('Where to read more (citation view)', body)
 
 
 def main() -> None:

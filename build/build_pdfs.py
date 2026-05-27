@@ -62,7 +62,7 @@ def _header_footer(canv, doc):
     canv.saveState()
     canv.setFont("Helvetica", 9)
     canv.setFillColor(MUTED)
-    canv.drawString(inch, 0.5 * inch, "Student Ransomware Playbook · CrimRxiv Consortium")
+    canv.drawString(inch, 0.5 * inch, "Student Ransomware Playbook · CrimConsortium")
     canv.drawRightString(LETTER[0] - inch, 0.5 * inch, f"Page {doc.page}")
     canv.setStrokeColor(BRAND_ORANGE)
     canv.setLineWidth(0.5)
@@ -79,7 +79,7 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
         leftMargin=inch, rightMargin=inch,
         topMargin=0.9 * inch, bottomMargin=0.9 * inch,
         title="Student Ransomware Playbook",
-        author="Joshua Gerstenfeld and Scott Jacques (CrimRxiv Consortium)",
+        author="Joshua Gerstenfeld and Scott Jacques (CrimConsortium)",
         subject="Student Ransomware Playbook",
     )
     story = []
@@ -91,7 +91,7 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
         s["lead"]))
     story.append(Spacer(1, 6))
     story.append(Paragraph(
-        "Created by Joshua Gerstenfeld and Scott Jacques with support from the CrimRxiv Consortium. "
+        "Created by Joshua Gerstenfeld and Scott Jacques with support from CrimConsortium (https://crimconsortium.com). "
         "Open access. Code MIT-licensed; content CC BY 4.0. Live site: "
         "https://crimconsortium.github.io/student-ransomware-playbook/",
         s["small"]))
