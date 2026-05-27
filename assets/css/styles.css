@@ -261,6 +261,11 @@ nav.primary a.emergency:hover { background: #0d0d0d; }
 main { padding: 2rem 0 4rem; }
 main.read-section { padding-top: 1.5rem; }
 
+/* Tighten gap when a content section's first heading sits right under the hero */
+.hero + .read > h2:first-child,
+.hero + main .read > h2:first-child,
+.hero + section.read h2:first-child { margin-top: 0; }
+
 /* Hero — no background band, blends with page like crimconsortium.com */
 .hero {
   padding: 2.5rem 0 1.5rem;
