@@ -476,7 +476,8 @@ main.read-section { padding-top: 1.5rem; }
 .alert {
   border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
-  background: #ffffff;
+  background: var(--bg-elev);
+  color: var(--fg);
   padding: 1.4rem 1.6rem;
   border-radius: var(--radius);
   margin: 1rem 0;

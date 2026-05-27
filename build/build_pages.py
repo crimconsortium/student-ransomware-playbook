@@ -100,6 +100,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
         <li><a href="{rel}references.html">Where to read more</a></li>
+        <li><a href="{rel}verify/index.html">Citation view</a></li>
       </ul>
     </div>
     <div>
@@ -107,7 +108,6 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
       <ul>
         <li>Code: <a href="{rel}LICENSE">MIT</a></li>
         <li>Content: <a href="{rel}LICENSE-content">CC BY 4.0</a></li>
-        <li><a href="{rel}verify/index.html">Citation view</a></li>
       </ul>
       <p class="muted">© <span data-year></span> Joshua Gerstenfeld &amp; Scott Jacques.</p>
     </div>
