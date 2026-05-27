@@ -34,7 +34,7 @@
     const cur = document.documentElement.getAttribute('data-theme') ||
                 (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     btn.setAttribute('aria-label', 'Switch to ' + (cur === 'dark' ? 'light' : 'dark') + ' mode');
-    btn.textContent = cur === 'dark' ? '☀ Light' : '☾ Dark';
+    btn.textContent = cur === 'dark' ? '☀' : '☾';
   }
   initTheme();
 

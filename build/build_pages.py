@@ -69,7 +69,7 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}readiness.html">Checklist</a></li>
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
-        <li><button class="theme-toggle" aria-label="Toggle dark mode">☾ Dark</button></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button></li>
       </ul>
     </nav>
   </div>
