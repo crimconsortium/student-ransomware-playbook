@@ -8,7 +8,9 @@ import sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "build"))
-from content import ROLES, GLOSSARY, FAQ, REFERENCES, DRILLS  # noqa: E402
+from content import ROLES, GLOSSARY, FAQ, REFERENCES  # noqa: E402
+# DRILLS is still in content.py but is intentionally not imported here while
+# the drills section is unlinked from the site. See DRILLS_FUTURE_NOTES.md.
 
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -126,24 +128,6 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
     story.append(Paragraph("Quick checklist", s["h2"]))
     for item in student["checklist_items"]:
         story.append(Paragraph("☐ &nbsp; " + _esc(item), s["body"]))
-
-    story.append(PageBreak())
-
-    story.append(Paragraph("Drills", s["h1"]))
-    story.append(Paragraph(
-        f"{len(DRILLS)} short incident rehearsals. Some are anchored in a simulated dorm room "
-        "you can click around; the rest are off-screen patterns (fake login page, MFA fatigue, "
-        "job and financial-aid scams, lost or stolen devices). Each drill has branching choices "
-        "and a short after-action review. Play the interactive version at "
-        "crimconsortium.github.io/student-ransomware-playbook/drills.html and earn a printable "
-        "Cyber-Smart Student certificate after finishing them all. The drills are listed below "
-        "for quick offline reference.",
-        s["body"]))
-    for i, mod in enumerate(DRILLS, 1):
-        story.append(Paragraph(f"{i:02d}. {_esc(mod['title'])}", s["h3"]))
-        story.append(Paragraph(_esc(mod.get('setup', '')), s["body"]))
-        for habit in mod.get('aar', []):
-            story.append(Paragraph("☐ &nbsp; " + _esc(habit), s["body"]))
 
     story.append(PageBreak())
 

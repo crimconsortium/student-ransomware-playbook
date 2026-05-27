@@ -1050,3 +1050,67 @@ ol.how-to li::marker { color: var(--brand-orange); font-weight: 700; }
   .lab-hotspot-label { font-size: 18px; }
   .lab-grid { grid-template-columns: 1fr; }
 }
+
+/* ----------------------------------------------------------------------------
+   /verify/ subtree -- inline citation markers.
+   Used by /verify/*.html pages only. The plain site doesn't render these.
+---------------------------------------------------------------------------- */
+.verify-cite {
+  margin: 0 0.15em;
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: super;
+}
+.verify-cite a {
+  text-decoration: none;
+  color: var(--brand-orange);
+  font-weight: 600;
+  padding: 0 0.15em;
+  border-radius: 2px;
+  border: 1px solid var(--brand-orange);
+}
+.verify-cite a:hover {
+  background: var(--brand-orange);
+  color: #fff;
+}
+.verify-tag {
+  margin: 0 0.15em;
+  font-size: 0.65em;
+  line-height: 1;
+  vertical-align: super;
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.verify-tag-guidance {
+  border-style: dashed;
+}
+.verify-tag-authority {
+  border-color: var(--fg-muted);
+  color: var(--fg);
+  background: var(--bg-soft);
+}
+.verify-tag-source {
+  border-color: var(--brand-orange);
+  color: var(--brand-orange);
+}
+.verify-tag-missing {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+.verify-footnotes ol {
+  margin-top: 0.5em;
+  padding-left: 1.5em;
+}
+.verify-footnotes li {
+  margin-bottom: 0.4em;
+  font-size: 0.95em;
+}
+.verify-footnotes h2 {
+  margin-top: 1.5rem;
+}

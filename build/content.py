@@ -1300,3 +1300,236 @@ def _build_drills() -> list:
 
 
 DRILLS = _build_drills()
+
+
+# ============================================================================
+# CITATIONS — per-claim source anchoring for the /verify/ subtree.
+# ----------------------------------------------------------------------------
+# The verify subtree mirrors the live site but renders inline citation markers
+# next to every sentence: a numbered footnote for factual claims, or a small
+# [guidance] / [authority: NAME] tag for directive or attributed sentences.
+#
+# Source bar (same as the 2026-05 validity audit):
+#   CISA, FBI/IC3, NIST, EDUCAUSE, National Cybersecurity Alliance,
+#   named university Information Security Offices, peer-reviewed research,
+#   named journalism. No vendor marketing unless it's the original source
+#   of a specific data point.
+#
+# Schema:
+#   CITATIONS["<content_key>"] is a list of dicts. The verify renderer pairs
+#   them positionally with the sentences of the corresponding content element.
+#   Each entry is one of:
+#       {"src": "<ref_key>"}                        # factual claim, sourced
+#       {"kind": "guidance"}                        # directive / instructional
+#       {"kind": "authority", "name": "CISA"}       # attributed to authority
+#
+#   If a list is shorter than the sentence count, trailing sentences default
+#   to {"kind": "guidance"}. If a list is missing for a key, the entire
+#   element defaults to {"kind": "guidance"} (with no factual claims).
+#
+# A "ref_key" is a stable shorthand for a row in CITATION_SOURCES below.
+# ============================================================================
+
+CITATION_SOURCES = {
+    # Reused entries from REFERENCES (also visible on /references.html).
+    "cisa_secureworld": (
+        "CISA Secure Our World",
+        "https://www.cisa.gov/secureourworld",
+    ),
+    "cisa_stopransomware": (
+        "CISA #StopRansomware",
+        "https://www.cisa.gov/stopransomware",
+    ),
+    "cisa_report_ransomware": (
+        "CISA — Report Ransomware",
+        "https://www.cisa.gov/stopransomware/report-ransomware",
+    ),
+    "cisa_mfa": (
+        "CISA — More Than a Password (MFA)",
+        "https://www.cisa.gov/MFA",
+    ),
+    "fbi_ic3": (
+        "FBI Internet Crime Complaint Center (IC3)",
+        "https://www.ic3.gov/",
+    ),
+    "nca_basics": (
+        "National Cybersecurity Alliance — Online Safety Basics",
+        "https://staysafeonline.org/online-safety-privacy-basics/",
+    ),
+    "educause_student": (
+        "EDUCAUSE — Cybersecurity Awareness for College Students",
+        "https://library.educause.edu/resources/2020/9/cybersecurity-awareness-for-college-students-7-things-to-do-now",
+    ),
+    "ftc_idtheft": (
+        "FTC — Identity Theft and Online Security",
+        "https://consumer.ftc.gov/identity-theft-and-online-security/online-privacy-and-security",
+    ),
+    "highered_dive_h1_2025": (
+        "Higher Ed Dive — Ransomware in Education, H1 2025",
+        "https://www.highereddive.com/news/ransomware-attacks-education-jump-23-percent-h1-2025/754011/",
+    ),
+    "utah_iso_2021": (
+        "University of Utah ISO (Nov 2021) — Students Face Increasing Phishing",
+        "https://attheu.utah.edu/announcements/students-face-increasing-phishing-and-other-cyberattacks/",
+    ),
+    "maroon_tiger_2025": (
+        "The Maroon Tiger (Aug 2025) — Morehouse student phishing",
+        "https://maroontigermedia.com/2025/08/phishing-morehouse-emails-student-hacking/",
+    ),
+    "tischer_usb_2016": (
+        "Tischer et al. (2016) — Users Really Do Plug in USB Drives They Find",
+        "https://research.google/pubs/users-really-do-plug-in-usb-drives-they-find/",
+    ),
+    "nomoreransom": (
+        "No More Ransom Project",
+        "https://www.nomoreransom.org/",
+    ),
+    # Additional authoritative anchors used by the verify renderer.
+    "nist_csf": (
+        "NIST Cybersecurity Framework",
+        "https://www.nist.gov/cyberframework",
+    ),
+    "cisa_phishing": (
+        "CISA — Avoiding Social Engineering and Phishing Attacks",
+        "https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks",
+    ),
+    "ferpa": (
+        "U.S. Dept. of Education — FERPA",
+        "https://studentprivacy.ed.gov/ferpa",
+    ),
+    "fido_alliance": (
+        "FIDO Alliance — How FIDO Works",
+        "https://fidoalliance.org/how-fido-works/",
+    ),
+}
+
+
+# ---- Citations by content element ----------------------------------------
+# Keys mirror the structure of the content the verify renderer will render.
+# When a key maps to a list, entries pair 1:1 with sentences in that element.
+# When a list is shorter than the sentence count, the rest default to guidance.
+# When a key is absent, the entire element defaults to guidance.
+
+CITATIONS = {
+    # --- Student role: BEFORE list (prevention checklist sentences) ---
+    "role.student.before.0": [{"kind": "authority", "name": "CISA"}],   # MFA — anchored to CISA's MFA guidance
+    "role.student.before.1": [{"kind": "guidance"}],
+    "role.student.before.2": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "role.student.before.3": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "role.student.before.4": [{"kind": "guidance"}],
+    "role.student.before.5": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "role.student.before.6": [{"kind": "guidance"}],
+
+    # --- Student role: DURING list (response in-the-moment sentences) ---
+    "role.student.during.0": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "role.student.during.1": [{"kind": "guidance"}],
+    "role.student.during.2": [{"kind": "authority", "name": "CISA"}],  # leave-powered-on + isolate per CISA #StopRansomware
+    "role.student.during.3": [{"kind": "guidance"}],
+    "role.student.during.4": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "role.student.during.5": [{"kind": "guidance"}, {"kind": "guidance"}],
+
+    # --- Student role: AFTER list ---
+    "role.student.after.0": [{"kind": "guidance"}],
+    "role.student.after.1": [{"kind": "guidance"}],
+    "role.student.after.2": [{"src": "utah_iso_2021"}],  # "phishing campaigns target many students at once"
+    "role.student.after.3": [{"kind": "guidance"}, {"kind": "guidance"}],
+
+    # --- Student role: checklist_items (readiness page) ---
+    # All directives — no factual claims.
+    # (Default-guidance via missing keys.)
+
+    # --- Hero / intro framing on home, prevention, response, readiness ---
+    "page.index.lead.0": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "page.index.lead.1": [{"kind": "guidance"}],
+    "page.prevention.lead": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "page.prevention.alert": [
+        {"kind": "guidance"},  # "Read this in advance, not during a live incident"
+        {"src": "cisa_secureworld"},  # paraphrases CISA Secure Our World / NCA / EDUCAUSE
+        {"kind": "guidance"},
+    ],
+    "page.response.lead": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "page.response.alert": [
+        {"kind": "guidance"},
+        {"src": "cisa_report_ransomware"},  # reporting routes to CISA + FBI IC3
+        {"kind": "guidance"},
+    ],
+    "page.readiness.lead": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "page.faq.lead": [{"kind": "guidance"}],
+    "page.glossary.lead": [{"kind": "guidance"}],
+    "page.references.lead": [{"kind": "guidance"}],
+
+    # --- Prevention page: phishing red flags ---
+    # The list items are recognition guidance, not empirical claims about prevalence.
+    "page.prevention.redflags.intro": [
+        {"src": "cisa_phishing"},  # "Most attacks on students start with a phish"
+        {"kind": "guidance"},
+    ],
+    "page.prevention.redflag.urgency": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "page.prevention.redflag.link": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "page.prevention.redflag.domain": [{"kind": "guidance"}],
+    "page.prevention.redflag.attachments": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "page.prevention.redflag.toogood": [{"kind": "guidance"}, {"kind": "guidance"}],
+    "page.prevention.redflag.mfa": [
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+    ],
+    # "And sometimes there are no red flags" — a compromised real account can phish.
+    "page.prevention.noflag.0": [
+        {"src": "maroon_tiger_2025"},  # documented at Morehouse: student accounts compromised and used to send phishing
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+    ],
+
+    # --- Response page: section intros + decision-tree framing ---
+    "page.response.decisiontree.intro": [{"kind": "guidance"}],
+
+    # --- Glossary entries ---
+    # Most glossary entries are definitional. Where a definition embeds a factual
+    # operational claim (e.g., FIDO2/WebAuthn binds the credential), tag it
+    # against the standards body. Otherwise: guidance/definitional.
+    "glossary.cisa": [{"kind": "guidance"}, {"src": "cisa_stopransomware"}],
+    "glossary.ferpa": [{"src": "ferpa"}, {"kind": "guidance"}],
+    "glossary.fido2": [{"src": "fido_alliance"}, {"kind": "guidance"}],
+    "glossary.mfa": [
+        {"kind": "guidance"},  # "Requiring more than a password to sign in..."
+        {"src": "fido_alliance"},  # phishing-resistant MFA / WebAuthn binding
+    ],
+    "glossary.mfa_fatigue": [{"src": "cisa_phishing"}],
+    "glossary.nist": [{"src": "nist_csf"}],
+    "glossary.thirdparty": [{"kind": "guidance"}, {"src": "highered_dive_h1_2025"}],
+    # Remaining glossary entries default to guidance (definitions).
+
+    # --- FAQ entries (the answer prose) ---
+    "faq.what_is_ransomware": [
+        {"kind": "guidance"},  # plain definition
+        {"src": "maroon_tiger_2025"},  # "as a student you mostly see the way in: phishing, fake login, account takeover"
+    ],
+    "faq.why_care": [
+        {"kind": "guidance"},  # "Your account is the easiest way in."
+        {"src": "utah_iso_2021"},  # documented compromise + password reset persistence (with Maroon Tiger as second anchor)
+        {"kind": "guidance"},  # final summary sentence
+    ],
+    "faq.faq_clicked": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "faq.ransom_note": [
+        {"kind": "authority", "name": "CISA"},   # "Don't pay anything" — anchored to CISA + FBI position
+        {"src": "cisa_stopransomware"},          # disconnect + leave powered on per CISA #StopRansomware guide
+        {"kind": "guidance"},
+        {"kind": "guidance"},
+    ],
+    "faq.discipline": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "faq.personal_device": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "faq.mfa_worth_it": [
+        {"src": "cisa_mfa"},          # CISA position on MFA
+        {"src": "fido_alliance"},     # FIDO2/passkeys/hardware-keys mechanism
+        {"kind": "guidance"},
+    ],
+    "faq.public_wifi": [{"kind": "guidance"}, {"kind": "guidance"}, {"kind": "guidance"}],
+    "faq.legal_advice": [{"kind": "guidance"}, {"src": "ferpa"}, {"kind": "guidance"}],
+
+    # --- References page intro ---
+    "page.references.intro": [{"kind": "guidance"}],
+    "page.references.footer": [{"kind": "guidance"}],
+}
