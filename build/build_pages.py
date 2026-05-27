@@ -543,7 +543,8 @@ def render_prevention() -> str:
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>Protect yourself</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Prevention</span>
+      <h1>Protect <span class="accent">yourself</span></h1>
       <p class="lead">A handful of habits that make your accounts, devices, and coursework a lot harder to ransom or steal. You don't need to be technical to do any of this.</p>
     </div>
   </section>
@@ -588,7 +589,8 @@ def render_response() -> str:
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>If something goes wrong</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Response</span>
+      <h1>If something <span class="accent">goes wrong</span></h1>
       <p class="lead">What to do if you think you've been hit with ransomware, phishing, or an account takeover. Read it before you need it.</p>
     </div>
   </section>
@@ -629,7 +631,8 @@ def render_emergency() -> str:
     body = """
   <section class="hero">
     <div class="container">
-      <h1>If an incident occurs</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Response</span>
+      <h1>If an incident <span class="accent">occurs</span></h1>
       <p class="lead">A summary of what public guidance says people on a college campus should do if they face a ransomware incident. Read it before you need it. It's not for use during a live incident.</p>
     </div>
   </section>
@@ -702,7 +705,8 @@ def render_readiness() -> str:
     body = f"""
   <section class="hero">
     <div class="container">
-      <h1>Quick checklist</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Readiness</span>
+      <h1>Quick <span class="accent">checklist</span></h1>
       <p class="lead">A short self-audit. Check things off as you go. Progress saves on this device only. No accounts, no servers.</p>
     </div>
   </section>
@@ -732,7 +736,8 @@ def render_glossary() -> str:
     )
     body = f"""
   <section class="container read">
-    <h1>Glossary</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Reference</span>
+    <h1><span class="accent">Glossary</span></h1>
     <p class="lead">Plain-language definitions for the terms in this playbook.</p>
     <dl>{items}</dl>
   </section>
@@ -747,7 +752,8 @@ def render_faq() -> str:
     )
     body = f"""
   <section class="container read">
-    <h1>Frequently asked questions</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Reference</span>
+    <h1>Frequently asked <span class="accent">questions</span></h1>
     <p class="lead">Short answers to the questions students actually ask about ransomware, phishing, and account safety.</p>
     {items}
   </section>
@@ -762,7 +768,8 @@ def render_references() -> str:
     )
     body = f"""
   <section class="container read">
-    <h1>Sources &amp; further reading</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Reference</span>
+    <h1>Sources &amp; <span class="accent">further reading</span></h1>
     <p class="lead">The sources we use to keep this playbook current.</p>
     <ul>{items}</ul>
     <p class="muted">We review this list every quarter. If something's missing, suggest it on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub Issues</a>.</p>
@@ -1284,7 +1291,8 @@ def render_verify_index() -> str:
     body = '''
   <section class="hero">
     <div class="container">
-      <h1>Citation view</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Verify</span>
+      <h1>Citation <span class="accent">view</span></h1>
       <p class="lead">A side-by-side of the playbook with every claim tagged. Numbered superscripts link to public sources; sentences marked <span class="verify-tag verify-tag-guidance">[guidance]</span> are directive advice; sentences marked <span class="verify-tag verify-tag-authority">[authority: …]</span> are recommendations attributed to a named authority.</p>
     </div>
   </section>
@@ -1356,7 +1364,8 @@ def render_verify_prevention() -> str:
     body = f'''
   <section class="hero">
     <div class="container">
-      <h1>Protect yourself — citation view</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Verify · Prevention</span>
+      <h1>Protect yourself — <span class="accent">citation view</span></h1>
       <p class="lead">{lead_html}</p>
       <p class="muted"><a href="../prevention.html">Plain view →</a></p>
     </div>
@@ -1410,7 +1419,8 @@ def render_verify_response() -> str:
     body = f'''
   <section class="hero">
     <div class="container">
-      <h1>If something goes wrong — citation view</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Verify · Response</span>
+      <h1>If something goes wrong — <span class="accent">citation view</span></h1>
       <p class="lead">{lead_html}</p>
       <p class="muted"><a href="../response.html">Plain view →</a></p>
     </div>
@@ -1455,7 +1465,8 @@ def render_verify_readiness() -> str:
     body = f'''
   <section class="hero">
     <div class="container">
-      <h1>Quick checklist — citation view</h1>
+      <span class="eyebrow">Student Ransomware Playbook · Verify · Readiness</span>
+      <h1>Quick checklist — <span class="accent">citation view</span></h1>
       <p class="lead">{lead_html}</p>
       <p class="muted"><a href="../readiness.html">Plain view →</a></p>
     </div>
@@ -1498,7 +1509,8 @@ def render_verify_faq() -> str:
 
     body = f'''
   <section class="container read">
-    <h1>FAQ — citation view</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Verify · FAQ</span>
+    <h1>FAQ — <span class="accent">citation view</span></h1>
     <p class="lead">{lead_html}</p>
     <p class="muted"><a href="../faq.html">Plain view →</a></p>
     {items}
@@ -1535,7 +1547,8 @@ def render_verify_glossary() -> str:
 
     body = f'''
   <section class="container read">
-    <h1>Glossary — citation view</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Verify · Glossary</span>
+    <h1>Glossary — <span class="accent">citation view</span></h1>
     <p class="lead">{lead_html}</p>
     <p class="muted"><a href="../glossary.html">Plain view →</a></p>
     <dl>{items}</dl>
@@ -1561,7 +1574,8 @@ def render_verify_references() -> str:
 
     body = f'''
   <section class="container read">
-    <h1>Sources &amp; further reading — citation view</h1>
+    <span class="eyebrow">Student Ransomware Playbook · Verify · References</span>
+    <h1>Sources &amp; further reading — <span class="accent">citation view</span></h1>
     <p class="lead">{lead_html}</p>
     <p class="muted"><a href="../references.html">Plain view →</a></p>
     <ul>{items}</ul>

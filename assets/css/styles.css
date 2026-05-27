@@ -16,10 +16,10 @@
   --brand-mint:  var(--brand-orange);  /* alias — was mint */
   --brand-rose:  #d9d9d9;              /* alias — was rose; now light gray */
 
-  /* Light theme tokens */
-  --bg:           #ffffff;
+  /* Light theme tokens — cream page bg matches crimconsortium.com / dashboards */
+  --bg:           #f4f1ea;
   --bg-elev:      #ffffff;
-  --bg-soft:      #f4f4f4;
+  --bg-soft:      #ebe6db;
   --fg:           #111111;
   --fg-muted:     #555555;
   --border:       #d9d9d9;
@@ -251,9 +251,27 @@ main.read-section { padding-top: 1.5rem; }
   border-bottom: 1px solid var(--border);
 }
 .hero h1 { font-size: 2.6rem; margin-top: 0; }
+.hero h1 .accent {
+  color: var(--brand-orange);
+  font-style: italic;
+  font-weight: 700;
+}
 .hero .lead {
   font-size: 1.2rem;
   color: var(--fg-muted);
+}
+
+/* Eyebrow label — small uppercase orange tag above a section heading.
+   Matches crimconsortium.com / dashboards visual language. */
+.eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  margin: 0 0 0.35em;
 }
 .hero .cta {
   margin-top: 1.5rem;
@@ -296,6 +314,7 @@ main.read-section { padding-top: 1.5rem; }
 .card {
   background: var(--bg-elev);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--brand-orange);
   border-radius: var(--radius);
   padding: 1.25rem;
   box-shadow: var(--shadow);
@@ -314,6 +333,7 @@ main.read-section { padding-top: 1.5rem; }
   display: block;
   background: var(--bg-elev);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--brand-orange);
   border-radius: var(--radius);
   padding: 1.2rem 1.1rem;
   text-decoration: none;
