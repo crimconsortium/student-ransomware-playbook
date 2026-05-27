@@ -1198,18 +1198,9 @@ ol.how-to li::marker { color: var(--brand-orange); font-weight: 700; }
   color: #fff;
 }
 .verify-tag {
-  margin: 0 0.15em;
-  font-size: 0.65em;
-  line-height: 1;
-  vertical-align: super;
-  padding: 0.1em 0.4em;
-  border-radius: 2px;
-  border: 1px solid var(--border);
-  color: var(--fg-muted);
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
+  /* [guidance] / [authority] / [source] / [?] tags are hidden by default.
+     The data stays in the HTML for future reuse or auditing. */
+  display: none;
 }
 .verify-tag-guidance {
   border-style: dashed;

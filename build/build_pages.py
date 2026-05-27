@@ -1244,20 +1244,16 @@ class _Footnotes:
             '<section class="container read verify-footnotes">\n'
             '<h2>Sources</h2>\n'
             '<ol>' + rows + '</ol>\n'
-            '<p class="muted">Every numbered citation above resolves to a public source. '
-            'Sentences marked <span class="verify-tag verify-tag-guidance">[guidance]</span> '
-            'are general directive advice. Sentences marked '
-            '<span class="verify-tag verify-tag-authority">[authority]</span> are '
-            'recommendations attributed to a named authority.</p>\n'
+            '<p class="muted">Numbered citations link the playbook&rsquo;s factual claims to public sources. Plain directive sentences (do X, don&rsquo;t do Y) are best-practice advice from CISA, EDUCAUSE, and NIST and are not tied to a single document.</p>\n'
             '</section>\n'
         )
 
 
 def _tag(kind: str, name: str = '') -> str:
-    if kind == 'guidance':
-        return '<sup class="verify-tag verify-tag-guidance">[guidance]</sup>'
-    if kind == 'authority':
-        return f'<sup class="verify-tag verify-tag-authority">[authority: {html.escape(name)}]</sup>'
+    # [guidance] and [authority] tags are intentionally not rendered: they
+    # clutter the page and drown out the real numbered citations. The
+    # CITATIONS table still distinguishes them in source so they can be
+    # re-enabled or audited later.
     return ''
 
 
@@ -1296,7 +1292,7 @@ def render_verify_index() -> str:
     <div class="container">
       <span class="eyebrow">Student Ransomware Playbook · Verify</span>
       <h1>Citation <span class="accent">view</span></h1>
-      <p class="lead">A side-by-side of the playbook with every claim tagged. Numbered superscripts link to public sources; sentences marked <span class="verify-tag verify-tag-guidance">[guidance]</span> are directive advice; sentences marked <span class="verify-tag verify-tag-authority">[authority: …]</span> are recommendations attributed to a named authority.</p>
+      <p class="lead">The playbook&rsquo;s factual claims with numbered footnotes linking each one to a public source. Plain directive sentences (do X, don&rsquo;t do Y) are best-practice advice from CISA, EDUCAUSE, and NIST and are not tied to a single document.</p>
     </div>
   </section>
 
