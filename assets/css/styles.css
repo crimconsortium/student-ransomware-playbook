@@ -189,7 +189,7 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
   font-size: 0.9rem;
 }
 html[data-theme="dark"] .brand .mark { background: var(--brand-orange); color: #0d0d0d; }
-.brand .title { font-size: 1.05rem; }
+.brand .title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.005em; white-space: nowrap; }
 .brand .sub { color: var(--fg-muted); font-weight: 500; font-size: 0.85rem; font-family: var(--font-sans); display: block; }
 
 nav.primary { margin-left: auto; }
