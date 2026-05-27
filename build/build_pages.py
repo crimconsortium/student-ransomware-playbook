@@ -100,7 +100,6 @@ def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str
         <li><a href="{rel}glossary.html">Glossary</a></li>
         <li><a href="{rel}faq.html">FAQ</a></li>
         <li><a href="{rel}references.html">Where to read more</a></li>
-        <li><a href="{rel}verify/index.html">Citation view</a></li>
       </ul>
     </div>
     <div>
@@ -542,7 +541,12 @@ def render_phase_section(pid: str) -> str:
 
 def render_prevention() -> str:
     student = ROLES[0]
+    fn = _Footnotes()
     items = "".join(f"<li>{html.escape(x)}</li>" for x in student['before'])
+    # Pre-compute the inline citation markers we'll drop into the prose.
+    alert_cite = cite_one('page.prevention.alert', 1, fn)  # after "...EDUCAUSE."
+    redflags_cite = cite_one('page.prevention.redflags.intro', 0, fn)  # after "...phish."
+    noflag_cite = cite_one('page.prevention.noflag.0', 0, fn)  # after "...send phishing."
     body = f"""
   <section class="hero">
     <div class="container">
@@ -555,7 +559,7 @@ def render_prevention() -> str:
   <section class="container">
     <div class="alert danger" role="note">
       <h4>Read this in advance, not during a live incident</h4>
-      <p>This page paraphrases public guidance from <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>. It's general advice for advance reading. If something's happening right now, call campus IT from a phone or another device you trust.</p>
+      <p>This page paraphrases public guidance from <a href="https://www.cisa.gov/secureourworld">CISA Secure Our World</a>, the <a href="https://staysafeonline.org/">National Cybersecurity Alliance</a>, and <a href="https://library.educause.edu/topics/cybersecurity">EDUCAUSE</a>.{alert_cite} It's general advice for advance reading. If something's happening right now, call campus IT from a phone or another device you trust.</p>
     </div>
   </section>
 
@@ -566,7 +570,7 @@ def render_prevention() -> str:
 
   <section class="container read">
     <h2>Phishing red flags</h2>
-    <p>Most attacks on students start with a phish. An email, text, DM, or fake login page that looks real. Slow down if you see any of this:</p>
+    <p>Most attacks on students start with a phish.{redflags_cite} An email, text, DM, or fake login page that looks real. Slow down if you see any of this:</p>
     <ul>
       <li><strong>Urgency.</strong> “Your account will be locked in 24 hours.” “Your aid will be canceled.”</li>
       <li><strong>A login link in the message.</strong> Don't click it. Type your campus URL into the browser yourself.</li>
@@ -577,17 +581,27 @@ def render_prevention() -> str:
     </ul>
     <div class="alert">
       <h4>And sometimes there are no red flags.</h4>
-      <p>A real account from someone you actually know — a friend, a professor, your RA, the campus help desk — can be compromised and used to send phishing. Same name, same email address, normal-looking signature. The message will <em>look</em> legitimate because, technically, it is. If a message asks you to click a link, log in somewhere, pay something, share an MFA code, or move money, treat the <em>request</em> with suspicion — not just the sender. Verify out-of-band: text or call the person on a number you already had, or walk over.</p>
+      <p>A real account from someone you actually know — a friend, a professor, your RA, the campus help desk — can be compromised and used to send phishing.{noflag_cite} Same name, same email address, normal-looking signature. The message will <em>look</em> legitimate because, technically, it is. If a message asks you to click a link, log in somewhere, pay something, share an MFA code, or move money, treat the <em>request</em> with suspicion — not just the sender. Verify out-of-band: text or call the person on a number you already had, or walk over.</p>
     </div>
   </section>
+
+  {fn.render()}
 """
     return page("Protect yourself", body, depth=0, description="Plain-language steps students can take to prevent ransomware and account takeover.")
 
 
 def render_response() -> str:
     student = ROLES[0]
+    fn = _Footnotes()
+    # Numbering happens in registration order, so compute markers in the order
+    # they appear on the page: alert first, then the after-list items.
+    alert_cite = cite_one('page.response.alert', 1, fn)  # after the CISA/IC3 sentence
+    after_items_parts = []
+    for i, x in enumerate(student['after']):
+        marker = cite_all(f'role.student.after.{i}', fn)
+        after_items_parts.append(f"<li>{html.escape(x)}{marker}</li>")
+    after_items = "".join(after_items_parts)
     during_items = "".join(f"<li>{html.escape(x)}</li>" for x in student['during'])
-    after_items = "".join(f"<li>{html.escape(x)}</li>" for x in student['after'])
     tree_json = html.escape(json.dumps(DECISION_TREES['student']), quote=False)
     body = f"""
   <section class="hero">
@@ -601,7 +615,7 @@ def render_response() -> str:
   <section class="container">
     <div class="alert danger" role="note">
       <h4>Read this in advance, not during a live incident</h4>
-      <p>If something's happening right now, <strong>call your campus IT help desk</strong> from a phone or another device you trust, and do what they say. In the U.S. you can also report to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>. This page is general educational material, not professional incident-response advice.</p>
+      <p>If something's happening right now, <strong>call your campus IT help desk</strong> from a phone or another device you trust, and do what they say. In the U.S. you can also report to <a href="https://www.cisa.gov/stopransomware/report-ransomware">CISA</a> and the <a href="https://www.ic3.gov/">FBI IC3</a>.{alert_cite} This page is general educational material, not professional incident-response advice.</p>
     </div>
   </section>
 
@@ -626,6 +640,8 @@ def render_response() -> str:
     <h2>After the dust settles</h2>
     <ul>{after_items}</ul>
   </section>
+
+  {fn.render()}
 """
     return page("If something goes wrong", body, depth=0, description="Student-focused guidance on what to do during and after a ransomware or phishing incident.")
 
@@ -732,11 +748,29 @@ def render_readiness() -> str:
     return page("Checklist", body, depth=0, description="A short self-audit checklist for college and university students.")
 
 
+# Map glossary term → citation key (only entries that have real sources).
+GLOSSARY_CITE_KEYS = {
+    "CISA": "glossary.cisa",
+    "FERPA": "glossary.ferpa",
+    "FIDO2 / WebAuthn": "glossary.fido2",
+    "MFA / Multi-factor authentication": "glossary.mfa",
+    "MFA fatigue": "glossary.mfa_fatigue",
+    "NIST": "glossary.nist",
+    "Third-party risk": "glossary.thirdparty",
+}
+
+
 def render_glossary() -> str:
-    items = "".join(
-        f"<dt><strong>{html.escape(term)}</strong></dt><dd>{html.escape(defn)}</dd>"
-        for term, defn in GLOSSARY
-    )
+    fn = _Footnotes()
+    parts = []
+    for term, defn in GLOSSARY:
+        key = GLOSSARY_CITE_KEYS.get(term)
+        marker = cite_all(key, fn) if key else ''
+        parts.append(
+            f"<dt><strong>{html.escape(term)}</strong></dt>"
+            f"<dd>{html.escape(defn)}{marker}</dd>"
+        )
+    items = "".join(parts)
     body = f"""
   <section class="container read">
     <span class="eyebrow">Student Ransomware Playbook · Reference</span>
@@ -744,15 +778,35 @@ def render_glossary() -> str:
     <p class="lead">Plain-language definitions for the terms in this playbook.</p>
     <dl>{items}</dl>
   </section>
+
+  {fn.render()}
 """
     return page("Glossary", body, depth=0, description="Glossary of ransomware and incident-response terms used in the playbook.")
 
 
+FAQ_CITE_KEYS = [
+    'faq.what_is_ransomware',
+    'faq.why_care',
+    'faq.faq_clicked',
+    'faq.ransom_note',
+    'faq.discipline',
+    'faq.personal_device',
+    'faq.mfa_worth_it',
+    'faq.public_wifi',
+    'faq.legal_advice',
+]
+
+
 def render_faq() -> str:
-    items = "".join(
-        f"<details><summary><strong>{html.escape(q)}</strong></summary><p>{html.escape(a)}</p></details>"
-        for q, a in FAQ
-    )
+    fn = _Footnotes()
+    parts = []
+    for (q, a), key in zip(FAQ, FAQ_CITE_KEYS):
+        marker = cite_all(key, fn)
+        parts.append(
+            f"<details><summary><strong>{html.escape(q)}</strong></summary>"
+            f"<p>{html.escape(a)}{marker}</p></details>"
+        )
+    items = "".join(parts)
     body = f"""
   <section class="container read">
     <span class="eyebrow">Student Ransomware Playbook · Reference</span>
@@ -760,6 +814,8 @@ def render_faq() -> str:
     <p class="lead">Short answers to the questions students actually ask about ransomware, phishing, and account safety.</p>
     {items}
   </section>
+
+  {fn.render()}
 """
     return page("FAQ", body, depth=0, description="Frequently asked questions for college and university students about ransomware, phishing, and account safety.")
 
@@ -1184,12 +1240,10 @@ def _render_drills_full_archived() -> str:
 
 
 # ============================================================================
-# /verify/ subtree -- per-claim citation view of the live site.
-# ----------------------------------------------------------------------------
-# Renders the same content as the main site, but with an inline citation
-# marker after every sentence: a numbered superscript for sourced factual
-# claims, or a small [guidance] / [authority: NAME] tag for directive or
-# attributed sentences. Footnotes are listed at the bottom of each page.
+# Citation infrastructure -- numbered footnotes for sourced factual claims on
+# the main pages. The CITATIONS table in build/content.py maps page-section
+# keys to per-sentence entries; entries with a 'src' produce a [N] superscript
+# linked to the Sources section at the bottom of the page.
 # ============================================================================
 import re as _re
 
@@ -1257,6 +1311,34 @@ def _tag(kind: str, name: str = '') -> str:
     return ''
 
 
+def cite_one(key: str, sentence_index: int, fn: _Footnotes) -> str:
+    """Return inline citation marker for a specific (key, sentence_index) or ''.
+
+    Used by the main page renderers to drop a [N] superscript at a chosen spot
+    without rewriting the surrounding HTML. Looks up CITATIONS[key][i] and
+    returns the marker only if that entry has a 'src'.
+    """
+    entries = CITATIONS.get(key, [])
+    if sentence_index < 0 or sentence_index >= len(entries):
+        return ''
+    entry = entries[sentence_index]
+    if 'src' in entry:
+        return fn.cite(entry['src'])
+    return ''
+
+
+def cite_all(key: str, fn: _Footnotes) -> str:
+    """Return all citation markers for a key concatenated (one space-separated).
+
+    Useful at the end of a paragraph when the markers aren't sentence-specific.
+    """
+    markers = []
+    for i, entry in enumerate(CITATIONS.get(key, [])):
+        if 'src' in entry:
+            markers.append(fn.cite(entry['src']))
+    return ''.join(markers)
+
+
 def _annotate(text: str, key: str, fn: _Footnotes) -> str:
     """Return text with an inline citation marker after each sentence.
 
@@ -1278,310 +1360,6 @@ def _annotate(text: str, key: str, fn: _Footnotes) -> str:
         out_parts.append(html.escape(sent) + ' ' + marker)
     return ' '.join(out_parts)
 
-
-def _verify_page(title: str, body: str, *, description: str = '') -> str:
-    """Wrap a verify-view body in the standard site chrome at depth=1."""
-    return page(title, body, depth=1, description=description)
-
-
-# ---- Verify renderers (one per live-site page that has prose to cite) ------
-
-def render_verify_index() -> str:
-    body = '''
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Student Ransomware Playbook · Verify</span>
-      <h1>Citation <span class="accent">view</span></h1>
-      <p class="lead">The playbook&rsquo;s factual claims with numbered footnotes linking each one to a public source. Plain directive sentences (do X, don&rsquo;t do Y) are best-practice advice from CISA, EDUCAUSE, and NIST and are not tied to a single document.</p>
-    </div>
-  </section>
-
-  <section class="container read">
-    <h2>Pages</h2>
-    <ul>
-      <li><a href="prevention.html">Protect yourself</a></li>
-      <li><a href="response.html">If something goes wrong</a></li>
-      <li><a href="readiness.html">Quick checklist</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="glossary.html">Glossary</a></li>
-      <li><a href="references.html">Where to read more</a></li>
-    </ul>
-  </section>
-
-  <section class="container read">
-    <h2>What this is</h2>
-    <p>The citation view exists so anyone can verify the claims on the main site against public sources. It is generated from the same content as the live playbook, so the two cannot drift. The source bar is: CISA, FBI/IC3, NIST, EDUCAUSE, the National Cybersecurity Alliance, named university Information Security Offices, peer-reviewed research, and named journalism. No vendor marketing unless it is the original source of a specific data point.</p>
-    <p>If you find a claim you think is wrong, file an issue on <a href="https://github.com/crimconsortium/student-ransomware-playbook/issues">GitHub</a>.</p>
-  </section>
-'''
-    return _verify_page(
-        'Citation view',
-        body,
-        description='Citation view of the Student Ransomware Playbook — every factual sentence linked to a public source.',
-    )
-
-
-def render_verify_prevention() -> str:
-    fn = _Footnotes()
-    student = ROLES[0]
-
-    # Annotate the BEFORE list (one citation key per item).
-    items_html = ''
-    for i, item in enumerate(student['before']):
-        items_html += '<li>' + _annotate(item, f'role.student.before.{i}', fn) + '</li>'
-
-    # Reusable bits from the live page, with the same prose and inline annotations.
-    lead_html = _annotate(
-        'A handful of habits that make your accounts, devices, and coursework a lot harder to ransom or steal. You don\'t need to be technical to do any of this.',
-        'page.prevention.lead', fn,
-    )
-    alert_html = _annotate(
-        "This page paraphrases public guidance from CISA Secure Our World, the National Cybersecurity Alliance, and EDUCAUSE. It's general advice for advance reading. If something's happening right now, call campus IT from a phone or another device you trust.",
-        'page.prevention.alert', fn,
-    )
-
-    redflag_intro = _annotate(
-        "Most attacks on students start with a phish. An email, text, DM, or fake login page that looks real. Slow down if you see any of this:",
-        'page.prevention.redflags.intro', fn,
-    )
-    redflag_items = ''
-    for key, text in [
-        ('page.prevention.redflag.urgency',     '"Your account will be locked in 24 hours." "Your aid will be canceled."'),
-        ('page.prevention.redflag.link',        "A login link in the message. Don't click it. Type your campus URL into the browser yourself."),
-        ('page.prevention.redflag.domain',      "A sender domain that's close but not exact (like support@my-college.edu.help instead of support@my-college.edu)."),
-        ('page.prevention.redflag.attachments', 'Unexpected attachments. Especially zip files, OneNote files, or HTML "invoices."'),
-        ('page.prevention.redflag.toogood',     "An offer that's too good to be true. High-paying remote job for a student, scholarship you never applied for, free laptop, surprise refund."),
-        ('page.prevention.redflag.mfa',         "MFA prompts you didn't trigger. Never approve a prompt you didn't start. Repeated prompts are MFA fatigue. It's a known attack."),
-    ]:
-        redflag_items += '<li>' + _annotate(text, key, fn) + '</li>'
-
-    noflag_html = _annotate(
-        "A real account from someone you actually know — a friend, a professor, your RA, the campus help desk — can be compromised and used to send phishing. Same name, same email address, normal-looking signature. The message will look legitimate because, technically, it is. If a message asks you to click a link, log in somewhere, pay something, share an MFA code, or move money, treat the request with suspicion — not just the sender. Verify out-of-band: text or call the person on a number you already had, or walk over.",
-        'page.prevention.noflag.0', fn,
-    )
-
-    body = f'''
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Student Ransomware Playbook · Verify · Prevention</span>
-      <h1>Protect yourself — <span class="accent">citation view</span></h1>
-      <p class="lead">{lead_html}</p>
-      <p class="muted"><a href="../prevention.html">Plain view →</a></p>
-    </div>
-  </section>
-
-  <section class="container read">
-    <div class="alert"><p>{alert_html}</p></div>
-  </section>
-
-  <section class="container read">
-    <h2>Do these before anything goes wrong</h2>
-    <ul>{items_html}</ul>
-  </section>
-
-  <section class="container read">
-    <h2>Phishing red flags</h2>
-    <p>{redflag_intro}</p>
-    <ul>{redflag_items}</ul>
-    <div class="alert"><h4>And sometimes there are no red flags.</h4><p>{noflag_html}</p></div>
-  </section>
-
-  {fn.render()}
-'''
-    return _verify_page('Protect yourself (citation view)', body)
-
-
-def render_verify_response() -> str:
-    fn = _Footnotes()
-    student = ROLES[0]
-
-    during_html = ''
-    for i, item in enumerate(student['during']):
-        during_html += '<li>' + _annotate(item, f'role.student.during.{i}', fn) + '</li>'
-    after_html = ''
-    for i, item in enumerate(student['after']):
-        after_html += '<li>' + _annotate(item, f'role.student.after.{i}', fn) + '</li>'
-
-    lead_html = _annotate(
-        "What to do if you think you've been hit with ransomware, phishing, or an account takeover. Read it before you need it.",
-        'page.response.lead', fn,
-    )
-    alert_html = _annotate(
-        "If something's happening right now, call your campus IT help desk from a phone or another device you trust, and do what they say. In the U.S. you can also report to CISA and the FBI IC3. This page is general educational material, not professional incident-response advice.",
-        'page.response.alert', fn,
-    )
-    tree_intro = _annotate(
-        'A short decision tree for the situations students actually run into.',
-        'page.response.decisiontree.intro', fn,
-    )
-
-    body = f'''
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Student Ransomware Playbook · Verify · Response</span>
-      <h1>If something goes wrong — <span class="accent">citation view</span></h1>
-      <p class="lead">{lead_html}</p>
-      <p class="muted"><a href="../response.html">Plain view →</a></p>
-    </div>
-  </section>
-
-  <section class="container read">
-    <div class="alert"><p>{alert_html}</p></div>
-  </section>
-
-  <section class="container read">
-    <h2>In the moment</h2>
-    <ul>{during_html}</ul>
-  </section>
-
-  <section class="container read">
-    <h2>What should I do right now?</h2>
-    <p>{tree_intro}</p>
-    <p class="muted">The interactive decision tree on the plain view paraphrases the disconnect-but-leave-powered-on guidance from the CISA #StopRansomware guide.</p>
-  </section>
-
-  <section class="container read">
-    <h2>After the dust settles</h2>
-    <ul>{after_html}</ul>
-  </section>
-
-  {fn.render()}
-'''
-    return _verify_page('If something goes wrong (citation view)', body)
-
-
-def render_verify_readiness() -> str:
-    fn = _Footnotes()
-    student = ROLES[0]
-    lead_html = _annotate(
-        'A short self-audit. Check things off as you go. Progress saves on this device only. No accounts, no servers.',
-        'page.readiness.lead', fn,
-    )
-    items_html = ''
-    for i, item in enumerate(student['checklist_items']):
-        items_html += '<li>' + _annotate(item, f'role.student.checklist.{i}', fn) + '</li>'
-
-    body = f'''
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">Student Ransomware Playbook · Verify · Readiness</span>
-      <h1>Quick checklist — <span class="accent">citation view</span></h1>
-      <p class="lead">{lead_html}</p>
-      <p class="muted"><a href="../readiness.html">Plain view →</a></p>
-    </div>
-  </section>
-
-  <section class="container read">
-    <h2>{html.escape(student["checklist_title"])}</h2>
-    <ul>{items_html}</ul>
-  </section>
-
-  {fn.render()}
-'''
-    return _verify_page('Quick checklist (citation view)', body)
-
-
-def render_verify_faq() -> str:
-    fn = _Footnotes()
-    lead_html = _annotate(
-        'Short answers to the questions students actually ask about ransomware, phishing, and account safety.',
-        'page.faq.lead', fn,
-    )
-    # FAQ-key mapping mirrors the order in content.FAQ.
-    keys = [
-        'faq.what_is_ransomware',
-        'faq.why_care',
-        'faq.faq_clicked',
-        'faq.ransom_note',
-        'faq.discipline',
-        'faq.personal_device',
-        'faq.mfa_worth_it',
-        'faq.public_wifi',
-        'faq.legal_advice',
-    ]
-    items = ''
-    for (q, a), k in zip(FAQ, keys):
-        items += (
-            '<details open><summary><strong>' + html.escape(q) + '</strong></summary>'
-            '<p>' + _annotate(a, k, fn) + '</p></details>'
-        )
-
-    body = f'''
-  <section class="container read">
-    <span class="eyebrow">Student Ransomware Playbook · Verify · FAQ</span>
-    <h1>FAQ — <span class="accent">citation view</span></h1>
-    <p class="lead">{lead_html}</p>
-    <p class="muted"><a href="../faq.html">Plain view →</a></p>
-    {items}
-  </section>
-
-  {fn.render()}
-'''
-    return _verify_page('FAQ (citation view)', body)
-
-
-def render_verify_glossary() -> str:
-    fn = _Footnotes()
-    lead_html = _annotate(
-        'Plain-language definitions for the terms in this playbook.',
-        'page.glossary.lead', fn,
-    )
-    # Glossary key mapping (only entries with anything other than guidance are keyed).
-    key_for_term = {
-        'CISA': 'glossary.cisa',
-        'FERPA': 'glossary.ferpa',
-        'FIDO2 / WebAuthn': 'glossary.fido2',
-        'MFA / Multi-factor authentication': 'glossary.mfa',
-        'MFA fatigue': 'glossary.mfa_fatigue',
-        'NIST': 'glossary.nist',
-        'Third-party risk': 'glossary.thirdparty',
-    }
-    items = ''
-    for term, defn in GLOSSARY:
-        k = key_for_term.get(term, f'glossary.{term.lower()}')
-        items += (
-            '<dt><strong>' + html.escape(term) + '</strong></dt>'
-            '<dd>' + _annotate(defn, k, fn) + '</dd>'
-        )
-
-    body = f'''
-  <section class="container read">
-    <span class="eyebrow">Student Ransomware Playbook · Verify · Glossary</span>
-    <h1>Glossary — <span class="accent">citation view</span></h1>
-    <p class="lead">{lead_html}</p>
-    <p class="muted"><a href="../glossary.html">Plain view →</a></p>
-    <dl>{items}</dl>
-  </section>
-
-  {fn.render()}
-'''
-    return _verify_page('Glossary (citation view)', body)
-
-
-def render_verify_references() -> str:
-    fn = _Footnotes()
-    lead_html = _annotate(
-        'The sources we use to keep this playbook current.',
-        'page.references.lead', fn,
-    )
-    items = ''
-    for title, url, blurb in REFERENCES:
-        items += (
-            '<li><a href="' + html.escape(url) + '">' + html.escape(title) + '</a>. '
-            + html.escape(blurb) + ' <sup class="verify-tag verify-tag-source">[source]</sup></li>'
-        )
-
-    body = f'''
-  <section class="container read">
-    <span class="eyebrow">Student Ransomware Playbook · Verify · References</span>
-    <h1>Where to read more — <span class="accent">citation view</span></h1>
-    <p class="lead">{lead_html}</p>
-    <p class="muted"><a href="../references.html">Plain view →</a></p>
-    <ul>{items}</ul>
-    <p class="muted">Every entry on this page is itself a source. The other pages in the citation view link back into this list via numbered footnotes.</p>
-  </section>
-'''
-    return _verify_page('Where to read more (citation view)', body)
 
 
 def main() -> None:
@@ -1606,17 +1384,6 @@ def main() -> None:
     (out / "faq.html").write_text(render_faq(), encoding="utf-8")
     (out / "references.html").write_text(render_references(), encoding="utf-8")
     (out / "404.html").write_text(render_404(), encoding="utf-8")
-
-    # /verify/ subtree -- per-claim citation view of every page on the live site.
-    verify_dir = out / "verify"
-    verify_dir.mkdir(exist_ok=True)
-    (verify_dir / "index.html").write_text(render_verify_index(), encoding="utf-8")
-    (verify_dir / "prevention.html").write_text(render_verify_prevention(), encoding="utf-8")
-    (verify_dir / "response.html").write_text(render_verify_response(), encoding="utf-8")
-    (verify_dir / "readiness.html").write_text(render_verify_readiness(), encoding="utf-8")
-    (verify_dir / "faq.html").write_text(render_verify_faq(), encoding="utf-8")
-    (verify_dir / "glossary.html").write_text(render_verify_glossary(), encoding="utf-8")
-    (verify_dir / "references.html").write_text(render_verify_references(), encoding="utf-8")
 
     print("Pages built.")
 
