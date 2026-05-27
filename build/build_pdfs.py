@@ -86,7 +86,7 @@ def build_pdf(out_dir: pathlib.Path) -> pathlib.Path:
 
     story.append(Paragraph("Student Ransomware Playbook", s["title"]))
     story.append(Paragraph(
-        "A plain-language guide for college and university students. "
+        "A plain-language guide for college students. "
         "How to spot phishing, protect your accounts and coursework, and know what to do if something goes wrong.",
         s["lead"]))
     story.append(Spacer(1, 6))

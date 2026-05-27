@@ -37,7 +37,7 @@ from content import ROLES, PHASES, GLOSSARY, FAQ, REFERENCES, DRILLS, CITATIONS,
 def page(title: str, body: str, *, depth: int = 0, description: str = "") -> str:
     """Return a full HTML page. depth = directory depth from repo root."""
     rel = "../" * depth
-    desc = description or "Student Ransomware Playbook. A plain-language educational guide for college and university students."
+    desc = description or "Student Ransomware Playbook. A plain-language educational guide for college students."
     desc = html.escape(desc)
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -745,7 +745,7 @@ def render_readiness() -> str:
   </section>
 
 """
-    return page("Checklist", body, depth=0, description="A short self-audit checklist for college and university students.")
+    return page("Checklist", body, depth=0, description="A short self-audit checklist for college students.")
 
 
 # Map glossary term → citation key (only entries that have real sources).
@@ -817,7 +817,7 @@ def render_faq() -> str:
 
   {fn.render()}
 """
-    return page("FAQ", body, depth=0, description="Frequently asked questions for college and university students about ransomware, phishing, and account safety.")
+    return page("FAQ", body, depth=0, description="Frequently asked questions for college students about ransomware, phishing, and account safety.")
 
 
 def render_references() -> str:
@@ -1235,7 +1235,7 @@ def _render_drills_full_archived() -> str:
         "Drills",
         body,
         depth=0,
-        description="Short incident drills for college and university students. Practice phishing, MFA fatigue, ransomware on a personal laptop, fake job offers, financial-aid scams, account takeover of a club's cloud drive, lost devices, and more — with feedback on every choice.",
+        description="Short incident drills for college students. Practice phishing, MFA fatigue, ransomware on a personal laptop, fake job offers, financial-aid scams, account takeover of a club's cloud drive, lost devices, and more — with feedback on every choice.",
     )
 
 

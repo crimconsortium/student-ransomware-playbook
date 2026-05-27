@@ -1,6 +1,6 @@
 # Student Ransomware Playbook
 
-A plain-language, open-access guide for **college and university students** on how to spot phishing, protect their accounts and devices, and act fast if something goes wrong. Created by **Joshua Gerstenfeld** and **Scott Jacques** with support from the **CrimRxiv Consortium**.
+A plain-language, open-access guide for **college students** on how to spot phishing, protect their accounts and devices, and act fast if something goes wrong. Created by **Joshua Gerstenfeld** and **Scott Jacques** with support from the **CrimRxiv Consortium**.
 
 🌐 **Live site:** https://crimconsortium.github.io/student-ransomware-playbook/
 

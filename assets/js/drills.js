@@ -331,7 +331,7 @@
         '<div class="name" contenteditable="true" spellcheck="false">Your name</div>',
         '<p>has completed all ' + DRILLS.length + ' drills of the Student Ransomware Playbook ',
         'and demonstrated awareness of phishing, account safety, ransomware response, ',
-        'and common cyber scams that target college and university students.</p>',
+        'and common cyber scams that target college students.</p>',
         '<div class="stars" aria-label="Path rating">' + stars + '</div>',
         '<div class="meta">',
           '<div><strong>Issued</strong>' + dateStr + '</div>',
