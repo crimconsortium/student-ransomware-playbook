@@ -164,8 +164,8 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
+  padding-top: 1.05rem;
+  padding-bottom: 1.05rem;
 }
 .brand {
   display: flex;
@@ -173,9 +173,10 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
   gap: 0.6rem;
   text-decoration: none;
   color: var(--fg);
-  font-weight: 500;
+  font-weight: 400;
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.55;
 }
 .brand .mark {
   width: 30px; height: 30px;
@@ -204,7 +205,9 @@ nav.primary ul {
 nav.primary a {
   color: var(--fg);
   text-decoration: none;
-  font-size: 0.93rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
   padding: 0.35rem 0.5rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
@@ -237,9 +240,12 @@ nav.primary a.emergency:hover { background: #0d0d0d; }
   color: var(--fg-muted);
   padding: 0.3rem 0.4rem;
   cursor: pointer;
-  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
 .theme-toggle:hover { color: var(--fg); }
 .menu-toggle { display: none; }
 
@@ -274,6 +280,82 @@ main.read-section { padding-top: 1.5rem; }
   font-weight: 400;
   color: var(--fg-muted);
   margin: 0.8em 0 1em;
+}
+
+/* =============================================================================
+   Big card with stacked blocks — mirrors crimconsortium.com's CrimRxiv card.
+   ============================================================================= */
+.big-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--brand-orange);
+  border-radius: 14px;
+  padding: 2rem 2.25rem;
+  margin: 1.5rem 0;
+}
+.big-card > .eyebrow { margin-top: 0; }
+.big-card h2 { margin-top: 0.1em; font-size: 2rem; font-weight: 500; }
+.big-card .lead { font-size: 1.2rem; margin: 0.4em 0 0.9em; }
+.big-card hr.card-divider {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.8rem 0 1.5rem;
+}
+
+/* Section list inside the big card — each row: link + serif description */
+.section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0 0;
+}
+.section-list li {
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--border);
+}
+.section-list li:first-child { border-top: 0; padding-top: 0; }
+.section-list .section-link {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--brand-orange);
+  text-decoration: none;
+  margin-bottom: 0.2em;
+}
+.section-list .section-link:hover {
+  color: var(--brand-orange-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.section-list .section-desc {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--fg-muted);
+}
+
+/* Primary orange CTA — 'Visit CrimRxiv ↗' style */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--brand-orange);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.05rem;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.btn-primary:hover {
+  background: var(--brand-orange-deep);
+  color: #ffffff;
+  text-decoration: none;
 }
 
 /* Eyebrow label — sampled from crimconsortium.com (Inter 13px / 600 / 1.3px tracking) */

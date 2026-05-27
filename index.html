@@ -28,7 +28,7 @@
         <li><a href="readiness.html">Checklist</a></li>
         <li><a href="glossary.html">Glossary</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li>
       </ul>
     </nav>
   </div>
@@ -44,32 +44,43 @@
   </section>
 
   <section class="container">
-    <div class="role-grid">
-      <a class="role-tile" href="prevention.html">
-        <h3>Protect yourself</h3>
-        <p>A handful of habits (MFA, backups, updates, spotting phishing) that make your accounts much harder to crack.</p>
-      </a>
-      <a class="role-tile" href="response.html">
-        <h3>If something goes wrong</h3>
-        <p>What to do if you clicked a phishing link, saw a ransom note, or think your account's been compromised. Read it before you need it.</p>
-      </a>
-      <a class="role-tile" href="readiness.html">
-        <h3>Checklist</h3>
-        <p>A short self-audit, about five minutes. Progress saves on this device only.</p>
-      </a>
-      <a class="role-tile" href="glossary.html">
-        <h3>Glossary</h3>
-        <p>Plain-language definitions of the terms used in this playbook.</p>
-      </a>
-      <a class="role-tile" href="faq.html">
-        <h3>FAQ</h3>
-        <p>Straight answers to questions students actually ask, including what counts as a real incident.</p>
-      </a>
-    </div>
+    <article class="big-card">
+      <span class="eyebrow">Five short reads</span>
+      <h2>The playbook</h2>
+      <p class="lead">Five short pages — read them in any order, or all at once. Each takes a few minutes.</p>
+      <ul class="section-list">
+        <li>
+          <a class="section-link" href="prevention.html">Protect yourself ↗</a>
+          <span class="section-desc">A handful of habits (MFA, backups, updates, spotting phishing) that make your accounts much harder to crack.</span>
+        </li>
+        <li>
+          <a class="section-link" href="response.html">If something goes wrong ↗</a>
+          <span class="section-desc">What to do if you clicked a phishing link, saw a ransom note, or think your account's been compromised. Read it before you need it.</span>
+        </li>
+        <li>
+          <a class="section-link" href="readiness.html">Checklist ↗</a>
+          <span class="section-desc">A short self-audit, about five minutes. Progress saves on this device only.</span>
+        </li>
+        <li>
+          <a class="section-link" href="glossary.html">Glossary ↗</a>
+          <span class="section-desc">Plain-language definitions of the terms used in this playbook.</span>
+        </li>
+        <li>
+          <a class="section-link" href="faq.html">FAQ ↗</a>
+          <span class="section-desc">Straight answers to questions students actually ask, including what counts as a real incident.</span>
+        </li>
+      </ul>
+
+      <hr class="card-divider">
+
+      <span class="eyebrow">Test yourself</span>
+      <h2>Quiz &amp; certificate</h2>
+      <p class="lead">A short quiz on what the playbook covers. Pass and you get a printable certificate of completion.</p>
+      <p><a class="btn-primary" href="quiz.html">Start the quiz ↗</a></p>
+    </article>
   </section>
 
   <section class="container">
-    <span class="eyebrow">About</span>
     <h2>About this resource</h2>
     <p>The Student Ransomware Playbook is by <strong>Joshua Gerstenfeld</strong> and <strong>Scott Jacques</strong> with support from the <a href="https://www.crimrxiv.com/consortium">CrimRxiv Consortium</a>. It gets a quarterly content review against CISA, EDUCAUSE, and NIST guidance.</p>
     <p>Code is <a href="LICENSE">MIT-licensed</a>. Text, diagrams, and illustrations are <a href="LICENSE-content">CC BY 4.0</a>. The repo is at <a href="https://github.com/crimconsortium/student-ransomware-playbook">github.com/crimconsortium/student-ransomware-playbook</a>.</p>
